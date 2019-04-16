@@ -1043,18 +1043,11 @@
 
         for (var i = 0; i < uss.length; i++) {
             if (progress[0] === lvl4) {
-
                 // Check if the created userstory exists
                 if (roleText === uss[i]["Given"] && actionText === uss[i]["When"] && benefitText === uss[i]["Then"]) {
-
                     // Userstory exists
-                    this.emptyMenu();
-                    uss.splice(i, 1);
-                    progress[5][0].splice(i, 1);
-                    progress[5][1].splice(i, 1);
-                    progress[5][2].splice(i, 1);
                     donezo = true;
-                    this.userStoryExists();
+                    this.userStoryExists(i);
                     return;
                 }
             }
@@ -1062,55 +1055,27 @@
                 // Check if the created userstory exists
                 if (roleText === uss[i]["Role"] && actionText === uss[i]["Action"] && benefitText === uss[i]["Benefit"]) {
 
-                    // If we're in a level with mistakes
+                    // If we're in a level with mistakes, also check if the found userstory is in the mistake list
                     if (progress[3].length !== 0) {
                         for (var j = 0; j < progress[3].length; j++) {
-
-                            // Also check if the userstory is not one of the mistakes
                             if (roleText === progress[3][j]["Role"] && actionText === progress[3][j]["Action"] && benefitText === progress[3][j]["Benefit"]) {
-
-                                // Tell player they made a mistake
-                                wrongSound.play();
-                                this.emptyMenu();
-
-                                roleMenu.disableInteractive();
-                                actionMenu.disableInteractive();
-                                benefitMenu.disableInteractive();
-
-                                this.time.delayedCall(1500, function () {
-                                    console.log("Not a valid userstory :(");
-                                    this.putStuffBack(false);
-                                    this.setUserStoryText();
-
-                                    roleMenu.setInteractive();
-                                    actionMenu.setInteractive();
-                                    benefitMenu.setInteractive();
-                                }, [], this);
+                                // Userstory exists, but a mistake has been made
                                 mistakeFound = true;
+                                this.userStoryDoesNotExist();
                                 return;
                             }
                             else {
                                 // Userstory exists
-                                this.emptyMenu();
-                                uss.splice(i, 1);
-                                progress[5][0].splice(i, 1);
-                                progress[5][1].splice(i, 1);
-                                progress[5][2].splice(i, 1);
                                 donezo = true;
-                                this.userStoryExists();
+                                this.userStoryExists(i);
                                 return;
                             }
                         }
                     }
                     else {
                         // Userstory exists
-                        this.emptyMenu();
-                        uss.splice(i, 1);
-                        progress[5][0].splice(i, 1);
-                        progress[5][1].splice(i, 1);
-                        progress[5][2].splice(i, 1);
                         donezo = true;
-                        this.userStoryExists();
+                        this.userStoryExists(i);
                         return;
                     }
 
@@ -1118,33 +1083,9 @@
             }
         }
         if (donezo === false && mistakeFound === false) {
-            if (roleText === '<???>' || actionText === '<???>' || benefitText === '<???>') {
-                // Tell player it's not a complete story yet
-                console.log("Incomplete userstory :/");
-            }
-            else {
-                // Tell player they made a mistake
-                wrongSound.play();
-                this.emptyMenu();
-
-                roleMenu.disableInteractive();
-                actionMenu.disableInteractive();
-                benefitMenu.disableInteractive();
-
-                console.log("Not a valid userstory :(");
-
-                this.time.delayedCall(1500, function () {
-                    strsr.push(roleText);
-                    strsa.push(actionText);
-                    strsb.push(benefitText);
-
-                    this.putStuffBack(false);
-                    this.setUserStoryText();
-
-                    roleMenu.setInteractive();
-                    actionMenu.setInteractive();
-                    benefitMenu.setInteractive();
-                }, [], this);
+            if (roleText !== '<???>' && actionText !== '<???>' && benefitText !== '<???>') {
+                // Userstory does not exist
+                this.userStoryDoesNotExist();
             }
         }
     }
@@ -1240,16 +1181,23 @@
         scoreText.text = "Score: " + score;
     }
 
-    userStoryExists() {
+    userStoryExists(index) {
+        this.emptyMenu();
+
+        uss.splice(index, 1);
+        progress[5][0].splice(index, 1);
+        progress[5][1].splice(index, 1);
+        progress[5][2].splice(index, 1);
+
         // Congratulate player
         emitter.on = true;
         correctSound.play();
+        console.log("Valid userstory! :)");
 
         roleMenu.disableInteractive();
         actionMenu.disableInteractive();
         benefitMenu.disableInteractive();
 
-        console.log("Valid userstory! :)");
 
         this.time.delayedCall(1500, function () {
             this.putStuffBack(true);
@@ -1301,6 +1249,31 @@
         }, [], this);
     }
 
+    userStoryDoesNotExist() {
+        // Tell player they made a mistake
+        wrongSound.play();
+        console.log("Not a valid userstory :(");
+
+        this.emptyMenu();
+
+        roleMenu.disableInteractive();
+        actionMenu.disableInteractive();
+        benefitMenu.disableInteractive();
+
+        this.time.delayedCall(1500, function () {
+            strsr.push(roleText);
+            strsa.push(actionText);
+            strsb.push(benefitText);
+
+            this.putStuffBack(false);
+            this.setUserStoryText();
+
+            roleMenu.setInteractive();
+            actionMenu.setInteractive();
+            benefitMenu.setInteractive();
+        }, [], this);
+    }
+
     nextLevel() {
         progress[4] = progress[4] + score;
         score = 0;
@@ -1308,6 +1281,8 @@
         eps = [];
         uss = [];
         mss = [];
+
+        progress[1] = 1;
         
         this.createLevel(0);
         oText.text = orderText;
