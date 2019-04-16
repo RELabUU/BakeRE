@@ -1,0 +1,14 @@
+{
+  "short_name": "BakeRE",
+  "name": "BakeRE - Userstory Game",
+  "icons": [
+    {
+      "src": "assets/images/icons/icon1-1 copy.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "orientation": "landscape"
+}

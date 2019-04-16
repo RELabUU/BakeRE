@@ -1,0 +1,51 @@
+﻿[
+  {
+    "Name": "Quality Framework QUS - continued",
+    "Epics": "6",
+    "Keys": "5",
+    "Content": {
+      "1": {
+        "nr": "3",
+        "usKey": "2",
+        "nrMistakes": "1",
+        "typeMistakes": "Full Sentence"
+      },
+      "2": {
+        "nr": "3",
+        "usKey": "5",
+        "nrMistakes": "1",
+        "typeMistakes": "Unambiguous"
+      },
+      "3": {
+        "nr": "4",
+        "usKey": "5",
+        "nrMistakes": "1",
+        "typeMistakes": "Independent"
+      },
+      "4": {
+        "nr": "4",
+        "usKey": "3",
+        "nrMistakes": "2",
+        "typeMistakes": "Unambiguous&Independent"
+      },
+      "5": {
+        "nr": "4",
+        "usKey": "3",
+        "nrMistakes": "2",
+        "typeMistakes": "Unambiguous&Independent"
+      },
+      "6": {
+        "nr": "4",
+        "usKey": "4",
+        "nrMistakes": "2",
+        "typeMistakes": "Full Sentence&Unambiguous&Independent"
+      },
+      "7": {
+        "nr": "5",
+        "usKey": "7",
+        "nrMistakes": "3",
+        "typeMistakes": "Full Sentence&Unambiguous&Independent"
+      }
+    }
+  }
+]
