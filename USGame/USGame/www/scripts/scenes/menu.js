@@ -50,7 +50,7 @@
         this.input.on('pointerdown', function (pointer) {
             //document.documentElement.requestFullscreen();
             this.createMenu(menuGroup, type);
-            this.txt_progress.visible = false;
+            this.txt_progress.text = "Select your database";
         }, this);
 
 
@@ -73,10 +73,10 @@
                 });
                 menuGroup = [];
                 type = 1;
+                this.txt_progress.text = "Pick a level";
                 this.createMenu(menuGroup, type);
             }
             else {
-
                 // Level selection
                 switch (gameobject.list[1].text) {
                     case 'Level 0':

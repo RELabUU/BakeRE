@@ -825,6 +825,7 @@
         this.createMenuBG(w, h, spriteWidth, us);
         this.createOrderBG(w, h, orderText);
         this.createUserStoryLine();
+        this.updateProgressBar(progress[0]);
     }
 
     createCircleBG(w, h, sprite) {
@@ -842,12 +843,6 @@
         var menuX = 15 * w / 20;
         var menuY = h / 2 - h / 80;
         menuBG.fillRoundedRect(menuX - menuWidth / 2 - spriteWidth / 2, menuY - menuHeight / 2 - h / 20, menuWidth, menuHeight, 45);
-
-        //mTitle = this.make.text(textconfigMenuHeader);
-        //mTitle.x = menuX - menuWidth / 2;
-        //mTitle.y = menuY - menuHeight / 2;
-        //mTitle.setDepth(1);
-        //mTitle.visible = false;
 
         this.createMenuText();
 
@@ -879,10 +874,60 @@
         this.toggleContext();
     }
 
-    createProgressBar() {
-        // TODO
-        // Progress bar (outer) --> batch (epic) 2/6 (how many batches in a level?)
+    updateProgressBar(level) {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        var height = 3 * h / 5;
+        var distance = height / Number(level['Epics']);
+
+        var circle;
+        var rect;
+        var rct;
+
         // Progress bar (inner) --> userstory 3/5 (how many do you need to complete the batch?)
+        var nrInBatch = level['Content'][progress[1]]['nr'];
+        var mistInBatch = level['Content'][progress[1]]['nrMistakes'];
+
+        if (mistInBatch === "") {
+            mistInBatch = 0;
+        }
+        else {
+            mistInBatch = Number(mistInBatch);
+        }
+
+        var ul = nrInBatch - mistInBatch;
+        var us = ul - uss.length + mistInBatch;
+        var dist = distance / ul;
+        console.log('Userstories in batch: ' + us + '/' + ul);
+
+        // Progress bar (outer) --> batch (epic) 2/6 (how many batches in a level?)
+        console.log('Batches in level: ' + progress[1] + '/' + level['Epics']);
+
+        for (var j = 1; j <= Number(level['Epics']); j++) {
+            for (var k = 1; k <= ul; k++) {
+                rect = this.add.graphics();
+                
+                if (j - 1 < progress[1]) {
+                    rect.fillStyle(0x36627b, 1);
+                }
+                else {
+                    rect.fillStyle(0xffffff, 1);
+                }
+
+                rect.fillRect(w / 40 + 5, k * dist + h / 9, 10, dist);
+            }
+        }
+
+        for (var i = 1; i <= Number(level['Epics']) + 1; i++) { 
+            circle = this.add.graphics();
+            if (i - 1 < progress[1]) {
+                circle.fillStyle(0xf4ab2b, 1); 
+            }
+            else {
+                circle.fillStyle(0xFFFFFF, 1); // blue: 0x36627b, orange: 0xf4ab2b,
+            }
+            circle.fillCircle(w / 40 + 10, i * distance + h / 9, 10); 
+        }
     }
 
     setUserStoryText() {
@@ -1198,13 +1243,13 @@
         actionMenu.disableInteractive();
         benefitMenu.disableInteractive();
 
+        var level = progress[0];
 
         this.time.delayedCall(1500, function () {
             this.putStuffBack(true);
 
             if (uss.length - mss.length === 0) {
                 uss = [];
-                var level = progress[0];
                 var ep = progress[1];
                 progress[1] = ep + 1;
                 var epic = eps[progress[1] - 1];
@@ -1219,7 +1264,6 @@
                     }, [], this);
                 }
                 else {
-                    console.log(progress[1] + '/' + level['Epics']);
                     this.pickUserStories(epic);
                     if (mss !== []) {
                         mss = [];
@@ -1251,6 +1295,8 @@
             this.setUserStoryText();
             emitter.on = false;
         }, [], this);
+
+        this.updateProgressBar(level);
     }
 
     userStoryDoesNotExist() {
