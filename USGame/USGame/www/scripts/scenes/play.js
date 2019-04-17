@@ -1204,7 +1204,6 @@
 
             if (uss.length - mss.length === 0) {
                 uss = [];
-                mss = [];
                 var level = progress[0];
                 var ep = progress[1];
                 progress[1] = ep + 1;
@@ -1223,8 +1222,13 @@
                     console.log(progress[1] + '/' + level['Epics']);
                     this.pickUserStories(epic);
                     if (mss !== []) {
+                        mss = [];
+                        strsr = [];
+                        strsa = [];
+                        strsb = [];
                         this.pickMistakes();
                     }
+
                     if (progress[0] === lvl4) {
                         orderText = "As a " + epic['Role'] + " I want to " + epic['Action'] + " so that I " + epic['Benefit'];
                     }
