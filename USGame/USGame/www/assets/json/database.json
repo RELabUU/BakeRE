@@ -1,5 +1,5 @@
 {
-  "Title": "Educational",
+  "Title": "Online Learning Environment"
   "Epics": {
     "Number": 8,
     "Epics List": [
@@ -73,7 +73,7 @@
       {
         "Epic Title": "Tests",
         "Role": "Teacher",
-        "Action": "create an anonymous test for my students",
+        "Action": "create an anonymous test within the learning environment for my students",
         "Benefit": "I can test their knowledge without knowing their performance"
       },
       {
@@ -293,7 +293,7 @@
       {
         "Epic Title": "Assignments",
         "Role": "Teacher assistant",
-        "Action": "see the list of submissions and exams that I was assigned to grade",
+        "Action": "see the list of submissions and the list of exams that I was assigned to grade",
         "Benefit": "I know how much grading work is ahead of me"
       },
       {
@@ -320,7 +320,7 @@
         "Epic Title": "Assignments",
         "Role": "Teacher",
         "Action": "restrict the file submission types",
-        "Benefit": "my teacher assistants can avoid checking file format constraints. For example, in the past, we had problems with pdfs."
+        "Benefit": "my ta's can avoid checking format constraints. For example, in the past, we had problems with pdfs."
       },
       {
         "Epic Title": "Course material",
@@ -357,7 +357,7 @@
       {
         "Epic Title": "Communication",
         "Role": "Teaching assistant",
-        "Action": "have an identifiable feature within the groupchats",
+        "Action": "clearly be identifiable as an assistant when posting messages",
         "Benefit": "students will receive a notification with an audible *pling* when I post on the message boards, which will identify me as a TA"
       }
     ],
@@ -424,7 +424,7 @@
         "Epic Title": "Accounts",
         "Role": "Teacher",
         "Action": "have insight into the current list of students with accounts",
-        "Benefit": "I know whether or not all of my students have created an account (as seen in attachment b.)"
+        "Benefit": "I know if all my students have created an account (as seen in attachment b.)"
       },
       {
         "Epic Title": "Scheduling",
