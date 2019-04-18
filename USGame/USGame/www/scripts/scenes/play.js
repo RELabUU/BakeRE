@@ -875,11 +875,24 @@
     }
 
     updateProgressBar(level) {
+        var pc = progressCircles.length;
+        var pr = progressRects.length;
+
+        for (var c = 0; c < pc; c++) {
+            progressCircles[c].destroy();
+        }
+        for (var r = 0; r < pr; r++) {
+            progressRects[r].destroy();
+        }
+
+        progressCircles = [];
+        progressRects = [];
+
         var w = window.innerWidth;
         var h = window.innerHeight;
         var height = 3 * h / 5;
         var distance = height / Number(level['Epics']);
-        var offset = h / 9;
+        var offset = h / 5;
 
         var circle;
         var rect;
@@ -902,14 +915,14 @@
         console.log('Userstories in batch: ' + us + '/' + ul);
 
         for (var j = 0; j < Number(level['Epics']); j++) {
-            for (var k = 1; k <= ul; k++) {
+            for (var k = 0; k < ul; k++) {
                 rect = this.add.graphics();
                 
-                if (j + 1 < progress[1]) {
+                if (j > Number(level['Epics']) - progress[1]) {
                     rect.fillStyle(0x36627b, 1); // blue: 0x36627b
                 }
-                else if (j + 1 === progress[1]) {
-                    if (k <= us) {
+                else if (j === Number(level['Epics']) - progress[1]) {
+                    if (k >= ul - us) {
                         rect.fillStyle(0x36627b, 1);
                     }
                     else {
@@ -921,24 +934,25 @@
                 }
 
                 var index = j * ul + k;
-                var offset2 = distance - dist + offset;
 
-                rect.fillRect(w / 40 + 5, index * dist + offset2, 10, dist);
+                rect.fillRect(w / 40 + 3, index * dist + offset, 6, dist);
+                progressRects.push(rect);
             }
         }
 
         // Progress bar (outer) --> batch (epic) 2/6 (how many batches in a level?)
         console.log('Batches in level: ' + progress[1] + '/' + level['Epics']);
 
-        for (var i = 1; i <= Number(level['Epics']) + 1; i++) { 
+        for (var i = 0; i <= Number(level['Epics']); i++) { 
             circle = this.add.graphics();
-            if (i - 1 < progress[1]) {
+            if (i > Number(level['Epics']) - progress[1]) {
                 circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
             else {
                 circle.fillStyle(0xFFFFFF, 1);  
             }
-            circle.fillCircle(w / 40 + 10, i * distance + offset, 10); 
+            circle.fillCircle(w / 40 + 6, i * distance + offset, 6);
+            progressCircles.push(circle);
         }
     }
 
@@ -1268,6 +1282,20 @@
 
                 if (progress[1] > level['Epics']) {
                     this.switchLevel();
+
+                    var pc = progressCircles.length;
+                    var pr = progressRects.length;
+
+                    for (var c = 0; c < pc; c++) {
+                        progressCircles[c].destroy();
+                    }
+                    for (var r = 0; r < pr; r++) {
+                        progressRects[r].destroy();
+                    }
+
+                    progressCircles = [];
+                    progressRects = [];
+
                     this.time.delayedCall(5000, function () {
                         this.toggleContext();
                         this.time.delayedCall(4500, function () {
@@ -1308,8 +1336,6 @@
             this.setUserStoryText();
             emitter.on = false;
         }, [], this);
-
-        this.updateProgressBar(level);
     }
 
     userStoryDoesNotExist() {
@@ -1348,6 +1374,7 @@
         progress[1] = 1;
         
         this.createLevel(0);
+        this.updateProgressBar(progress[0]);
         oText.text = orderText;
     }
 

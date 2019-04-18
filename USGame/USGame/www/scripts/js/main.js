@@ -37,6 +37,9 @@ building[0] = "";
 building[1] = "";
 building[2] = "";
 
+var progressCircles = [];
+var progressRects = [];
+
 // The possible databases (choose at start of the game which one to use)
 var databases = [];
 var database;
