@@ -879,6 +879,7 @@
         var h = window.innerHeight;
         var height = 3 * h / 5;
         var distance = height / Number(level['Epics']);
+        var offset = h / 9;
 
         var circle;
         var rect;
@@ -900,33 +901,44 @@
         var dist = distance / ul;
         console.log('Userstories in batch: ' + us + '/' + ul);
 
-        // Progress bar (outer) --> batch (epic) 2/6 (how many batches in a level?)
-        console.log('Batches in level: ' + progress[1] + '/' + level['Epics']);
-
-        for (var j = 1; j <= Number(level['Epics']); j++) {
+        for (var j = 0; j < Number(level['Epics']); j++) {
             for (var k = 1; k <= ul; k++) {
                 rect = this.add.graphics();
                 
-                if (j - 1 < progress[1]) {
-                    rect.fillStyle(0x36627b, 1);
+                if (j + 1 < progress[1]) {
+                    rect.fillStyle(0x36627b, 1); // blue: 0x36627b
+                }
+                else if (j + 1 === progress[1]) {
+                    if (k <= us) {
+                        rect.fillStyle(0x36627b, 1);
+                    }
+                    else {
+                        rect.fillStyle(0xffffff, 1);
+                    }
                 }
                 else {
                     rect.fillStyle(0xffffff, 1);
                 }
 
-                rect.fillRect(w / 40 + 5, k * dist + h / 9, 10, dist);
+                var index = j * ul + k;
+                var offset2 = distance - dist + offset;
+
+                rect.fillRect(w / 40 + 5, index * dist + offset2, 10, dist);
             }
         }
+
+        // Progress bar (outer) --> batch (epic) 2/6 (how many batches in a level?)
+        console.log('Batches in level: ' + progress[1] + '/' + level['Epics']);
 
         for (var i = 1; i <= Number(level['Epics']) + 1; i++) { 
             circle = this.add.graphics();
             if (i - 1 < progress[1]) {
-                circle.fillStyle(0xf4ab2b, 1); 
+                circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
             else {
-                circle.fillStyle(0xFFFFFF, 1); // blue: 0x36627b, orange: 0xf4ab2b,
+                circle.fillStyle(0xFFFFFF, 1);  
             }
-            circle.fillCircle(w / 40 + 10, i * distance + h / 9, 10); 
+            circle.fillCircle(w / 40 + 10, i * distance + offset, 10); 
         }
     }
 
@@ -1287,6 +1299,7 @@
                     }, [], this);
                 }
             }
+            this.updateProgressBar(progress[0]);
 
             roleMenu.setInteractive();
             actionMenu.setInteractive();
