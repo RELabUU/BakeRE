@@ -1371,7 +1371,7 @@
         uss = [];
         mss = [];
 
-        progress[1] = 1;
+        //progress[1] = 1;
         
         this.createLevel(0);
         this.updateProgressBar(progress[0]);
@@ -1382,6 +1382,8 @@
         strsr = [];
         strsa = [];
         strsb = [];
+
+        progress[1] = 1;
 
         jingle2Sound.play();
 

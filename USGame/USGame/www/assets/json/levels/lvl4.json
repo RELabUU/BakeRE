@@ -1,14 +1,16 @@
 ﻿[
   {
     "Name": "Acceptance Tests",
-    "Epics": "5",
+    "Epics": "1",
     "Keys": "",
     "Content": {
       "1": {
         "nr": "1",
         "nrMistakes": "",
         "typeMistakes": ""
-      },
+      }
+    },
+    "Test": {
       "2": {
         "nr": "2",
         "nrMistakes": "",
