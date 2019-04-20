@@ -63,6 +63,9 @@ var strsb = [];
 // Particle variables
 var particles;
 var emitter;
+var firework1;
+var firework2;
+var firework3;
 
 // Menu parts
 var menuVisible = "None";

@@ -150,6 +150,8 @@
 
         // #endregion
 
+        // #region Particle configs
+
         // The particle settings (code from "labs.phaser.io")
         particles = this.add.particles('flares');
         particles.setDepth(5);
@@ -164,11 +166,46 @@
             blendMode: 'ADD'
         });
 
+        firework1 = particles.createEmitter({
+            frame: ['red', 'blue', 'green', 'yellow'],
+            x: window.innerWidth / 3,
+            y: window.innerHeight / 3,
+            speed: 200,
+            lifespan: 1000,
+            on: false,
+            maxParticles: 15,
+            blendMode: 'ADD'
+        });
+
+        firework2 = particles.createEmitter({
+            frame: ['red', 'blue', 'green', 'yellow'],
+            x: window.innerWidth / 2,
+            y: 3 * window.innerHeight / 4,
+            speed: 200,
+            lifespan: 1000,
+            on: false,
+            maxParticles: 15,
+            blendMode: 'ADD'
+        });
+
+        firework3 = particles.createEmitter({
+            frame: ['red', 'blue', 'green', 'yellow'],
+            x: 3 * window.innerWidth / 4,
+            y: window.innerHeight / 2,
+            speed: 200,
+            lifespan: 1000,
+            on: false,
+            maxParticles: 15,
+            blendMode: 'ADD'
+        });
+
+        // #endregion
+
         //#region Text
 
         titleText = this.make.text(textconfigTitle);
         titleText.x = window.innerWidth / 2;
-        titleText.y = window.innerHeight / 5;
+        titleText.y = window.innerHeight / 2;
         titleText.setOrigin(0.5, 0.5);
         titleText.visible = false;
 
@@ -948,6 +985,9 @@
             if (i > Number(level['Epics']) - progress[1]) {
                 circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
+            else if (i === Number(level['Epics']) && Number(level['Epics']) - progress[1] === 0) {
+                circle.fillStyle(0xf4ab2b, 1);
+            }
             else {
                 circle.fillStyle(0xFFFFFF, 1);  
             }
@@ -1332,7 +1372,7 @@
                     }
 
                     if (progress[0] === lvl4) {
-                        orderText = "As a " + epic['Role'] + " I want to " + epic['Action'] + " so that I " + epic['Benefit'];
+                        orderText = "As a " + epic['Role'] + " I want to " + epic['Action'] + " so that " + epic['Benefit'];
                     }
                     else {
                         orderText = epic['Epic Text'];
@@ -1409,14 +1449,25 @@
         progress[1] = 1;
 
         jingle2Sound.play();
+        firework1.on = true;
+        this.time.delayedCall(800, function () {
+            firework2.on = true;
+            this.time.delayedCall(800, function () {
+                firework3.on = true;
+            }, [], this);
+        }, [], this);
 
         switch (progress[0]) {
             case lvl0:
                 progress[0] = lvl1;
+                
                 titleText.text = "Completed tutorial!";
                 titleText.visible = true;
                 this.time.delayedCall(5000, function () {
                     titleText.visible = false;
+                    firework1.on = false;
+                    firework2.on = false;
+                    firework3.on = false;
                     this.nextLevel();
                 }, [], this);
                 break;
@@ -1426,6 +1477,9 @@
                 titleText.visible = true;
                 this.time.delayedCall(5000, function () {
                     titleText.visible = false;
+                    firework1.on = false;
+                    firework2.on = false;
+                    firework3.on = false;
                     this.nextLevel();
                 }, [], this);
                 break;
@@ -1435,6 +1489,9 @@
                 titleText.visible = true;
                 this.time.delayedCall(5000, function () {
                     titleText.visible = false;
+                    firework1.on = false;
+                    firework2.on = false;
+                    firework3.on = false;
                     this.nextLevel();
                 }, [], this);
                 break;
@@ -1444,6 +1501,9 @@
                 titleText.visible = true;
                 this.time.delayedCall(5000, function () {
                     titleText.visible = false;
+                    firework1.on = false;
+                    firework2.on = false;
+                    firework3.on = false;
                     this.nextLevel();
                 }, [], this);
                 break;
@@ -1452,6 +1512,9 @@
                 titleText.visible = true;
                 this.time.delayedCall(5000, function () {
                     titleText.visible = false;
+                    firework1.on = false;
+                    firework2.on = false;
+                    firework3.on = false;
                     this.restartGame();
                 }, [], this);
                 break;
