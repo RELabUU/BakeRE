@@ -14,11 +14,14 @@
         // Load the databases and level information
         this.load.json('db1', 'assets/json/database.json');
 
-        //this.load.json('lvl0', 'assets/json/levels/lvl0.json');
+        this.load.json('lvl0', 'assets/json/levels/lvl0.json');
         this.load.json('lvl1', 'assets/json/levels/lvl1.json');
         this.load.json('lvl2', 'assets/json/levels/lvl2.json');
         this.load.json('lvl3', 'assets/json/levels/lvl3.json');
         this.load.json('lvl4', 'assets/json/levels/lvl4.json');
+
+        // Load the texts (introductions, tips, etc.)
+        this.load.json('texts', 'assets/json/texts.json');
 
         // #region Cake sprites
 
@@ -324,13 +327,17 @@
         var db1 = this.cache.json.get('db1');
         databases.push(db1);
 
-        //var l0 = this.cache.json.get('lvl0');
+        var texts = this.cache.json.get('texts');
+        intros = texts['Introductions'];
+        tips = texts['Tips'];
+
+        var l0 = this.cache.json.get('lvl0');
         var l1 = this.cache.json.get('lvl1');
         var l2 = this.cache.json.get('lvl2');
         var l3 = this.cache.json.get('lvl3');
         var l4 = this.cache.json.get('lvl4');
 
-        //lvl0 = l0[0];
+        lvl0 = l0[0];
         lvl1 = l1[0];
         lvl2 = l2[0];
         lvl3 = l3[0];

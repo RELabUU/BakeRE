@@ -40,6 +40,10 @@ building[2] = "";
 var progressCircles = [];
 var progressRects = [];
 
+// Texts for descriptions, tips, etc.
+var intros;
+var tips;
+
 // The possible databases (choose at start of the game which one to use)
 var databases = [];
 var database;
@@ -59,6 +63,10 @@ var mss = [];
 var strsr = [];
 var strsa = [];
 var strsb = [];
+
+// Lists used in the debriefing of the player
+var tups = [];
+var mistakesMade = [];
 
 // Particle variables
 var particles;
@@ -93,7 +101,6 @@ var benefitsEmptied = false;
 var lvl0;
 var lvl1;
 var lvl2;
-var lvl23;
 var lvl3;
 var lvl4;
 
@@ -163,6 +170,7 @@ var dragging = false;
 var score = 0;
 var countDown = 0;
 
+// #region Sounds
 var correctSound;
 var wrongSound;
 var thudSound;
@@ -173,6 +181,7 @@ var dripSound;
 var jingleSound;
 var jingle2Sound;
 var song1;
+// #endregion
 
 window.onload = function () {
     //statusbar.hide();

@@ -11,7 +11,7 @@
     create()
     {
         // Start the background music
-        song1 = this.sound.add('song1', { loop: true, volume: 0.5 });
+        //song1 = this.sound.add('song1', { loop: true, volume: 0.5 });
         //song1.play();
 
         //#region Texts
@@ -73,15 +73,15 @@
                 });
                 menuGroup = [];
                 type = 1;
-                this.txt_progress.text = "Pick a level";
                 this.createMenu(menuGroup, type);
             }
             else {
                 // Level selection
+                this.txt_progress.text = "Pick a level";
+
                 switch (gameobject.list[1].text) {
                     case 'Level 0':
-                        // TODO
-                        //progress[0] = lvl0;
+                        progress[0] = lvl0;
                         break;
                     case 'Level 1':
                         progress[0] = lvl1;
@@ -118,22 +118,22 @@
         var l = 0;
         var w = window.innerWidth;
         var h = window.innerHeight;
-        var squareSize = window.innerWidth / 6;
+        var squareSize = window.innerWidth / 8;
 
         if (type === 0) {
             l = databases.length;
         }
         else {
-            l = 4; // Nr. of levels, will become 5 when tutorial is added
+            l = 5; 
         }
 
-        for (var i = 1; i <= l; i++) {
+        for (var i = 0; i < l; i++) {
             graphics = this.add.graphics();
             graphics.fillStyle(0xffff00, 1);
             graphics.fillRoundedRect(0, 0, squareSize, squareSize, 12);
 
             if (type === 0) {
-                txt = databases[i - 1]['Title'];
+                txt = databases[i]['Title'];
             }
             else {
                 txt = 'Level ' + i;
@@ -151,7 +151,7 @@
             );
             t.setOrigin(0.5, 0.5);
 
-            container = this.add.container(i * w / 5 - squareSize / 2, 2 * h / 3 - squareSize / 2);
+            container = this.add.container((i + 1) * w / 5 - squareSize / 2, 2 * h / 3 - squareSize / 2);
             container.setInteractive(new Phaser.Geom.Rectangle(0, 0, squareSize, squareSize), Phaser.Geom.Rectangle.Contains);
             container.add(graphics);
             container.add(t);

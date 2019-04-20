@@ -55,9 +55,6 @@
         roleMenu.setInteractive();
         actionMenu.setInteractive();
         benefitMenu.setInteractive();
-        //roleMenu.input.enable = true;
-        //actionMenu.input.enable = true;
-        //benefitMenu.input.enable = true;
 
         this.initializeAnimations();
 
@@ -268,6 +265,8 @@
             case lvl0:
                 this.pickEpics(lvl0);
                 this.pickUserStories(eps[epNr]);
+                order = eps[epNr];
+                orderText = order['Epic Text'];
                 console.log("Level 0 " + lvl0['Name']);
                 break;
             case lvl1:
@@ -410,6 +409,7 @@
         var types = typeOfM.split("&");
 
         var msnrs = [];
+        var mistTuple = [];
 
         // Pick some userstories to replace by bad userstories
         var nrs = this.generateRandomNumbers(0, uss.length - 1, n);
@@ -426,6 +426,8 @@
             var epic = uss[0]['Epic Title'];
             var toUse = [];
 
+            mistTuple[0] = msnrs[k];
+
             for (var l = 0; l < typeContent.length; l++) {
                 if (typeContent[l]['Epic Title'] === epic) {
                     toUse.push(typeContent[l]);
@@ -434,10 +436,14 @@
 
             if (toUse.length === 1) {
                 mss.push(toUse[0]);
+                mistTuple[1] = toUse[0];
+                tups.push(mistTuple);
             }
             else {
                 var r = this.generateRandomNumbers(0, 1, 1);
                 mss.push(toUse[r[0]]);
+                mistTuple[1] = toUse[r[0]];
+                tups.push(mistTuple);
             }
         }
 
@@ -617,6 +623,67 @@
         gameObject.list[1].visible = false;
         gameObject.list[2].visible = false;
     }
+
+    // --------------------------------------------------------------------------- //
+
+    // #region Debriefing
+
+    debriefing() {
+        // Contains: 
+        // - Score per level (score)
+        // - Total score of game (progress[4])
+        // - Time spent on level
+        // - Tip (mistakesMade)
+        // - Top (?)
+
+        orderBG.visible = true;
+        bg.visible = true;
+
+
+    }
+
+    gatherMistakes() {
+        var types = [];
+        
+        for (var i = 0; i < mistakesMade.length; i++) {
+            types.push(mistakesMade[i][0]);
+        }
+
+        types.sort();
+        var a = types.reduce(function (acc, curr) {
+            if (typeof acc[curr] === 'undefined') {
+                acc[curr] = 1;
+            } else {
+                acc[curr] += 1;
+            }
+
+            return acc;
+        }, {});
+
+        var first = a[0];
+        var second = a[1];
+
+        if (first !== undefined) {
+            switch (first[0]) {
+                case 'Atomic':
+                    break;
+                case 'Minimal':
+                    break;
+                case 'Problem Oriented':
+                    break;
+                case 'Full Sentence':
+                    break;
+                case 'Unambiguous':
+                    break;
+                case 'Independent':
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    // #endregion
 
     // --------------------------------------------------------------------------- //
 
@@ -1185,8 +1252,16 @@
                     if (progress[3].length !== 0) {
                         for (var j = 0; j < progress[3].length; j++) {
                             if (roleText === progress[3][j]["Role"] && actionText === progress[3][j]["Action"] && benefitText === progress[3][j]["Benefit"]) {
+
                                 // Userstory exists, but a mistake has been made
                                 mistakeFound = true;
+                                for (var y = 0; y < tups.length; y++) {
+                                    if (tups[y][1]["Role"] === roleText && tups[y][1]["Action"] === actionText && tups[y][1]["Benefit"]) {
+
+                                        // Add to the list of mistakes made for the debriefing at the end of the level
+                                        mistakesMade.push(tups[y]);
+                                    }
+                                }
                                 this.userStoryDoesNotExist();
                                 return;
                             }
@@ -1336,6 +1411,7 @@
                 var epic = eps[progress[1] - 1];
 
                 if (progress[1] > level['Epics']) {
+                    this.gatherMistakes();
                     this.switchLevel();
 
                     var pc = progressCircles.length;
