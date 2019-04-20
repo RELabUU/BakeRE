@@ -1,5 +1,5 @@
 {
-  "Title": "Online Learning Environment",
+  "Title":  "Online Learning Environment",
   "Epics": {
     "Number": 8,
     "Epics List": [
@@ -442,7 +442,7 @@
         "usKey": 1,
         "Role": "Teacher",
         "Action": "message groups",
-        "Benefit": "I can share feedback and other remarks once to everyone working within the same team",
+        "Benefit": "I can share feedback and other remarks once to everyone on the same team",
         "Given": "a list of groups within the learning environment",
         "When": "I click on a group",
         "Then": "I should get the option to send feedback and/or remarks to all group members at once"
@@ -452,7 +452,7 @@
         "usKey": 1,
         "Role": "Teacher",
         "Action": "message groups",
-        "Benefit": "I can share feedback and other remarks once to everyone working within the same team",
+        "Benefit": "I can share feedback and other remarks once to everyone on the same team",
         "Given": "a list of groups within the learning environment",
         "When": "I click on a group",
         "Then": "I should get the option to send feedback and/or remarks to specific group members"
@@ -462,7 +462,7 @@
         "usKey": 1,
         "Role": "Teacher",
         "Action": "message groups",
-        "Benefit": "I can share feedback and other remarks once to everyone working within the same team",
+        "Benefit": "I can share feedback and other remarks once to everyone on the same team",
         "Given": "a group within the learning environment",
         "When": "I message all group members",
         "Then": "all group members should get a notification when one of them replies"
@@ -501,7 +501,7 @@
         "Epic Title": "Groups",
         "usKey": 3,
         "Role": "Student",
-        "Action": "create groups for practical teams",
+        "Action": "create groups",
         "Benefit": "I can make a hub for my practical partners to cooperate within",
         "Given": "the learning environment",
         "When": "I have an account within the learning environment",
@@ -511,7 +511,7 @@
         "Epic Title": "Groups",
         "usKey": 3,
         "Role": "Student",
-        "Action": "create groups for practical teams",
+        "Action": "create groups",
         "Benefit": "I can make a hub for my practical partners to cooperate within",
         "Given": "a group within the learning environment",
         "When": "I am creating the group settings",
@@ -521,7 +521,7 @@
         "Epic Title": "Groups",
         "usKey": 3,
         "Role": "Student",
-        "Action": "create groups for practical teams",
+        "Action": "create groups",
         "Benefit": "I can make a hub for my practical partners to cooperate within",
         "Given": "a group within the learning environment",
         "When": "I have created this group",
@@ -531,8 +531,8 @@
         "Epic Title": "Groups",
         "usKey": 4,
         "Role": "Student",
-        "Action": "accept join requests for my groups",
-        "Benefit": "I can accept or reject colleagues in my team to cooperate on assignments",
+        "Action": "send group invites",
+        "Benefit": "I can add partners to my practical team",
         "Given": "a group within the learning environment",
         "When": "I receive a join request",
         "Then": "I should be able to reject this request"
@@ -541,8 +541,8 @@
         "Epic Title": "Groups",
         "usKey": 4,
         "Role": "Student",
-        "Action": "accept join requests for my groups",
-        "Benefit": "I can accept or reject colleagues in my team to cooperate on assignments",
+        "Action": "send group invites",
+        "Benefit": "I can add partners to my practical team",
         "Given": "a group within the learning environment",
         "When": "I receive a join request",
         "Then": "I should be able to accept this request"
@@ -551,8 +551,8 @@
         "Epic Title": "Groups",
         "usKey": 4,
         "Role": "Student",
-        "Action": "accept join requests for my groups",
-        "Benefit": "I can accept or reject colleagues in my team to cooperate on assignments",
+        "Action": "send group invites",
+        "Benefit": "I can add partners to my practical team",
         "Given": "a group within the learning environment",
         "When": "I find another student that belongs in my team",
         "Then": "I should be able to send a join request"
@@ -560,9 +560,9 @@
       {
         "Epic Title": "Groups",
         "usKey": 5,
-        "Role": "Teacher",
-        "Action": "have an overview of all different practical teams",
-        "Benefit": "I know whether or not everyone has joined a team",
+        "Role": "Student",
+        "Action": "accept group invites",
+        "Benefit": "I can become a member of my practical team",
         "Given": "the learning environment",
         "When": "I go to my account",
         "Then": "I should be able to access a list of groups"
@@ -570,9 +570,9 @@
       {
         "Epic Title": "Groups",
         "usKey": 5,
-        "Role": "Teacher",
-        "Action": "have an overview of all different practical teams",
-        "Benefit": "I know whether or not everyone has joined a team",
+        "Role": "Student",
+        "Action": "accept group invites",
+        "Benefit": "I can become a member of my practical team",
         "Given": "the learning environment",
         "When": "I go to my account",
         "Then": "I should see who amongst the students is not yet a member of any groups"
@@ -580,9 +580,9 @@
       {
         "Epic Title": "Groups",
         "usKey": 5,
-        "Role": "Teacher",
-        "Action": "have an overview of all different practical teams",
-        "Benefit": "I know whether or not everyone has joined a team",
+        "Role": "Student",
+        "Action": "accept group invites",
+        "Benefit": "I can become a member of my practical team",
         "Given": "a deadline I set on group joining",
         "When": "a student has not yet joined any groups after this deadline",
         "Then": "I should receive a notification"

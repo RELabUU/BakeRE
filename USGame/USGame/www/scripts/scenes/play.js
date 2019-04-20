@@ -1020,19 +1020,34 @@
         switch (menuVisible) {
             case 'Roles':
                 strs = strsr;
-                str = 'Role';
+                if (progress[0] === lvl4) {
+                    str = 'Given';
+                }
+                else {
+                    str = 'Role';
+                }
                 icon = 'icon1-';
                 n = 0;
                 break;
             case 'Actions':
                 strs = strsa;
-                str = 'Action';
+                if (progress[0] === lvl4) {
+                    str = 'When';
+                }
+                else {
+                    str = 'Action';
+                }
                 icon = 'icon2-';
                 n = 1;
                 break;
             case 'Benefits':
                 strs = strsb;
-                str = 'Benefit';
+                if (progress[0] === lvl4) {
+                    str = 'Then';
+                }
+                else {
+                    str = 'Benefit';
+                }
                 icon = 'icon3-';
                 n = 2;
                 break;
@@ -1300,6 +1315,9 @@
                         this.toggleContext();
                         this.time.delayedCall(4500, function () {
                             this.startTimer();
+                            roleMenu.setInteractive();
+                            actionMenu.setInteractive();
+                            benefitMenu.setInteractive();
                         }, [], this);
                     }, [], this);
                 }
@@ -1324,14 +1342,19 @@
                     this.toggleContext();
                     this.time.delayedCall(4500, function () {
                         this.startTimer();
+                        roleMenu.setInteractive();
+                        actionMenu.setInteractive();
+                        benefitMenu.setInteractive();
                     }, [], this);
                 }
             }
+            else {
+                roleMenu.setInteractive();
+                actionMenu.setInteractive();
+                benefitMenu.setInteractive();
+            }
             this.updateProgressBar(progress[0]);
 
-            roleMenu.setInteractive();
-            actionMenu.setInteractive();
-            benefitMenu.setInteractive();
 
             this.setUserStoryText();
             emitter.on = false;
