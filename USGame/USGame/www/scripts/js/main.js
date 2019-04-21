@@ -94,6 +94,7 @@ var orderText;
 var titleText;
 var scoreText;
 var timeText;
+var debrief;
 
 var rolesEmptied = false;
 var actionsEmptied = false;

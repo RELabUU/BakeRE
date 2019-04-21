@@ -46,11 +46,7 @@
         roleMenu = this.add.sprite(37 * w / 40, h / 6, 'cupcake').setScale(0.75).setDepth(3);
         actionMenu = this.add.sprite(37 * w / 40, 3 * h / 6 - h / 20, 'cream3').setScale(0.75).setDepth(3);
         benefitMenu = this.add.sprite(37 * w / 40, 5 * h / 6 - h / 10, 'deco3').setScale(0.75).setDepth(3);
-
-        roleMenu.setInteractive();
-        actionMenu.setInteractive();
-        benefitMenu.setInteractive();
-
+        
         this.initializeAnimations();
 
         var children;
@@ -81,12 +77,25 @@
             bg.visible = false;
             oText.visible = false;
 
-            this.startTimer();
-            roleMenu.setInteractive();
-            actionMenu.setInteractive();
-            benefitMenu.setInteractive();
+            if (debrief !== undefined) {
+                if (debrief.visible === true) {
+                    debrief.visible = false;
+                    this.toggleContext();
+                }
+                else {
+                    this.startTimer();
+                    this.enableMenuButtons();
 
-            orderBG.disableInteractive();
+                    orderBG.disableInteractive();
+                }
+            }
+            else {
+                this.startTimer();
+                this.enableMenuButtons();
+
+                orderBG.disableInteractive();
+            }
+            
         }, this);
 
         // #region Dropzone
@@ -679,12 +688,17 @@
             mistakeText
         ];
 
-        var debrief = this.make.text(textconfigMenuOrder);
+        debrief = this.make.text(textconfigMenuOrder);
         debrief.x = window.innerWidth / 2;
         debrief.y = window.innerHeight / 2;
         debrief.setOrigin(0.5, 0.5);
         debrief.setDepth(105);
         debrief.text = content;
+        debrief.visible = true;
+
+        this.time.delayedCall(4500, function () {
+            orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
+        }, [], this);
     }
 
     gatherMistakes() {
@@ -951,6 +965,18 @@
         });
     }
 
+    enableMenuButtons() {
+        roleMenu.setInteractive();
+        actionMenu.setInteractive();
+        benefitMenu.setInteractive();
+    }
+
+    disableMenuButtons() {
+        roleMenu.disableInteractive();
+        actionMenu.disableInteractive();
+        benefitMenu.disableInteractive();
+    }
+
     textsTrue() {
         //mTitle.visible = true;
 
@@ -1060,9 +1086,18 @@
         var rect;
         var rct;
 
-        // Progress bar (inner) --> userstory 3/5 (how many do you need to complete the batch?)
-        var nrInBatch = level['Content'][progress[1]]['nr'];
-        var mistInBatch = level['Content'][progress[1]]['nrMistakes'];
+        var nrInBatch;
+        var mistInBatch;
+
+        // Progress bar (inner) --> how many do you need to complete the batch?
+        if (progress[1] <= level['Epics']) {
+            nrInBatch = level['Content'][progress[1]]['nr'];
+            mistInBatch = level['Content'][progress[1]]['nrMistakes'];
+        }
+        else {
+            nrInBatch = level['Content'][progress[1] - 1]['nr'];
+            mistInBatch = level['Content'][progress[1] - 1]['nrMistakes'];
+        }
 
         if (mistInBatch === "") {
             mistInBatch = 0;
@@ -1110,7 +1145,7 @@
             if (i > Number(level['Epics']) - progress[1]) {
                 circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
-            else if (i === Number(level['Epics']) && Number(level['Epics']) - progress[1] === 0) {
+            else if (i === 0 && Number(level['Epics']) - progress[1] < 0) {
                 circle.fillStyle(0xf4ab2b, 1);
             }
             else {
@@ -1462,9 +1497,7 @@
         correctSound.play();
         console.log("Valid userstory! :)");
 
-        roleMenu.disableInteractive();
-        actionMenu.disableInteractive();
-        benefitMenu.disableInteractive();
+        this.disableMenuButtons();
 
         var level = progress[0];
 
@@ -1478,6 +1511,7 @@
                 var epic = eps[progress[1] - 1];
 
                 if (progress[1] > level['Epics']) {
+                    this.updateProgressBar(progress[0]);
                     progress[4] = progress[4] + score;
                     this.debriefing();
                     this.switchLevel();
@@ -1494,10 +1528,6 @@
 
                     progressCircles = [];
                     progressRects = [];
-
-                    this.time.delayedCall(5000, function () {
-                        this.toggleContext();
-                    }, [], this);
                 }
                 else {
                     this.pickUserStories(epic);
@@ -1508,6 +1538,7 @@
                         strsb = [];
                         this.pickMistakes();
                     }
+                    this.updateProgressBar(progress[0]);
 
                     if (progress[0] === lvl4) {
                         orderText = "As a " + epic['Role'] + " I want to " + epic['Action'] + " so that " + epic['Benefit'];
@@ -1515,19 +1546,15 @@
                     else {
                         orderText = epic['Epic Text'];
                     }
-                    oText.text = orderText;
 
+                    oText.text = orderText;
                     this.toggleContext();
                 }
             }
             else {
-                roleMenu.setInteractive();
-                actionMenu.setInteractive();
-                benefitMenu.setInteractive();
+                this.updateProgressBar(progress[0]);
+                this.enableMenuButtons();
             }
-            this.updateProgressBar(progress[0]);
-
-
             this.setUserStoryText();
             emitter.on = false;
         }, [], this);
@@ -1540,9 +1567,7 @@
 
         this.emptyMenu();
 
-        roleMenu.disableInteractive();
-        actionMenu.disableInteractive();
-        benefitMenu.disableInteractive();
+        this.disableMenuButtons();
 
         this.time.delayedCall(1500, function () {
             strsr.push(roleText);
@@ -1552,15 +1577,14 @@
             this.putStuffBack(false);
             this.setUserStoryText();
 
-            roleMenu.setInteractive();
-            actionMenu.setInteractive();
-            benefitMenu.setInteractive();
+            this.enableMenuButtons();
         }, [], this);
     }
 
     nextLevel() {
         progress[6] = 0;
         score = 0;
+        scoreText.text = "Score: " + score;
 
         eps = [];
         uss = [];
