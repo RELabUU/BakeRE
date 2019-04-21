@@ -30,6 +30,7 @@ var formerB = "<???>";
 // progress[3] = current mistake batch (array of mistakes)
 // progress[4] = current total score (of completed levels)
 // progress[5] = colours matching uss
+// progress[6] = current total time (of completed batches)
 var progress = [];
 
 var building = [];
@@ -92,6 +93,7 @@ var mText5;
 var orderText;
 var titleText;
 var scoreText;
+var timeText;
 
 var rolesEmptied = false;
 var actionsEmptied = false;
@@ -151,7 +153,7 @@ var textconfigTitle = {
     style: {
         fontFamily: 'Dosis',
         fontSize: 36,
-        fill: '#000000'
+        fill: '#FFFFFF'
     }
 };
 
@@ -159,7 +161,7 @@ var textconfigScore = {
     text: '',
     style: {
         fontFamily: 'Dosis',
-        fontSize: 36,
+        fontSize: 28,
         fill: '#FFFFFF'
     }
 };
@@ -168,6 +170,7 @@ var textconfigScore = {
 
 var dragging = false;
 var score = 0;
+var time = 0;
 var countDown = 0;
 
 // #region Sounds

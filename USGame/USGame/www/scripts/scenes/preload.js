@@ -349,6 +349,7 @@
         progress[3] = [];
         progress[4] = 0;
         progress[5] = [];
+        progress[6] = 0;
 
         this.doneLoading();
         console.log('Preload');

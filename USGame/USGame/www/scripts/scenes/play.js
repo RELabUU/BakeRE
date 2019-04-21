@@ -26,11 +26,6 @@
         jingleSound = this.sound.add('jingle1');
         jingle2Sound = this.sound.add('jingle2');
 
-        // Initialize timer when the context screen disappears
-        this.time.delayedCall(4500, function () {
-            this.startTimer();
-        }, [], this);
-
         // Initialize menu background
         menuBG = this.add.graphics();
         orderBG = this.add.graphics();
@@ -80,6 +75,19 @@
 
         var initialX = 0;
         var initialY = 0;
+        
+        orderBG.on('pointerup', function (pointer, gameobject) {
+            orderBG.visible = false;
+            bg.visible = false;
+            oText.visible = false;
+
+            this.startTimer();
+            roleMenu.setInteractive();
+            actionMenu.setInteractive();
+            benefitMenu.setInteractive();
+
+            orderBG.disableInteractive();
+        }, this);
 
         // #region Dropzone
         var zoneWidth = 3 * w / 7;
@@ -211,6 +219,11 @@
         scoreText.y = h / 20;
         scoreText.text = "Score: " + score;
 
+        timeText = this.make.text(textconfigScore);
+        timeText.x = w / 4;
+        timeText.y = h / 20;
+        timeText.text = "Time: " + countDown;
+
         //#endregion
 
         this.add.image(zoneX, zoneY, 'plate').setScale(1.4);
@@ -249,7 +262,12 @@
 
         //Time elapsed in seconds
         this.timeElapsed = Math.abs(timeDifference / 1000);
-        countDown = Math.round(this.timeElapsed);
+        time = Math.round(this.timeElapsed);
+        countDown = 45 - time;
+        if (countDown < 0) {
+            countDown = 0;
+        }
+        timeText.text = "Time: " + countDown;
     }
 
     //#endregion
@@ -632,14 +650,41 @@
         // Contains: 
         // - Score per level (score)
         // - Total score of game (progress[4])
-        // - Time spent on level
+        // - Time spent on level (progress[6])
         // - Tip (mistakesMade)
         // - Top (?)
 
         orderBG.visible = true;
         bg.visible = true;
 
+        var sc = score;
+        var total = progress[4];
+        var t = progress[6];
+        var mistakeText = "";
 
+        if (mistakesMade.length === 0) {
+            mistakeText = "You have made 0 mistakes in this level! Well done!";
+        }
+        else {
+            var tip = this.gatherMistakes();
+            var tipType = tip[0];
+            var tipText = tip[1];
+            mistakeText = "You made the most mistakes in the category " + tipType + ". " + tipText;
+        }
+
+        var content = [
+            "Your score for this level is " + score + ". This brings your total score to " + total + ".",
+            "Your time for this level is " + t + ".",
+            "",
+            mistakeText
+        ];
+
+        var debrief = this.make.text(textconfigMenuOrder);
+        debrief.x = window.innerWidth / 2;
+        debrief.y = window.innerHeight / 2;
+        debrief.setOrigin(0.5, 0.5);
+        debrief.setDepth(105);
+        debrief.text = content;
     }
 
     gatherMistakes() {
@@ -650,37 +695,50 @@
         }
 
         types.sort();
-        var a = types.reduce(function (acc, curr) {
-            if (typeof acc[curr] === 'undefined') {
-                acc[curr] = 1;
-            } else {
-                acc[curr] += 1;
+
+        var a = [];
+        var indexa = 0;
+        var indexb = 1;
+
+        for (var j = 0; j < types.length; j++) {
+            if (j === 0) {
+                a[indexa] = types[j];
+                a[indexb] = 1;
             }
-
-            return acc;
-        }, {});
-
-        var first = a[0];
-        var second = a[1];
-
-        if (first !== undefined) {
-            switch (first[0]) {
-                case 'Atomic':
-                    break;
-                case 'Minimal':
-                    break;
-                case 'Problem Oriented':
-                    break;
-                case 'Full Sentence':
-                    break;
-                case 'Unambiguous':
-                    break;
-                case 'Independent':
-                    break;
-                default:
-                    break;
+            else if (types[j] === a[indexa]) {
+                a[indexb] = a[indexb] + 1;
+            }
+            else {
+                indexa = indexa + 2;
+                indexb = indexb + 2;
+                a[indexa] = types[j];
+                a[indexb] = 1;
             }
         }
+
+        var first = "";
+        var biggest = 0;
+
+        for (var k = 0; k < a.length; k++) {
+            if (k % 2 !== 0) {
+                if (a[k] > biggest) {
+                    first = a[k - 1];
+                    biggest = a[k];
+                }
+            }
+        }
+
+        var tipText = "";
+
+        if (first !== "") {
+            tipText = tips[first];
+        }
+
+        var tup = [];
+        tup[0] = first;
+        tup[1] = tipText;
+
+        return tup;
     }
 
     // #endregion
@@ -1080,9 +1138,7 @@
         jingleSound.play();
 
         this.time.delayedCall(4500, function () {
-            orderBG.visible = false;
-            bg.visible = false;
-            oText.visible = false;
+            orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
         }, [], this);
     }
 
@@ -1286,6 +1342,15 @@
         if (donezo === false && mistakeFound === false) {
             if (roleText !== '<???>' && actionText !== '<???>' && benefitText !== '<???>') {
                 // Userstory does not exist
+                var tup = [];
+                var us = {
+                    Role: roleText,
+                    Action: actionText,
+                    Benefit: benefitText
+                };
+                tup[0] = "Well Formed";
+                tup[1] = us;
+                mistakesMade.push(tup);
                 this.userStoryDoesNotExist();
             }
         }
@@ -1362,8 +1427,10 @@
     calculateScore(correct) {
         var timePerUserstory = 45;
         var c = 200 / Math.pow(timePerUserstory, 2);
-        var x = Math.pow(countDown, 2);
+        var x = Math.pow(time, 2);
         var s = Math.round(200 - c * x);
+
+        progress[6] = progress[6] + time;
 
         if (s < 0) {
             s = 0;
@@ -1411,7 +1478,8 @@
                 var epic = eps[progress[1] - 1];
 
                 if (progress[1] > level['Epics']) {
-                    this.gatherMistakes();
+                    progress[4] = progress[4] + score;
+                    this.debriefing();
                     this.switchLevel();
 
                     var pc = progressCircles.length;
@@ -1429,12 +1497,6 @@
 
                     this.time.delayedCall(5000, function () {
                         this.toggleContext();
-                        this.time.delayedCall(4500, function () {
-                            this.startTimer();
-                            roleMenu.setInteractive();
-                            actionMenu.setInteractive();
-                            benefitMenu.setInteractive();
-                        }, [], this);
                     }, [], this);
                 }
                 else {
@@ -1456,12 +1518,6 @@
                     oText.text = orderText;
 
                     this.toggleContext();
-                    this.time.delayedCall(4500, function () {
-                        this.startTimer();
-                        roleMenu.setInteractive();
-                        actionMenu.setInteractive();
-                        benefitMenu.setInteractive();
-                    }, [], this);
                 }
             }
             else {
@@ -1503,14 +1559,12 @@
     }
 
     nextLevel() {
-        progress[4] = progress[4] + score;
+        progress[6] = 0;
         score = 0;
 
         eps = [];
         uss = [];
         mss = [];
-
-        //progress[1] = 1;
         
         this.createLevel(0);
         this.updateProgressBar(progress[0]);
@@ -1639,11 +1693,14 @@
     restartGame() {
         this.emptyLevel();
 
-        // Set the progress array to the start conditions; level 1 at epic 1. (Will have a level 0/tutorial later) 
-        progress[0] = lvl1;
+        // Set the progress array to the start conditions; tutorial at epic 1. 
+        progress[0] = lvl0;
         progress[1] = 1;
         progress[2] = [];
         progress[3] = [];
+        progress[4] = 0;
+        progress[5] = [];
+        progress[6] = 0;
 
         building = [];
 
