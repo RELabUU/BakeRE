@@ -68,6 +68,7 @@ var strsb = [];
 // Lists used in the debriefing of the player
 var tups = [];
 var mistakesMade = [];
+var intr = [];
 
 // Particle variables
 var particles;
@@ -95,6 +96,8 @@ var titleText;
 var scoreText;
 var timeText;
 var debrief;
+var introText;
+var conText;
 
 var rolesEmptied = false;
 var actionsEmptied = false;
@@ -144,7 +147,7 @@ var textconfigMenuHeader = {
     text: '',
     style: {
         fontFamily: 'Dosis',
-        fontSize: 18,
+        fontSize: 24,
         fill: '#000000'
     }
 };

@@ -73,16 +73,37 @@
         var initialY = 0;
         
         orderBG.on('pointerup', function (pointer, gameobject) {
-            orderBG.visible = false;
-            bg.visible = false;
-            oText.visible = false;
 
-            if (debrief !== undefined) {
-                if (debrief.visible === true) {
-                    debrief.visible = false;
+            if (introText.visible === true) {
+                if (introText.text === intr[intr.length - 1]) {
+                    introText.visible = false;
                     this.toggleContext();
                 }
                 else {
+                    for (var i = 0; i < intr.length; i++) {
+                        if (intr[i] === introText.text) {
+                            introText.text = intr[i + 1];
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (debrief !== undefined) {
+                if (debrief.visible === true) {
+                    orderBG.visible = false;
+                    bg.visible = false;
+                    oText.visible = false;
+                    conText.visible = false;
+                    debrief.visible = false;
+
+                    this.toggleContext();
+                }
+                else {
+                    orderBG.visible = false;
+                    bg.visible = false;
+                    oText.visible = false;
+                    conText.visible = false;
+
                     this.startTimer();
                     this.enableMenuButtons();
 
@@ -90,6 +111,11 @@
                 }
             }
             else {
+                orderBG.visible = false;
+                bg.visible = false;
+                oText.visible = false;
+                conText.visible = false;
+
                 this.startTimer();
                 this.enableMenuButtons();
 
@@ -1058,8 +1084,18 @@
         oText.y = orderY;
         oText.text = orderText;
         oText.setDepth(101);
+        oText.visible = false;
 
-        this.toggleContext();
+        conText = this.make.text(textconfigMenuHeader);
+        conText.setOrigin(0.5, 0.5);
+        conText.x = window.innerWidth / 2;
+        conText.y = window.innerHeight / 4;
+        conText.text = "Context";
+        conText.setDepth(101);
+        conText.visible = false;
+
+        //this.toggleContext();
+        this.toggleIntroduction();
     }
 
     updateProgressBar(level) {
@@ -1168,11 +1204,51 @@
     toggleContext() {
         orderBG.visible = true;
         bg.visible = true;
+        conText.visible = true;
         oText.visible = true;
 
         jingleSound.play();
 
         this.time.delayedCall(4500, function () {
+            orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
+        }, [], this);
+    }
+
+    toggleIntroduction() {
+        jingle2Sound.play();
+
+        orderBG.visible = true;
+        bg.visible = true;
+
+        introText = this.make.text(textconfigMenuOrder);
+        introText.x = window.innerWidth / 2;
+        introText.y = window.innerHeight / 2;
+        introText.setOrigin(0.5, 0.5);
+        introText.setDepth(105);
+
+        switch (progress[0]) {
+            case lvl0:
+                intr = intros['lvl0'][0].split("@");
+                break;
+            case lvl1:
+                intr = intros['lvl1'][0].split("@");
+                break;
+            case lvl2:
+                intr = intros['lvl2'][0].split("@");
+                break;
+            case lvl3:
+                intr = intros['lvl3'][0].split("@");
+                break;
+            case lvl4:
+                intr = intros['lvl4'][0].split("@");
+                break;
+            default:
+                break;
+        }
+
+        introText.text = intr[0];
+
+        this.time.delayedCall(2000, function () {
             orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
         }, [], this);
     }
@@ -1591,6 +1667,7 @@
         mss = [];
         
         this.createLevel(0);
+        this.toggleIntroduction();
         this.updateProgressBar(progress[0]);
         oText.text = orderText;
     }
