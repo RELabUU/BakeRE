@@ -156,8 +156,8 @@ var textconfigTitle = {
     text: '',
     style: {
         fontFamily: 'Dosis',
-        fontSize: 36,
-        fill: '#FFFFFF'
+        fontSize: 48,
+        fill: '#000000'
     }
 };
 

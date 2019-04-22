@@ -200,6 +200,8 @@
         titleText = this.make.text(textconfigTitle);
         titleText.x = window.innerWidth / 2;
         titleText.y = window.innerHeight / 2;
+        titleText.setStroke('#FFFFFF', 16);
+        titleText.setShadow(2, 2, '#333333', 2, true, false);
         titleText.setOrigin(0.5, 0.5);
         titleText.visible = false;
 
@@ -209,7 +211,7 @@
         scoreText.text = "Score: " + score;
 
         timeText = this.make.text(textconfigScore);
-        timeText.x = w / 4;
+        timeText.x = 7 * w / 24;
         timeText.y = h / 20;
         timeText.text = "Time: " + countDown;
 
@@ -1100,9 +1102,6 @@
             if (i > Number(level['Epics']) - progress[1]) {
                 circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
-            /*else if (i === Number(level['Epics']) - progress[1]) {
-                circle.fillStyle(0xf4ab2b, 1);
-            }*/
             else {
                 circle.fillStyle(0xFFFFFF, 1);  
             }
@@ -1545,7 +1544,7 @@
 
                 if (progress[1] > level['Epics']) {
                     progress[4] = progress[4] + score;
-                    this.debriefing();
+                    
                     this.fireworks();
 
                     var pc = progressCircles.length;
@@ -1653,6 +1652,7 @@
             firework1.on = false;
             firework2.on = false;
             firework3.on = false;
+            this.debriefing();
             //this.nextLevel();
             // or
             //this.restartGame();

@@ -16,7 +16,7 @@ App.prototype.start = function () {
         type: Phaser.AUTO,
         width: window.innerWidth,
         height: window.innerHeight,
-        backgroundColor: '#6495ed',
+        backgroundColor: '0xf4ab2b',
         physics: {
             default: 'arcade',
             arcade: {
