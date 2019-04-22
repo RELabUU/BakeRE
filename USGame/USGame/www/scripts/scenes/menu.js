@@ -48,6 +48,11 @@
         this.txt_progress.setStroke('#FFFFFF', 12);
         this.txt_progress.setOrigin(0.5, 0.5);
 
+        //scoreText = this.make.text(textconfigScore);
+        //scoreText.x = w / 40;
+        //scoreText.y = h / 20;
+        //scoreText.text = "Score: " + progress[4].reduce(function (a, b) { return a + b; }, 0);
+
         //#endregion
         
         var type = 0;
@@ -82,25 +87,23 @@
             }
             else {
                 // Level selection
+                var name = gameobject.list[1].text;
 
-                switch (gameobject.list[1].text) {
-                    case 'Level 0':
-                        progress[0] = lvl0;
-                        break;
-                    case 'Level 1':
-                        progress[0] = lvl1;
-                        break;
-                    case 'Level 2':
-                        progress[0] = lvl2;
-                        break;
-                    case 'Level 3':
-                        progress[0] = lvl3;
-                        break;
-                    case 'Level 4':
-                        progress[0] = lvl4;
-                        break;
-                    default:
-                        break;
+                if (name.includes("Level 1")) {
+                    progress[0] = lvl1;
+                }
+                else if (name.includes("Level 2")) {
+                    progress[0] = lvl2;
+                }
+                else if (name.includes("Level 3")) {
+                    progress[0] = lvl3;
+                }
+                else if (name.includes("Level 4")) {
+                    progress[0] = lvl4;
+                }
+                else {
+                    // Tutorial
+                    progress[0] = lvl0;
                 }
 
                 this.startGame();
@@ -118,6 +121,9 @@
         var graphics;
         var txt;
         var container;
+        var ptsNeeded = this.pointsNextLevel();
+        var points = 0;
+        var totalPoints = 0;
 
         var l = 0;
         var w = window.innerWidth;
@@ -134,8 +140,35 @@
         }
 
         for (var i = 0; i < l; i++) {
+            var unlocked;
+            points = ptsNeeded[i];
+            totalPoints = progress[4].reduce(function (a, b) { return a + b; }, 0);
+            if (type === 1) {
+                if (i === 0) {
+                    unlocked = true;
+                }
+                else if (totalPoints >= points && progress[7][i - 1] === true) {
+                    unlocked = true;
+                }
+                else {
+                    unlocked = false;
+                }
+            }
+
             graphics = this.add.graphics();
-            graphics.fillStyle(0xffffff, 1);
+
+            if (type === 1) {
+                if (unlocked === true) {
+                    graphics.fillStyle(0xffffff, 1);
+                }
+                else {
+                    graphics.fillStyle(0xa4a4a4, 1);
+                }
+            }
+            else {
+                graphics.fillStyle(0xf2f2f2, 1);
+            }
+
             graphics.fillRoundedRect(0, 0, squareSize, squareSize, 12);
             
             graphics.lineStyle(2, 0x000000, 1);
@@ -144,8 +177,15 @@
             if (type === 0) {
                 txt = databases[i]['Title'];
             }
+            else if (i === 0) {
+                txt = "Tutorial";
+            }
             else {
-                txt = 'Level ' + i;
+                txt = [
+                    "Level " + i,
+                    "",
+                    "Points needed: " + points
+                ];
             }
 
             var t = this.add.text(
@@ -163,7 +203,9 @@
             t.setOrigin(0.5, 0.5);
 
             container = this.add.container(i * (w / 6 + w / 36) + w / 36, 2 * h / 3 - squareSize / 2);
-            container.setInteractive(new Phaser.Geom.Rectangle(0, 0, squareSize, squareSize), Phaser.Geom.Rectangle.Contains);
+            if (type === 0 || unlocked === true) {
+                container.setInteractive(new Phaser.Geom.Rectangle(0, 0, squareSize, squareSize), Phaser.Geom.Rectangle.Contains);
+            }
             container.add(graphics);
             container.add(t);
             menuGroup.push(container);
@@ -176,5 +218,53 @@
         userstories = database['Userstories'];
         mistakes = database['Mistakes'];
         accTests = database['Acceptance Tests'];
+    }
+
+    pointsNextLevel() {
+        var pts = [];
+        
+        var lvl1to2;
+        var lvl2to3;
+        var lvl3to4;
+
+        // The points threshold you get for completing a userstory in 25 seconds (out of 45)
+        var timePerUserstory = 45;
+        var timeToSucceed = 25;
+        var c = 200 / Math.pow(timePerUserstory, 2);
+        var x = Math.pow(timeToSucceed, 2);
+        var s = Math.round(200 - c * x);
+
+        var nr1 = this.getNrOfUserstories(lvl1);
+        var nr2 = this.getNrOfUserstories(lvl2);
+        var nr3 = this.getNrOfUserstories(lvl3);
+
+        lvl1to2 = nr1 * s;
+        lvl2to3 = nr2 * s + lvl1to2;
+        lvl3to4 = nr3 * s + lvl2to3;
+
+        pts.push(0);
+        pts.push(0);
+        pts.push(lvl1to2);
+        pts.push(lvl2to3);
+        pts.push(lvl3to4);
+
+        return pts;
+    }
+
+    getNrOfUserstories(level) {
+        var ep = level['Epics'];
+        var cont = level['Content'];
+        var nr = 0;
+
+        for (var i = 1; i <= ep; i++) {
+            if (level === lvl1 || level === lvl4) {
+                nr = nr + Number(cont[i]['nr']);
+            }
+            else {
+                nr = nr + (Number(cont[i]['nr']) - Number(cont[1]['nrMistakes']));
+            }
+        }
+
+        return nr;
     }
 }

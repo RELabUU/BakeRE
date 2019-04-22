@@ -619,9 +619,13 @@
         bg.visible = true;
 
         var sc = score;
-        var total = progress[4];
+        var total = 0;
         var t = progress[6];
         var mistakeText = "";
+
+        for (var i = 0; i < progress[4].length; i++) {
+            total = total + progress[4][i];
+        }
 
         if (mistakesMade.length === 0) {
             mistakeText = "You have made 0 mistakes in this level! Well done!";
@@ -1532,6 +1536,26 @@
         this.disableMenuButtons();
 
         var level = progress[0];
+        var lvlNr;
+        switch (level) {
+            case lvl0:
+                lvlNr = 0;
+                break;
+            case lvl1:
+                lvlNr = 1;
+                break;
+            case lvl2:
+                lvlNr = 2;
+                break;
+            case lvl3:
+                lvlNr = 3;
+                break;
+            case lvl4:
+                lvlNr = 4;
+                break;
+            default:
+                break;
+        }
 
         this.time.delayedCall(1500, function () {
             this.putStuffBack(true);
@@ -1543,7 +1567,9 @@
                 var epic = eps[progress[1] - 1];
 
                 if (progress[1] > level['Epics']) {
-                    progress[4] = progress[4] + score;
+                    //progress[4] = progress[4] + score;
+                    progress[4][lvlNr] = score;
+                    progress[7][lvlNr] = true;
                     
                     this.fireworks();
 

@@ -28,9 +28,10 @@ var formerB = "<???>";
 // progress[1] = current epic (number),
 // progress[2] = current userstory batch (array of userstories)
 // progress[3] = current mistake batch (array of mistakes)
-// progress[4] = current total score (of completed levels)
+// progress[4] = points per level (array of points per level, tutorial does not have points)
 // progress[5] = colours matching uss
 // progress[6] = current total time (of completed batches)
+// progress[7] = completed levels (array of bools)
 var progress = [];
 
 var building = [];

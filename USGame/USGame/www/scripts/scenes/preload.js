@@ -343,13 +343,17 @@
         lvl3 = l3[0];
         lvl4 = l4[0];
 
+        var initialScores = [0, 0, 0, 0, 0];
+        var initialBools = [false, false, false, false, false];
+
         // Set the progress array to the start conditions. Level is set in the level select menu.
         progress[1] = 1;
         progress[2] = [];
         progress[3] = [];
-        progress[4] = 0;
+        progress[4] = initialScores;
         progress[5] = [];
         progress[6] = 0;
+        progress[7] = initialBools;
 
         this.doneLoading();
         console.log('Preload');
