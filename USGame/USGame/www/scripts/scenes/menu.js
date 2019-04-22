@@ -50,7 +50,6 @@
         this.input.on('pointerdown', function (pointer) {
             //document.documentElement.requestFullscreen();
             this.createMenu(menuGroup, type);
-            this.txt_progress.text = "Select your database";
         }, this);
 
 
@@ -77,7 +76,6 @@
             }
             else {
                 // Level selection
-                this.txt_progress.text = "Pick a level";
 
                 switch (gameobject.list[1].text) {
                     case 'Level 0':
@@ -121,9 +119,11 @@
         var squareSize = window.innerWidth / 8;
 
         if (type === 0) {
+            this.txt_progress.text = "Select your database";
             l = databases.length;
         }
         else {
+            this.txt_progress.text = "Pick a level";
             l = 5; 
         }
 

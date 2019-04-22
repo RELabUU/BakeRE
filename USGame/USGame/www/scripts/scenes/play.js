@@ -16,6 +16,7 @@
         var background = this.add.image(window.innerWidth / 2, window.innerHeight / 4, 'background');
         background.setTint(0x36627b, 0x36627b, 0xf4ab2b, 0xf4ab2b);
 
+        // Initialize sounds
         correctSound = this.sound.add('correct');
         wrongSound = this.sound.add('wrong');
         thudSound = this.sound.add('thud');
@@ -26,7 +27,7 @@
         jingleSound = this.sound.add('jingle1');
         jingle2Sound = this.sound.add('jingle2');
 
-        // Initialize menu background
+        // Initialize menu backgrounds
         menuBG = this.add.graphics();
         orderBG = this.add.graphics();
         usBG = this.add.graphics();
@@ -71,57 +72,10 @@
 
         var initialX = 0;
         var initialY = 0;
-        
+
+        // Take care of the different types of textslides that could be on the screen (Introduction, Context & Debriefing)
         orderBG.on('pointerup', function (pointer, gameobject) {
-
-            if (introText.visible === true) {
-                if (introText.text === intr[intr.length - 1]) {
-                    introText.visible = false;
-                    this.toggleContext();
-                }
-                else {
-                    for (var i = 0; i < intr.length; i++) {
-                        if (intr[i] === introText.text) {
-                            introText.text = intr[i + 1];
-                            break;
-                        }
-                    }
-                }
-            }
-            else if (debrief !== undefined) {
-                if (debrief.visible === true) {
-                    orderBG.visible = false;
-                    bg.visible = false;
-                    oText.visible = false;
-                    conText.visible = false;
-                    debrief.visible = false;
-
-                    this.toggleContext();
-                }
-                else {
-                    orderBG.visible = false;
-                    bg.visible = false;
-                    oText.visible = false;
-                    conText.visible = false;
-
-                    this.startTimer();
-                    this.enableMenuButtons();
-
-                    orderBG.disableInteractive();
-                }
-            }
-            else {
-                orderBG.visible = false;
-                bg.visible = false;
-                oText.visible = false;
-                conText.visible = false;
-
-                this.startTimer();
-                this.enableMenuButtons();
-
-                orderBG.disableInteractive();
-            }
-            
+            this.toggleContext();
         }, this);
 
         // #region Dropzone
@@ -314,48 +268,18 @@
     createLevel(epNr) {
         var order;
 
-        switch (progress[0]) {
-            case lvl0:
-                this.pickEpics(lvl0);
-                this.pickUserStories(eps[epNr]);
-                order = eps[epNr];
-                orderText = order['Epic Text'];
-                console.log("Level 0 " + lvl0['Name']);
-                break;
-            case lvl1:
-                this.pickEpics(lvl1);
-                this.pickUserStories(eps[epNr]);
-                order = eps[epNr];
-                orderText = order['Epic Text'];
-                console.log("Level 1 " + lvl1['Name']);
-                break;
-            case lvl2:
-                this.pickEpics(lvl2);
-                this.pickUserStories(eps[epNr]);
-                this.pickMistakes();
-                order = eps[epNr];
-                orderText = order['Epic Text'];
-                console.log("Level 2 " + lvl2['Name']);
-                break;
-            case lvl3:
-                this.pickEpics(lvl3);
-                this.pickUserStories(eps[epNr]);
-                this.pickMistakes();
-                order = eps[epNr];
-                orderText = order['Epic Text'];
-                console.log("Level 3 " + lvl3['Name']);
-                break;
-            case lvl4:
-                this.pickEpics(lvl4);
-                this.pickUserStories(eps[epNr]);
-                order = uss[epNr];
-                orderText = "As a " + order['Role'] + " I want to " + order['Action'] + " so that " + order['Benefit'];
-                console.log("Level 4 " + lvl4['Name']);
-                break;
-            default:
-                console.log("Secret bonus level");
-                break;
+        this.pickEpics(progress[0]);
+        order = eps[epNr];
+        this.pickUserStories(order);
+
+        if (progress[0] === lvl4) {
+            orderText = "As a " + order['Role'] + " I want to " + order['Action'] + " so that " + order['Benefit'];
         }
+        else {
+            orderText = order['Epic Text'];
+        }
+        
+        console.log(progress[0]['Name']);
     }
 
     pickEpics(level) {
@@ -412,7 +336,7 @@
                     usContent.push(accTests['Acceptance Tests'][k]);
                 }
             }
-            usNr = usContent.length;
+            usNr = 3;
         }
         else {
             var usc = userstories['Userstories'];
@@ -1004,8 +928,6 @@
     }
 
     textsTrue() {
-        //mTitle.visible = true;
-
         mText1.visible = true;
         mText2.visible = true;
         mText3.visible = true;
@@ -1014,8 +936,6 @@
     }
 
     textsFalse() {
-        //mTitle.visible = false;
-
         mText1.visible = false;
         mText2.visible = false;
         mText3.visible = false;
@@ -1093,8 +1013,7 @@
         conText.text = "Context";
         conText.setDepth(101);
         conText.visible = false;
-
-        //this.toggleContext();
+        
         this.toggleIntroduction();
     }
 
@@ -1181,9 +1100,9 @@
             if (i > Number(level['Epics']) - progress[1]) {
                 circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
-            else if (i === 0 && Number(level['Epics']) - progress[1] < 0) {
+            /*else if (i === Number(level['Epics']) - progress[1]) {
                 circle.fillStyle(0xf4ab2b, 1);
-            }
+            }*/
             else {
                 circle.fillStyle(0xFFFFFF, 1);  
             }
@@ -1202,16 +1121,52 @@
     }
 
     toggleContext() {
-        orderBG.visible = true;
-        bg.visible = true;
-        conText.visible = true;
-        oText.visible = true;
+        if (introText.visible === true) {
+            // Either skip to the next intro slide or close the introduction and start the game
+            if (introText.text === intr[intr.length - 1]) {
+                introText.visible = false;
+                this.openContext();
+            }
+            else {
+                for (var i = 0; i < intr.length; i++) {
+                    if (intr[i] === introText.text) {
+                        introText.text = intr[i + 1];
+                        break;
+                    }
+                }
+            }
+        }
+        else if (debrief !== undefined) {
+            // When closing the debriefing, return to level select.
+            if (debrief.visible === true) {
+                this.closeContext();
+                debrief.visible = false;
 
-        jingleSound.play();
+                this.nextLevel();
+            }
+            else {
+                // Close the context slide
+                this.closeContext();
+                this.startTimer();
+                this.enableMenuButtons();
 
-        this.time.delayedCall(4500, function () {
-            orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
-        }, [], this);
+                orderBG.disableInteractive();
+            }
+        }
+        else {
+            if (orderBG.visible === true) {
+                // Close the context slide
+                this.closeContext();
+                this.startTimer();
+                this.enableMenuButtons();
+
+                orderBG.disableInteractive();
+            }
+            else {
+                // Open the context slide
+                this.openContext();
+            }
+        }
     }
 
     toggleIntroduction() {
@@ -1225,30 +1180,31 @@
         introText.y = window.innerHeight / 2;
         introText.setOrigin(0.5, 0.5);
         introText.setDepth(105);
-
-        switch (progress[0]) {
-            case lvl0:
-                intr = intros['lvl0'][0].split("@");
-                break;
-            case lvl1:
-                intr = intros['lvl1'][0].split("@");
-                break;
-            case lvl2:
-                intr = intros['lvl2'][0].split("@");
-                break;
-            case lvl3:
-                intr = intros['lvl3'][0].split("@");
-                break;
-            case lvl4:
-                intr = intros['lvl4'][0].split("@");
-                break;
-            default:
-                break;
-        }
-
+        
+        intr = intros[progress[0]['Name']][0].split("@");
         introText.text = intr[0];
 
         this.time.delayedCall(2000, function () {
+            orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
+        }, [], this);
+    }
+
+    closeContext() {
+        orderBG.visible = false;
+        bg.visible = false;
+        conText.visible = false;
+        oText.visible = false;
+    }
+
+    openContext() {
+        orderBG.visible = true;
+        bg.visible = true;
+        conText.visible = true;
+        oText.visible = true;
+
+        jingleSound.play();
+
+        this.time.delayedCall(4500, function () {
             orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
         }, [], this);
     }
@@ -1567,6 +1523,7 @@
         progress[5][0].splice(index, 1);
         progress[5][1].splice(index, 1);
         progress[5][2].splice(index, 1);
+        this.updateProgressBar(progress[0]);
 
         // Congratulate player
         emitter.on = true;
@@ -1587,10 +1544,9 @@
                 var epic = eps[progress[1] - 1];
 
                 if (progress[1] > level['Epics']) {
-                    this.updateProgressBar(progress[0]);
                     progress[4] = progress[4] + score;
                     this.debriefing();
-                    this.switchLevel();
+                    this.fireworks();
 
                     var pc = progressCircles.length;
                     var pr = progressRects.length;
@@ -1628,7 +1584,6 @@
                 }
             }
             else {
-                this.updateProgressBar(progress[0]);
                 this.enableMenuButtons();
             }
             this.setUserStoryText();
@@ -1666,13 +1621,15 @@
         uss = [];
         mss = [];
         
-        this.createLevel(0);
-        this.toggleIntroduction();
-        this.updateProgressBar(progress[0]);
-        oText.text = orderText;
+        //this.createLevel(0);
+        //this.toggleIntroduction();
+        //this.updateProgressBar(progress[0]);
+        //oText.text = orderText;
+
+        this.scene.start('Menu');
     }
 
-    switchLevel() {
+    fireworks() {
         strsr = [];
         strsa = [];
         strsb = [];
@@ -1688,71 +1645,18 @@
             }, [], this);
         }, [], this);
 
-        switch (progress[0]) {
-            case lvl0:
-                progress[0] = lvl1;
-                
-                titleText.text = "Completed tutorial!";
-                titleText.visible = true;
-                this.time.delayedCall(5000, function () {
-                    titleText.visible = false;
-                    firework1.on = false;
-                    firework2.on = false;
-                    firework3.on = false;
-                    this.nextLevel();
-                }, [], this);
-                break;
-            case lvl1:
-                progress[0] = lvl2;
-                titleText.text = "Completed level 1!";
-                titleText.visible = true;
-                this.time.delayedCall(5000, function () {
-                    titleText.visible = false;
-                    firework1.on = false;
-                    firework2.on = false;
-                    firework3.on = false;
-                    this.nextLevel();
-                }, [], this);
-                break;
-            case lvl2:
-                progress[0] = lvl3;
-                titleText.text = "Completed level 2!";
-                titleText.visible = true;
-                this.time.delayedCall(5000, function () {
-                    titleText.visible = false;
-                    firework1.on = false;
-                    firework2.on = false;
-                    firework3.on = false;
-                    this.nextLevel();
-                }, [], this);
-                break;
-            case lvl3:
-                progress[0] = lvl4;
-                titleText.text = "Completed level 3!";
-                titleText.visible = true;
-                this.time.delayedCall(5000, function () {
-                    titleText.visible = false;
-                    firework1.on = false;
-                    firework2.on = false;
-                    firework3.on = false;
-                    this.nextLevel();
-                }, [], this);
-                break;
-            case lvl4:
-                titleText.text = "Completed game!";
-                titleText.visible = true;
-                this.time.delayedCall(5000, function () {
-                    titleText.visible = false;
-                    firework1.on = false;
-                    firework2.on = false;
-                    firework3.on = false;
-                    this.restartGame();
-                }, [], this);
-                break;
-            default:
-                console.log('How even');
-                break;
-        }
+        titleText.text = "Completed level!";
+        titleText.visible = true;
+
+        this.time.delayedCall(5000, function () {
+            titleText.visible = false;
+            firework1.on = false;
+            firework2.on = false;
+            firework3.on = false;
+            //this.nextLevel();
+            // or
+            //this.restartGame();
+        }, [], this);
     }
 
     emptyLevel() {
