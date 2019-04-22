@@ -116,7 +116,7 @@
         var l = 0;
         var w = window.innerWidth;
         var h = window.innerHeight;
-        var squareSize = window.innerWidth / 8;
+        var squareSize = window.innerWidth / 6;
 
         if (type === 0) {
             this.txt_progress.text = "Select your database";
@@ -140,8 +140,8 @@
             }
 
             var t = this.add.text(
-                0,
-                0,
+                squareSize / 2,
+                squareSize / 2,
                 txt,
                 {
                     fontFamily: 'Dosis',
@@ -151,7 +151,7 @@
             );
             t.setOrigin(0.5, 0.5);
 
-            container = this.add.container((i + 1) * w / 5 - squareSize / 2, 2 * h / 3 - squareSize / 2);
+            container = this.add.container(i * w / 6 + w / 36, 2 * h / 3 - squareSize / 2);
             container.setInteractive(new Phaser.Geom.Rectangle(0, 0, squareSize, squareSize), Phaser.Geom.Rectangle.Contains);
             container.add(graphics);
             container.add(t);
