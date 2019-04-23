@@ -49,6 +49,7 @@ var tips;
 // The possible databases (choose at start of the game which one to use)
 var databases = [];
 var database;
+var skipDatabaseSelect = false;
 
 // The different parts of the database
 var epics;

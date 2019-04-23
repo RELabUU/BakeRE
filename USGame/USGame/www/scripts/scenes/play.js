@@ -219,6 +219,7 @@
 
         this.add.image(zoneX, zoneY, 'plate').setScale(1.4);
 
+        skipDatabaseSelect = true;
         console.log('Play');
     }
 
@@ -1139,7 +1140,7 @@
                 }
             }
         }
-        else if (debrief !== undefined) {
+        else if (debrief !== undefined && orderBG.visible === true) {
             // When closing the debriefing, return to level select.
             if (debrief.visible === true) {
                 this.closeContext();
@@ -1567,8 +1568,9 @@
                 var epic = eps[progress[1] - 1];
 
                 if (progress[1] > level['Epics']) {
-                    //progress[4] = progress[4] + score;
-                    progress[4][lvlNr] = score;
+                    if (lvlNr !== 0) {
+                        progress[4][lvlNr] = score;
+                    }
                     progress[7][lvlNr] = true;
                     
                     this.fireworks();

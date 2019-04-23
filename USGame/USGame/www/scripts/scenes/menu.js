@@ -48,21 +48,22 @@
         this.txt_progress.setStroke('#FFFFFF', 12);
         this.txt_progress.setOrigin(0.5, 0.5);
 
-        //scoreText = this.make.text(textconfigScore);
-        //scoreText.x = w / 40;
-        //scoreText.y = h / 20;
-        //scoreText.text = "Score: " + progress[4].reduce(function (a, b) { return a + b; }, 0);
+        
 
         //#endregion
         
         var type = 0;
         var menuGroup = [];
 
-        this.input.on('pointerdown', function (pointer) {
-            //document.documentElement.requestFullscreen();
-            this.createMenu(menuGroup, type);
-        }, this);
-
+        if (skipDatabaseSelect === true) {
+            this.createMenu(menuGroup, 1);
+        }
+        else {
+            this.input.on('pointerdown', function (pointer) {
+                //document.documentElement.requestFullscreen();
+                this.createMenu(menuGroup, type);
+            }, this);
+        }
 
         this.input.on('gameobjectdown', function (pointer, gameobject) {
             if (type === 0) {
@@ -137,6 +138,11 @@
         else {
             this.txt_progress.text = "Pick a level";
             l = 5; 
+
+            var sText = this.make.text(textconfigScore);
+            sText.x = window.innerWidth / 40;
+            sText.y = window.innerHeight / 20;
+            sText.text = "Score: " + progress[4].reduce(function (a, b) { return a + b; }, 0);
         }
 
         for (var i = 0; i < l; i++) {
