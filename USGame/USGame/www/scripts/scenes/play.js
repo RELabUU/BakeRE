@@ -235,6 +235,9 @@
 
         if (orderBG.visible === false) {
             this.updateTimer();
+            if (progress[0] === lvl0) {
+                this.checkTutorialTasks();
+            }
         }
     }
 
@@ -1139,6 +1142,10 @@
                 for (var i = 0; i < intr.length; i++) {
                     if (intr[i] === introText.text) {
                         introText.text = intr[i + 1];
+                        if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
+                            tutorialProgress = introText.text;
+                            this.tutorialManager();
+                        }
                         break;
                     }
                 }
@@ -1751,20 +1758,57 @@
     // #region Tutorial
 
     tutorialManager() {
+        this.disableMenuButtons();
+        this.closeFlashingSigns();
 
+        switch (tutorialProgress) {
+            case "#1":
+                //progressbar
+                //currentTask = wait or tap screen
+                progressFlash.visible = true;
+                break;
+            case "#2":
+                //menu
+                menuFlash.visible = true;
+                break;
+            case "#3":
+                //rolemenu
+                //currentTask = wait or tap screen
+                menuButton1Flash.visible = true;
+                roleMenu.setInteractive();
+                break;
+            case "#4":
+                //drag cake to middle
+                //currentTask = open role menu, drag role to middle
+                this.enableMenuButtons();
+                break;
+            case "#5":
+                //userstoryline
+                //currentTask = wait or tap screen
+                userstoryFlash.visible = true;
+                break;
+            case "#6":
+                //points and time
+                //currentTask = wait or tap screen
+                scoreTimeFlash.visible = true;
+                break;
+            default:
+                //tutorial is done, no more intro, move on to the context screen
+                break;
+        }
+
+        //update manages the checktutorialtasks as long as context is closed.
+        this.closeContext();
+    }
+
+    checkTutorialTasks() {
+        // if currentTask === completed, 
+        // this.openContext again, at the correct part in the tutorial
     }
 
     tutorialUI() {
         var w = window.innerWidth;
         var h = window.innerHeight;
-
-        var scoreTimeFlash;
-        var progressFlash;
-        var menuFlash;
-        var menuButton1Flash;
-        var menuButton2Flash;
-        var menuButton3Flash;
-        var userstoryFlash;
 
         scoreTimeFlash = this.add.graphics();
         scoreTimeFlash.fillStyle(0xf4ab2b);
@@ -1793,13 +1837,48 @@
         menuFlash.setAlpha(0);
         menuFlash.setBlendMode(Phaser.BlendModes.ADD);
         menuFlash.fillRoundedRect(17 * w / 20, h / 20, 3 * w / 20, 4 * h / 5, 12);
+        
+        menuButton1Flash = this.add.graphics();
+        menuButton1Flash.fillStyle(0xf4ab2b);
+        menuButton1Flash.setDepth(150);
+        menuButton1Flash.setAlpha(0);
+        menuButton1Flash.setBlendMode(Phaser.BlendModes.ADD);
+        menuButton1Flash.fillRoundedRect(17 * w / 20, h / 20, 3 * w / 20, 3 * h / 10, 12);
+
+        menuButton2Flash = this.add.graphics();
+        menuButton2Flash.fillStyle(0xf4ab2b);
+        menuButton2Flash.setDepth(150);
+        menuButton2Flash.setAlpha(0);
+        menuButton2Flash.setBlendMode(Phaser.BlendModes.ADD);
+        menuButton2Flash.fillRoundedRect(17 * w / 20, h / 20 + h / 5, 3 * w / 20, 3 * h / 10, 12);
+
+        menuButton3Flash = this.add.graphics();
+        menuButton3Flash.fillStyle(0xf4ab2b);
+        menuButton3Flash.setDepth(150);
+        menuButton3Flash.setAlpha(0);
+        menuButton3Flash.setBlendMode(Phaser.BlendModes.ADD);
+        menuButton3Flash.fillRoundedRect(17 * w / 20, h / 20 + 2 * h / 5, 3 * w / 20, 3 * h / 10, 12);
 
         this.tweens.add({
-            targets: [scoreTimeFlash, progressFlash, userstoryFlash, menuFlash],
+            targets: [scoreTimeFlash, progressFlash, userstoryFlash, menuFlash, menuButton1Flash, menuButton2Flash, menuButton3Flash],
             alpha: { value: 0.5, duration: 1500, ease: 'Power1' },
             yoyo: true,
             loop: -1
         });
+
+        this.closeFlashingSigns();
+    }
+
+    closeFlashingSigns() {
+
+        scoreTimeFlash.visible = false;
+        progressFlash.visible = false;
+        userstoryFlash.visible = false;
+        menuFlash.visible = false;
+        menuButton1Flash.visible = false;
+        menuButton2Flash.visible = false;
+        menuButton3Flash.visible = false;
+
     }
 
     // #endregion

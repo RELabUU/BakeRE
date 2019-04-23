@@ -51,6 +51,18 @@ var databases = [];
 var database;
 var skipDatabaseSelect = false;
 
+// Tutorial parts
+var tutorialProgress = "";
+var currentTask;
+
+var scoreTimeFlash;
+var progressFlash;
+var menuFlash;
+var menuButton1Flash;
+var menuButton2Flash;
+var menuButton3Flash;
+var userstoryFlash;
+
 // The different parts of the database
 var epics;
 var userstories;
