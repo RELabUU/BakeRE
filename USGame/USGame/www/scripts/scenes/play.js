@@ -275,6 +275,10 @@
         order = eps[epNr];
         this.pickUserStories(order);
 
+        if (progress[0] === lvl0) {
+            this.tutorialUI();
+        }
+
         if (progress[0] === lvl4) {
             orderText = "As a " + order['Role'] + " I want to " + order['Action'] + " so that " + order['Benefit'];
         }
@@ -1738,6 +1742,64 @@
         building = [];
 
         this.scene.restart();
+    }
+
+    // #endregion
+
+    // --------------------------------------------------------------------------- //
+
+    // #region Tutorial
+
+    tutorialManager() {
+
+    }
+
+    tutorialUI() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        var scoreTimeFlash;
+        var progressFlash;
+        var menuFlash;
+        var menuButton1Flash;
+        var menuButton2Flash;
+        var menuButton3Flash;
+        var userstoryFlash;
+
+        scoreTimeFlash = this.add.graphics();
+        scoreTimeFlash.fillStyle(0xf4ab2b);
+        scoreTimeFlash.setDepth(150);
+        scoreTimeFlash.setAlpha(0);
+        scoreTimeFlash.setBlendMode(Phaser.BlendModes.ADD);
+        scoreTimeFlash.fillRoundedRect(w / 80, h / 20, 11 * w / 24, h / 10, 12);
+
+        progressFlash = this.add.graphics();
+        progressFlash.fillStyle(0xf4ab2b);
+        progressFlash.setDepth(150);
+        progressFlash.setAlpha(0);
+        progressFlash.setBlendMode(Phaser.BlendModes.ADD);
+        progressFlash.fillRoundedRect(w / 80, h / 5 - h / 40, w / 20, 3 * h / 5 + h / 20, 12);
+
+        userstoryFlash = this.add.graphics();
+        userstoryFlash.fillStyle(0xf4ab2b);
+        userstoryFlash.setDepth(150);
+        userstoryFlash.setAlpha(0);
+        userstoryFlash.setBlendMode(Phaser.BlendModes.ADD);
+        userstoryFlash.fillRoundedRect(w / 80, 7 * h / 8, 39 * w / 40, h / 8, 12);
+
+        menuFlash = this.add.graphics();
+        menuFlash.fillStyle(0xf4ab2b);
+        menuFlash.setDepth(150);
+        menuFlash.setAlpha(0);
+        menuFlash.setBlendMode(Phaser.BlendModes.ADD);
+        menuFlash.fillRoundedRect(17 * w / 20, h / 20, 3 * w / 20, 4 * h / 5, 12);
+
+        this.tweens.add({
+            targets: [scoreTimeFlash, progressFlash, userstoryFlash, menuFlash],
+            alpha: { value: 0.5, duration: 1500, ease: 'Power1' },
+            yoyo: true,
+            loop: -1
+        });
     }
 
     // #endregion
