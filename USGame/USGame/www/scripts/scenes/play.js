@@ -234,9 +234,14 @@
         }
 
         if (orderBG.visible === false) {
-            this.updateTimer();
             if (progress[0] === lvl0) {
                 this.checkTutorialTasks();
+                if (this.startTime !== undefined) {
+                    this.updateTimer();
+                }
+            }
+            else {
+                this.updateTimer();
             }
         }
     }
@@ -1027,8 +1032,9 @@
         conText.text = "Context";
         conText.setDepth(101);
         conText.visible = false;
-        
-        this.toggleIntroduction();
+
+        this.loadIntroductions();
+        this.toggleIntroduction(intr[0]);
     }
 
     updateProgressBar(level) {
@@ -1184,7 +1190,7 @@
         }
     }
 
-    toggleIntroduction() {
+    toggleIntroduction(txt) {
         jingle2Sound.play();
 
         orderBG.visible = true;
@@ -1195,13 +1201,16 @@
         introText.y = window.innerHeight / 2;
         introText.setOrigin(0.5, 0.5);
         introText.setDepth(105);
-        
-        intr = intros[progress[0]['Name']][0].split("@");
-        introText.text = intr[0];
+
+        introText.text = txt;
 
         this.time.delayedCall(2000, function () {
             orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
         }, [], this);
+    }
+
+    loadIntroductions() {
+        intr = intros[progress[0]['Name']][0].split("@");
     }
 
     closeContext() {
@@ -1209,6 +1218,7 @@
         bg.visible = false;
         conText.visible = false;
         oText.visible = false;
+        introText.visible = false;
     }
 
     openContext() {
@@ -1803,7 +1813,13 @@
 
     checkTutorialTasks() {
         // if currentTask === completed, 
-        // this.openContext again, at the correct part in the tutorial
+        // this.toggleintroduction again, at the correct part in the tutorial
+        for (var i = 0; i < intr.length; i++) {
+            if (intr[i] === introText.text) {
+                this.toggleIntroduction(intr[i + 1]);
+                break;
+            }
+        }
     }
 
     tutorialUI() {
