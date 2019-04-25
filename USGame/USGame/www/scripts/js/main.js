@@ -125,6 +125,14 @@ var lvl2;
 var lvl3;
 var lvl4;
 
+// Pause items
+var paused;
+var timePaused;
+var pauseTimeStart;
+var pauseTimeEnd;
+var times = [];
+var timeIndex = 0;
+
 // #region Text configs
 // Config for menu text
 var textconfigMenu = {

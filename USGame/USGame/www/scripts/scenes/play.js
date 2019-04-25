@@ -249,6 +249,7 @@
 
     startTimer() {
         this.startTime = new Date();
+
         this.totalTime = uss.length * 45;
         this.timeElapsed = 0;
     }
@@ -257,13 +258,33 @@
         var currentTime = new Date();
         var timeDifference = this.startTime.getTime() - currentTime.getTime();
 
+        if (paused === true) {
+            if (pauseTimeStart !== undefined) {
+                if (pauseTimeEnd === undefined) {
+                    timePaused = pauseTimeStart.getTime() - currentTime.getTime();
+                    times[timeIndex] = timePaused;
+                }
+                else {
+                    timePaused = pauseTimeStart.getTime() - pauseTimeEnd.getTime();
+                    times[timeIndex] = timePaused;
+                }
+            }
+        }
+
+        var totalTimePaused = times.reduce(function (a, b) { return a + b; }, 0);
+        //timeDifference = timeDifference - timePaused;
+        timeDifference = timeDifference - totalTimePaused;
+
         //Time elapsed in seconds
         this.timeElapsed = Math.abs(timeDifference / 1000);
         time = Math.round(this.timeElapsed);
+        console.log(time);
         countDown = 45 - time;
+
         if (countDown < 0) {
             countDown = 0;
         }
+
         timeText.text = "Time: " + countDown;
     }
 
@@ -980,7 +1001,11 @@
     }
 
     createPauseMenu() {
+        paused = false;
+        timePaused = 0;
+
         var pauseText;
+
         var w = window.innerWidth;
         var h = window.innerHeight;
 
@@ -997,6 +1022,16 @@
     }
 
     handlePauseMenu() {
+        if (paused === false) {
+            paused = true;
+            timeIndex++;
+            pauseTimeStart = new Date();
+            pauseTimeEnd = undefined;
+        }
+        else {
+            paused = false;
+            pauseTimeEnd = new Date();
+        }
         console.log("clicked pause");
     }
 
