@@ -285,7 +285,6 @@
         //Time elapsed in seconds
         this.timeElapsed = Math.abs(timeDifference / 1000);
         time = Math.round(this.timeElapsed);
-        console.log(time);
         countDown = 45 - time;
 
         if (countDown < 0) {
@@ -1612,6 +1611,7 @@
 
     userStoryExists(index) {
         this.emptyMenu();
+        times = [];
 
         uss.splice(index, 1);
         progress[5][0].splice(index, 1);
@@ -1714,6 +1714,7 @@
         console.log("Not a valid userstory :(");
 
         this.emptyMenu();
+        times = [];
 
         this.disableMenuButtons();
 
