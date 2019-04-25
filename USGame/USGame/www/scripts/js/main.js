@@ -54,6 +54,7 @@ var skipDatabaseSelect = false;
 // Tutorial parts
 var tutorialProgress = "";
 var currentTask;
+var tutorialHandler;
 
 var scoreTimeFlash;
 var progressFlash;
@@ -142,7 +143,7 @@ var textconfigMenuUserStory = {
         fontFamily: 'Dosis',
         fontSize: 12,
         fill: '#000000',
-        wordWrap: { width: 9 * window.innerWidth / 10 - window.innerWidth / 40, useAdvancedWrap: true }
+        wordWrap: { width: 17 * window.innerWidth / 20 - window.innerWidth / 40, useAdvancedWrap: true }
     }
 };
 

@@ -234,13 +234,10 @@
         }
 
         if (orderBG.visible === false) {
-            if (progress[0] === lvl0) {
+            if (progress[0] === lvl0 && tutorialProgress !== "Complete") {
                 this.checkTutorialTasks();
-                if (this.startTime !== undefined) {
-                    this.updateTimer();
-                }
             }
-            else {
+            else if (this.startTime !== undefined) {
                 this.updateTimer();
             }
         }
@@ -975,10 +972,32 @@
         this.createCircleBG(w, h, sprite2);
         this.createCircleBG(w, h, sprite3);
 
+        this.createPauseMenu();
         this.createMenuBG(w, h, spriteWidth, us);
         this.createOrderBG(w, h, orderText);
         this.createUserStoryLine();
         this.updateProgressBar(progress[0]);
+    }
+
+    createPauseMenu() {
+        var pauseText;
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        pauseText = this.make.text(textconfigScore);
+        pauseText.x = w / 40;
+        pauseText.y = 7 * h / 8;
+        pauseText.setDepth(10);
+        pauseText.text = "II";
+
+        pauseText.setInteractive(new Phaser.Geom.Rectangle(0, 0, pauseText.width, pauseText.height), Phaser.Geom.Rectangle.Contains);
+        pauseText.on('pointerup', function (pointer) {
+            this.handlePauseMenu();
+        }, this);
+    }
+
+    handlePauseMenu() {
+        console.log("clicked pause");
     }
 
     createCircleBG(w, h, sprite) {
@@ -1142,6 +1161,7 @@
             // Either skip to the next intro slide or close the introduction and start the game
             if (introText.text === intr[intr.length - 1]) {
                 introText.visible = false;
+                tutorialProgress = "Complete";
                 this.openContext();
             }
             else {
@@ -1219,6 +1239,7 @@
         conText.visible = false;
         oText.visible = false;
         introText.visible = false;
+        console.log("context closed");
     }
 
     openContext() {
@@ -1240,15 +1261,15 @@
         var w = window.innerWidth;
         var h = window.innerHeight;
 
-        var usWidth = 19 * w / 20;
+        var usWidth = 9 * w / 10;
         var usHeight = h / 8;
         var usX = w / 2;
         var usY = 9 * h / 10;
 
-        usBG.fillRoundedRect(usX - usWidth / 2, usY - usHeight / 4, usWidth, usHeight, 12);
+        usBG.fillRoundedRect(usX - usWidth / 2 + w / 40, usY - usHeight / 4, usWidth, usHeight, 12);
 
         usText = this.make.text(textconfigMenuUserStory);
-        usText.x = w / 20;
+        usText.x = w / 10;
         usText.y = usY - h / 80;
         usText.setDepth(1);
 
@@ -1775,31 +1796,37 @@
             case "#1":
                 //progressbar
                 //currentTask = wait or tap screen
+                currentTask = { type: "tap", complete: false };
                 progressFlash.visible = true;
                 break;
             case "#2":
                 //menu
+                currentTask = { type: "tap", complete: false };
                 menuFlash.visible = true;
                 break;
             case "#3":
                 //rolemenu
                 //currentTask = wait or tap screen
+                currentTask = { type: "tap role", complete: false };
                 menuButton1Flash.visible = true;
                 roleMenu.setInteractive();
                 break;
             case "#4":
                 //drag cake to middle
                 //currentTask = open role menu, drag role to middle
+                currentTask = { type: "drag", complete: false };
                 this.enableMenuButtons();
                 break;
             case "#5":
                 //userstoryline
                 //currentTask = wait or tap screen
+                currentTask = { type: "tap", complete: false };
                 userstoryFlash.visible = true;
                 break;
             case "#6":
                 //points and time
                 //currentTask = wait or tap screen
+                currentTask = { type: "tap", complete: false };
                 scoreTimeFlash.visible = true;
                 break;
             default:
@@ -1809,15 +1836,36 @@
 
         //update manages the checktutorialtasks as long as context is closed.
         this.closeContext();
+        this.checkTutorialTasks();
     }
 
     checkTutorialTasks() {
-        // if currentTask === completed, 
-        // this.toggleintroduction again, at the correct part in the tutorial
-        for (var i = 0; i < intr.length; i++) {
-            if (intr[i] === introText.text) {
-                this.toggleIntroduction(intr[i + 1]);
-                break;
+        if (currentTask.type === "tap") {
+            /*this.time.delayedCall(4500, function () {
+                this.input.once('pointerup', function (pointer) {
+                    console.log("clicked the thing");
+                });
+            }, [], this);*/
+            currentTask.complete = true;
+            console.log("tap completed");
+        }
+        else if (currentTask.type === "tap role") {
+            currentTask.complete = true;
+            console.log("tap role completed");
+        }
+        else if (currentTask.type === "drag") {
+            currentTask.complete = true;
+            console.log("drag completed");
+        }
+
+        if (currentTask.complete === true) {
+            // Toggle introduction again, at the correct part in the tutorial
+            currentTask = undefined;
+            for (var i = 0; i < intr.length; i++) {
+                if (intr[i] === introText.text) {
+                    this.toggleIntroduction(intr[i + 1]);
+                    break;
+                }
             }
         }
     }
@@ -1825,6 +1873,10 @@
     tutorialUI() {
         var w = window.innerWidth;
         var h = window.innerHeight;
+
+        tutorialHandler = this.add.graphics();
+        tutorialHandler.setInteractive(new Phaser.Geom.Rectangle(0, 0, w, h), Phaser.Geom.Rectangle.Contains);
+        tutorialHandler.visible = false;
 
         scoreTimeFlash = this.add.graphics();
         scoreTimeFlash.fillStyle(0xf4ab2b);
