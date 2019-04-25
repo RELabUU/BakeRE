@@ -75,7 +75,12 @@
 
         // Take care of the different types of textslides that could be on the screen (Introduction, Context & Debriefing)
         orderBG.on('pointerup', function (pointer, gameobject) {
-            this.toggleContext();
+            if (paused === false) {
+                this.toggleContext();
+            }
+            else {
+                this.handlePauseMenu();
+            }
         }, this);
 
         // #region Dropzone
@@ -241,6 +246,9 @@
                 this.updateTimer();
             }
         }
+        else if (paused === true) {
+            this.updateTimer();
+        }
     }
 
     // --------------------------------------------------------------------------- //
@@ -272,7 +280,6 @@
         }
 
         var totalTimePaused = times.reduce(function (a, b) { return a + b; }, 0);
-        //timeDifference = timeDifference - timePaused;
         timeDifference = timeDifference - totalTimePaused;
 
         //Time elapsed in seconds
@@ -1027,10 +1034,14 @@
             timeIndex++;
             pauseTimeStart = new Date();
             pauseTimeEnd = undefined;
+            //oText.text = 
+            conText.text = "Paused";
+            this.openContext();
         }
         else {
             paused = false;
             pauseTimeEnd = new Date();
+            this.closeContext();
         }
         console.log("clicked pause");
     }
@@ -1274,6 +1285,8 @@
         conText.visible = false;
         oText.visible = false;
         introText.visible = false;
+
+        conText.text = "Context";
         console.log("context closed");
     }
 
