@@ -13,8 +13,11 @@
     }
 
     create() {
-        var background = this.add.image(window.innerWidth / 2, window.innerHeight / 4, 'background');
+        var background = this.add.image(window.innerWidth / 2, window.innerHeight / 4, 'background3');
         background.setTint(0x36627b, 0x36627b, 0xf4ab2b, 0xf4ab2b);
+        if (progress[0] === lvl0) {
+            background.setInteractive();
+        }
 
         // Initialize sounds
         correctSound = this.sound.add('correct');
@@ -56,6 +59,13 @@
 
         // Switch between menu states; None = closed, Roles = roles, Actions = actions & Benefits = benefits
         roleMenu.on('pointerup', function (pointer, gameObject) {
+            if (progress[0] === lvl0 && currentTask !== undefined) {
+                if (currentTask.type === "tap role" && tapRoleComplete === false) {
+                    //this.time.delayedCall(1000, function () {
+                        tapRoleComplete = true;
+                    //}, [], this);
+                }
+            }
             this.menuManager(roles, actions, benefits, roleMenu.width, roleMenu.height, w, h, "Roles");
         }, this);
 
@@ -76,12 +86,25 @@
         // Take care of the different types of textslides that could be on the screen (Introduction, Context & Debriefing)
         orderBG.on('pointerup', function (pointer, gameobject) {
             if (paused === false) {
-                this.toggleContext();
+                if (progress[0] === lvl0 && currentTask !== undefined) {
+                    this.checkTutorialTasks();
+                }
+                else {
+                    this.toggleContext();
+                }
             }
             else {
                 this.handlePauseMenu();
             }
         }, this);
+
+        background.on('pointerup', function () {
+            if (progress[0] === lvl0 && currentTask !== undefined) {
+                if (currentTask.type === "tap") {
+                    tapComplete = true;
+                }
+            }
+        });
 
         // #region Dropzone
         var zoneWidth = 3 * w / 7;
@@ -638,6 +661,14 @@
         gameObject.list[0].visible = false;
         gameObject.list[1].visible = false;
         gameObject.list[2].visible = false;
+
+        if (progress[0] === lvl0 && currentTask !== undefined) {
+            if (currentTask.type === "drag") {
+                this.time.delayedCall(500, function () {
+                    dragComplete = true;
+                }, [], this);
+            }
+        } 
     }
 
     // --------------------------------------------------------------------------- //
@@ -1042,7 +1073,6 @@
             pauseTimeEnd = new Date();
             this.closeContext();
         }
-        console.log("clicked pause");
     }
 
     createCircleBG(w, h, sprite) {
@@ -1207,6 +1237,7 @@
             if (introText.text === intr[intr.length - 1]) {
                 introText.visible = false;
                 tutorialProgress = "Complete";
+                this.closeFlashingSigns();
                 this.openContext();
             }
             else {
@@ -1286,7 +1317,6 @@
         introText.visible = false;
 
         conText.text = "Context";
-        console.log("context closed");
     }
 
     openContext() {
@@ -1586,21 +1616,24 @@
 
     calculateScore(correct) {
         var timePerUserstory = 45;
-        var c = 200 / Math.pow(timePerUserstory, 2);
+        var b = 200 / Math.pow(timePerUserstory, 2);
+        var c = 150 / Math.pow(timePerUserstory, 2);
         var x = Math.pow(time, 2);
-        var s = Math.round(200 - c * x);
+
+        var splus = Math.round(200 - b * x);
+        var smin = Math.round(150 - c * x);
 
         progress[6] = progress[6] + time;
 
-        if (s < 0) {
-            s = 0;
+        if (smin < 0) {
+            smin = 0;
         }
 
         if (correct === true) {
-            score = score + s;
+            score = score + splus;
         }
         else {
-            score = score - s;
+            score = score - smin;
             if (score < 0) {
                 score = 0;
             }
@@ -1882,30 +1915,25 @@
                 //tutorial is done, no more intro, move on to the context screen
                 break;
         }
-
-        //update manages the checktutorialtasks as long as context is closed.
+        
         this.closeContext();
         this.checkTutorialTasks();
     }
 
     checkTutorialTasks() {
-        if (currentTask.type === "tap") {
-            /*this.time.delayedCall(4500, function () {
-                this.input.once('pointerup', function (pointer) {
-                    console.log("clicked the thing");
-                });
-            }, [], this);*/
+        if (currentTask.type === "tap" && tapComplete === true) {
             currentTask.complete = true;
-            console.log("tap completed");
         }
-        else if (currentTask.type === "tap role") {
+        else if (currentTask.type === "tap role" && tapRoleComplete === true) {
             currentTask.complete = true;
-            console.log("tap role completed");
         }
-        else if (currentTask.type === "drag") {
+        else if (currentTask.type === "drag" && dragComplete === true) {
             currentTask.complete = true;
-            console.log("drag completed");
         }
+        
+        tapComplete = false;
+        tapRoleComplete = false;
+        dragComplete = false;
 
         if (currentTask.complete === true) {
             // Toggle introduction again, at the correct part in the tutorial

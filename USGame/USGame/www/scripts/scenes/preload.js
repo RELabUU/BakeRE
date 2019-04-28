@@ -298,7 +298,9 @@
         this.load.image('plate', 'assets/images/plate (Aangepast) (4).png');
 
         // Load the background image
-        this.load.image('background', 'assets/images/counter-bg.jpg');
+        this.load.image('background1', 'assets/images/background1 (Aangepast).jpg');
+        this.load.image('background2', 'assets/images/background2 (Aangepast).jpg');
+        this.load.image('background3', 'assets/images/background3 (Aangepast).jpg');
 
         // Load the ice cream temp sprites
         this.load.image('cupcake', 'assets/images/cupCake.png');
@@ -344,7 +346,7 @@
         lvl4 = l4[0];
 
         var initialScores = [0, 0, 0, 0, 0];
-        var initialBools = [true, false, false, false, false];
+        var initialBools = [false, false, false, false, false];
 
         // Set the progress array to the start conditions. Level is set in the level select menu.
         progress[1] = 1;

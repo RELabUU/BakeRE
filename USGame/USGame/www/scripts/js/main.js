@@ -55,6 +55,9 @@ var skipDatabaseSelect = false;
 var tutorialProgress = "";
 var currentTask;
 var tutorialHandler;
+var tapComplete = false;
+var tapRoleComplete = false;
+var dragComplete = false;
 
 var scoreTimeFlash;
 var progressFlash;
