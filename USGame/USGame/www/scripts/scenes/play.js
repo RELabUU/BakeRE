@@ -45,7 +45,7 @@
         var w = window.innerWidth;
         var h = window.innerHeight;
 
-        this.createLevel(0);
+        this.createLevel();
 
         roleMenu = this.add.sprite(37 * w / 40, h / 6, 'cupcake').setScale(0.75).setDepth(3);
         actionMenu = this.add.sprite(37 * w / 40, 3 * h / 6 - h / 20, 'cream3').setScale(0.75).setDepth(3);
@@ -323,11 +323,17 @@
 
     // #region Level creation and epic/userstory/mistake management
 
-    createLevel(epNr) {
+    createLevel() {
         var order;
 
-        this.pickEpics(progress[0]);
-        order = eps[epNr];
+        if (flawless.inProgress === true) {
+            this.pickEpics(lvlF);
+        }
+        else {
+            this.pickEpics(progress[0]);
+        }
+
+        order = eps[0];
         this.pickUserStories(order);
 
         if (progress[0] === lvl0) {
@@ -414,6 +420,7 @@
 
         var level = progress[0];
         var cont = level['Content'];
+        //progress[0] === lvlF
         var curr = cont[progress[1]];
         var n = curr['nr'];
 
@@ -1064,7 +1071,6 @@
             timeIndex++;
             pauseTimeStart = new Date();
             pauseTimeEnd = undefined;
-            //oText.text = 
             conText.text = "Paused";
             this.openContext();
         }
@@ -1237,7 +1243,9 @@
             if (introText.text === intr[intr.length - 1]) {
                 introText.visible = false;
                 tutorialProgress = "Complete";
-                this.closeFlashingSigns();
+                if (progress[0] === lvl0) {
+                    this.closeFlashingSigns();
+                }
                 this.openContext();
             }
             else {
@@ -1484,7 +1492,10 @@
             if (progress[0] === lvl4) {
                 // Check if the created userstory exists
                 if (roleText === uss[i]["Given"] && actionText === uss[i]["When"] && benefitText === uss[i]["Then"]) {
-                    // Userstory exists
+                    if (flawless.inProgress === true) {
+                        flawless.completed = true;
+                    }
+                    
                     donezo = true;
                     this.userStoryExists(i);
                     return;
@@ -1512,7 +1523,10 @@
                                 return;
                             }
                             else {
-                                // Userstory exists
+                                if (flawless.inProgress === true) {
+                                    flawless.completed = true;
+                                }
+
                                 donezo = true;
                                 this.userStoryExists(i);
                                 return;
@@ -1520,7 +1534,10 @@
                         }
                     }
                     else {
-                        // Userstory exists
+                        if (flawless.inProgress === true) {
+                            flawless.completed = true;
+                        }
+
                         donezo = true;
                         this.userStoryExists(i);
                         return;
@@ -1530,18 +1547,43 @@
             }
         }
         if (donezo === false && mistakeFound === false) {
+            
             if (roleText !== '<???>' && actionText !== '<???>' && benefitText !== '<???>') {
-                // Userstory does not exist
-                var tup = [];
-                var us = {
-                    Role: roleText,
-                    Action: actionText,
-                    Benefit: benefitText
-                };
-                tup[0] = "Well Formed";
-                tup[1] = us;
-                mistakesMade.push(tup);
-                this.userStoryDoesNotExist();
+                if (flawless.inProgress === true && flawless.completed === false) {
+                    //this.userStoryDoesNotExist();
+                    wrongSound.play();
+                    console.log("Not a valid userstory :(");
+
+                    this.emptyMenu();
+
+                    strsr = [];
+                    strsa = [];
+                    strsb = [];
+                    uss = [];
+                    eps = [];
+                    times = [];
+                    
+                    this.putStuffBack(false);
+                    this.setUserStoryText();
+
+                    // Generate a new mini level with one batch that has to be completed without errors
+                    progress[0] = lvlF;
+                    progress[1] = 1;
+                    this.scene.restart();
+                }
+                else {
+                    // Userstory does not exist
+                    var tup = [];
+                    var us = {
+                        Role: roleText,
+                        Action: actionText,
+                        Benefit: benefitText
+                    };
+                    tup[0] = "Well Formed";
+                    tup[1] = us;
+                    mistakesMade.push(tup);
+                    this.userStoryDoesNotExist();
+                }
             }
         }
     }
@@ -1629,6 +1671,10 @@
             smin = 0;
         }
 
+        if (splus < 0) {
+            splus = 0;
+        }
+
         if (correct === true) {
             score = score + splus;
         }
@@ -1683,33 +1729,94 @@
 
         this.time.delayedCall(1500, function () {
             this.putStuffBack(true);
-
-            if (uss.length - mss.length === 0) {
+            
+            if (uss.length - mss.length === 0 || flawless.completed === true) {
                 uss = [];
                 var ep = progress[1];
                 progress[1] = ep + 1;
                 var epic = eps[progress[1] - 1];
 
                 if (progress[1] > level['Epics']) {
-                    if (lvlNr !== 0) {
-                        progress[4][lvlNr] = score;
-                    }
-                    progress[7][lvlNr] = true;
-                    
-                    this.fireworks();
+                    var s = 200 / Math.pow(45, 2);
+                    var minScore = Math.round(200 - s * Math.pow(40, 2));
 
-                    var pc = progressCircles.length;
-                    var pr = progressRects.length;
-
-                    for (var c = 0; c < pc; c++) {
-                        progressCircles[c].destroy();
-                    }
-                    for (var r = 0; r < pr; r++) {
-                        progressRects[r].destroy();
+                    var e = progress[0]['Epics'];
+                    var con = progress[0]['Content'];
+                    var amount = 0;
+                    for (var a = 1; a <= e; a++) {
+                        if (progress[0] === lvl0 || progress[0] === lvl1 || progress[0] === lvl4) {
+                            amount = amount + Number(con[a]['nr']);
+                        }
+                        else {
+                            amount = amount + Number(con[a]['nr']) - Number(con[a]['nrMistakes']);
+                        }
                     }
 
-                    progressCircles = [];
-                    progressRects = [];
+                    var minTotal = minScore * amount;
+                    console.log("Minimum score: " + minScore);
+                    console.log("Minimum total: " + minTotal);
+
+                    if (progress[0] !== lvl0) {
+                        if (score > minTotal || flawless.completed === true) {
+                            if (flawless.inProgress === true) {
+                                lvlNr = flawless.lvlNr;
+                            }
+                            progress[4][lvlNr] = score;
+                            progress[7][lvlNr] = true;
+
+                            flawless.inProgress = false;
+                            flawless.completed = false;
+
+                            this.fireworks();
+
+                            var pc = progressCircles.length;
+                            var pr = progressRects.length;
+
+                            for (var c = 0; c < pc; c++) {
+                                progressCircles[c].destroy();
+                            }
+                            for (var r = 0; r < pr; r++) {
+                                progressRects[r].destroy();
+                            }
+
+                            progressCircles = [];
+                            progressRects = [];
+                        }
+                        else {
+                            flawless.inProgress = true;
+                            flawless.lvlNr = lvlNr;
+                            
+                            strsr = [];
+                            strsa = [];
+                            strsb = [];
+                            uss = [];
+                            eps = [];
+                            times = [];
+
+                            // Generate a new mini level with one batch that has to be completed without errors
+                            progress[0] = lvlF;
+                            progress[1] = 1;
+                            this.scene.restart();
+                        }
+                    }
+                    else {
+                        progress[7][lvlNr] = true;
+
+                        this.fireworks();
+
+                        var pcl = progressCircles.length;
+                        var prl = progressRects.length;
+
+                        for (var b = 0; b < pcl; b++) {
+                            progressCircles[c].destroy();
+                        }
+                        for (var t = 0; t < prl; t++) {
+                            progressRects[r].destroy();
+                        }
+
+                        progressCircles = [];
+                        progressRects = [];
+                    }
                 }
                 else {
                     this.pickUserStories(epic);
@@ -1761,6 +1868,13 @@
 
             this.enableMenuButtons();
         }, [], this);
+    }
+
+    flawlessUserstory() {
+        // pick a random extra batch
+
+        // get a different checker for finishing this batch
+        // somehow handle the score again
     }
 
     nextLevel() {
@@ -1838,7 +1952,6 @@
         bg.destroy();
 
         // Menu text
-        mTitle = "";
         mText1 = "";
         mText2 = "";
         mText3 = "";

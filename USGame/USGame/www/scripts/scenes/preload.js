@@ -19,6 +19,7 @@
         this.load.json('lvl2', 'assets/json/levels/lvl2.json');
         this.load.json('lvl3', 'assets/json/levels/lvl3.json');
         this.load.json('lvl4', 'assets/json/levels/lvl4.json');
+        this.load.json('lvlF', 'assets/json/levels/lvlF.json');
 
         // Load the texts (introductions, tips, etc.)
         this.load.json('texts', 'assets/json/texts.json');
@@ -297,7 +298,7 @@
         // Load the plate sprite
         this.load.image('plate', 'assets/images/plate (Aangepast) (4).png');
 
-        // Load the background image
+        // Load the background images
         this.load.image('background1', 'assets/images/background1 (Aangepast).jpg');
         this.load.image('background2', 'assets/images/background2 (Aangepast).jpg');
         this.load.image('background3', 'assets/images/background3 (Aangepast).jpg');
@@ -338,12 +339,14 @@
         var l2 = this.cache.json.get('lvl2');
         var l3 = this.cache.json.get('lvl3');
         var l4 = this.cache.json.get('lvl4');
+        var lF = this.cache.json.get('lvlF');
 
         lvl0 = l0[0];
         lvl1 = l1[0];
         lvl2 = l2[0];
         lvl3 = l3[0];
         lvl4 = l4[0];
+        lvlF = lF[0];
 
         var initialScores = [0, 0, 0, 0, 0];
         var initialBools = [false, false, false, false, false];

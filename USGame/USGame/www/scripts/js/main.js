@@ -127,6 +127,7 @@ var lvl1;
 var lvl2;
 var lvl3;
 var lvl4;
+var lvlF;
 
 // Pause items
 var paused;
@@ -202,6 +203,7 @@ var dragging = false;
 var score = 0;
 var time = 0;
 var countDown = 0;
+var flawless = { inProgress: false, completed: false, lvlNr: 0 };
 
 // #region Sounds
 var correctSound;

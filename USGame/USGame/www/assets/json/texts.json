@@ -14,6 +14,9 @@
     ],
     "Acceptance Tests": [
       "Nice to see you again! For this final level, we are going to look at something other than userstories, but closely related; acceptance tests. These tests are a method of checking whether or not a userstory has been implemented correctly. Acceptance tests do not have such a set structure as userstories, but one of the most popular structures is the following; 'Given <some context>, When <some action is carried out>, Then <some observable consequence occurs>'. @These will be your new cake parts, so your cakebases will be the 'Given', the icing will be the 'When' and the decorations will be the 'Then'. Try to make the correct acceptance tests given the context (which is a userstory in this case). Just like before, complete the batches to complete the level. There are no more mistakes within this level, every acceptance test in the batch must be completed. Good luck!"
+    ],
+    "Flawless Userstory": [
+      "To complete this level, you have to create at least one flawless userstory from the next batches! Everytime you make a mistake, the batch will be renewed; try to really focus on the possibilities and read the context!"
     ]
   },
   "Tips": {
