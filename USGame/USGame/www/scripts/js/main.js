@@ -23,6 +23,9 @@ var formerR = "<???>";
 var formerA = "<???>";
 var formerB = "<???>";
 
+var menuType = 0;
+var menuGroup = [];
+
 // Progress is an array that keeps track of the player progress within the game. 
 // progress[0] = current level (level object), 
 // progress[1] = current epic (number),
@@ -32,6 +35,7 @@ var formerB = "<???>";
 // progress[5] = colours matching uss
 // progress[6] = current total time (of completed batches)
 // progress[7] = completed levels (array of bools)
+// progress[8] = player name
 var progress = [];
 
 var building = [];

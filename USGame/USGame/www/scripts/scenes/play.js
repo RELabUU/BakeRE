@@ -2145,7 +2145,7 @@
     // --------------------------------------------------------------------------- //
 
     sendScore(s) {
-        var name = "%27" + "PlayerB" + "%27";
+        var name = "%27" + progress[8].join("") + "%27";
         var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=" + s;
         console.log(url);
 
