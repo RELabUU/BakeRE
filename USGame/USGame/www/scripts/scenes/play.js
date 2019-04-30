@@ -1,5 +1,5 @@
 ﻿class Play extends Phaser.Scene {
-  
+
     constructor() {
         super({ key: 'Play', active: false });
     }
@@ -50,8 +50,6 @@
         roleMenu = this.add.sprite(37 * w / 40, h / 6, 'cupcake').setScale(0.75).setDepth(3);
         actionMenu = this.add.sprite(37 * w / 40, 3 * h / 6 - h / 20, 'cream3').setScale(0.75).setDepth(3);
         benefitMenu = this.add.sprite(37 * w / 40, 5 * h / 6 - h / 10, 'deco3').setScale(0.75).setDepth(3);
-        
-        this.initializeAnimations();
 
         var children;
         var l;
@@ -62,7 +60,7 @@
             if (progress[0] === lvl0 && currentTask !== undefined) {
                 if (currentTask.type === "tap role" && tapRoleComplete === false) {
                     //this.time.delayedCall(1000, function () {
-                        tapRoleComplete = true;
+                    tapRoleComplete = true;
                     //}, [], this);
                 }
             }
@@ -159,7 +157,7 @@
             else {
                 console.log("How did you get here");
             }
-           
+
             gameObject.input.enabled = false;
         });
         this.input.on('dragend', function (pointer, gameObject, dropped) {
@@ -346,7 +344,7 @@
         else {
             orderText = order['Epic Text'];
         }
-        
+
         console.log(progress[0]['Name']);
     }
 
@@ -380,7 +378,7 @@
                 eps.push(epicgroup[nrs[i]]);
             }
         }
-        else if (keys !== "" && level !== lvl4)  {
+        else if (keys !== "" && level !== lvl4) {
             for (var j = 1; j <= epNr; j++) {
                 var curr = lvlContent[j];
                 var key = curr['usKey'];
@@ -539,7 +537,7 @@
             c.visible = false;
         });
 
-        var key = gameObject.list[1].texture.key; 
+        var key = gameObject.list[1].texture.key;
         var counter = 0;
         var loopDone = false;
 
@@ -648,7 +646,7 @@
                     default:
                         break;
                 }
-                
+
                 if (children.length === 0) {
                     benefitsEmptied = true;
                 }
@@ -675,7 +673,7 @@
                     dragComplete = true;
                 }, [], this);
             }
-        } 
+        }
     }
 
     // --------------------------------------------------------------------------- //
@@ -734,7 +732,7 @@
 
     gatherMistakes() {
         var types = [];
-        
+
         for (var i = 0; i < mistakesMade.length; i++) {
             types.push(mistakesMade[i][0]);
         }
@@ -965,7 +963,7 @@
         mText5.text = strs[4];
 
         l = strs.length;
-              
+
 
         this.initializeCreams(group, uss, w, h, spriteWidth, spriteHeight, l);
     }
@@ -1189,7 +1187,7 @@
         for (var j = 0; j < Number(level['Epics']); j++) {
             for (var k = 0; k < ul; k++) {
                 rect = this.add.graphics();
-                
+
                 if (j > Number(level['Epics']) - progress[1]) {
                     rect.fillStyle(0x36627b, 1); // blue: 0x36627b
                 }
@@ -1215,13 +1213,13 @@
         // Progress bar (outer) --> batch (epic) 2/6 (how many batches in a level?)
         console.log('Batches in level: ' + progress[1] + '/' + level['Epics']);
 
-        for (var i = 0; i <= Number(level['Epics']); i++) { 
+        for (var i = 0; i <= Number(level['Epics']); i++) {
             circle = this.add.graphics();
             if (i > Number(level['Epics']) - progress[1]) {
                 circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
             else {
-                circle.fillStyle(0xFFFFFF, 1);  
+                circle.fillStyle(0xFFFFFF, 1);
             }
             circle.fillCircle(w / 40 + 6, i * distance + offset, 6);
             progressCircles.push(circle);
@@ -1426,7 +1424,7 @@
         }
 
         for (var i = 0; i < nr; i++) {
-            var cream; 
+            var cream;
             var container;
             var cont;
 
@@ -1471,7 +1469,7 @@
                 default:
                     break;
             }
-            
+
             this.input.setDraggable(container);
             creams.add(container);
         }
@@ -1495,7 +1493,7 @@
                     if (flawless.inProgress === true) {
                         flawless.completed = true;
                     }
-                    
+
                     donezo = true;
                     this.userStoryExists(i);
                     return;
@@ -1547,7 +1545,7 @@
             }
         }
         if (donezo === false && mistakeFound === false) {
-            
+
             if (roleText !== '<???>' && actionText !== '<???>' && benefitText !== '<???>') {
                 if (flawless.inProgress === true && flawless.completed === false) {
                     //this.userStoryDoesNotExist();
@@ -1562,7 +1560,7 @@
                     uss = [];
                     eps = [];
                     times = [];
-                    
+
                     this.putStuffBack(false);
                     this.setUserStoryText();
 
@@ -1729,7 +1727,7 @@
 
         this.time.delayedCall(1500, function () {
             this.putStuffBack(true);
-            
+
             if (uss.length - mss.length === 0 || flawless.completed === true) {
                 uss = [];
                 var ep = progress[1];
@@ -1767,6 +1765,9 @@
                             flawless.inProgress = false;
                             flawless.completed = false;
 
+                            var scoreTotal = progress[4].reduce(function (a, b) { return a + b; }, 0);
+                            this.sendScore(scoreTotal);
+
                             this.fireworks();
 
                             var pc = progressCircles.length;
@@ -1785,7 +1786,7 @@
                         else {
                             flawless.inProgress = true;
                             flawless.lvlNr = lvlNr;
-                            
+
                             strsr = [];
                             strsa = [];
                             strsb = [];
@@ -1885,7 +1886,7 @@
         eps = [];
         uss = [];
         mss = [];
-        
+
         //this.createLevel(0);
         //this.toggleIntroduction();
         //this.updateProgressBar(progress[0]);
@@ -2028,7 +2029,7 @@
                 //tutorial is done, no more intro, move on to the context screen
                 break;
         }
-        
+
         this.closeContext();
         this.checkTutorialTasks();
     }
@@ -2043,7 +2044,7 @@
         else if (currentTask.type === "drag" && dragComplete === true) {
             currentTask.complete = true;
         }
-        
+
         tapComplete = false;
         tapRoleComplete = false;
         dragComplete = false;
@@ -2095,7 +2096,7 @@
         menuFlash.setAlpha(0);
         menuFlash.setBlendMode(Phaser.BlendModes.ADD);
         menuFlash.fillRoundedRect(17 * w / 20, h / 20, 3 * w / 20, 4 * h / 5, 12);
-        
+
         menuButton1Flash = this.add.graphics();
         menuButton1Flash.fillStyle(0xf4ab2b);
         menuButton1Flash.setDepth(150);
@@ -2143,342 +2144,13 @@
 
     // --------------------------------------------------------------------------- //
 
-    initializeAnimations() {
-        this.anims.create({
-            key: 'cake1',
-            frames: [
-                { key: 'cake1-01' },
-                { key: 'cake1-02' },
-                { key: 'cake1-03' },
-                { key: 'cake1-04' },
-                { key: 'cake1-05' },
-                { key: 'cake1-06' },
-                { key: 'cake1-07' },
-                { key: 'cake1-08' },
-                { key: 'cake1-09' },
-                { key: 'cake1-10' },
-                { key: 'cake1-11' },
-                { key: 'cake1-12' },
-                { key: 'cake1-13' },
-                { key: 'cake1-14' },
-                { key: 'cake1-15' },
-                { key: 'cake1-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
+    sendScore(s) {
+        var name = "%27" + "PlayerB" + "%27";
+        var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=" + s;
+        console.log(url);
 
-        this.anims.create({
-            key: 'cake2',
-            frames: [
-                { key: 'cake2-01' },
-                { key: 'cake2-02' },
-                { key: 'cake2-03' },
-                { key: 'cake2-04' },
-                { key: 'cake2-05' },
-                { key: 'cake2-06' },
-                { key: 'cake2-07' },
-                { key: 'cake2-08' },
-                { key: 'cake2-09' },
-                { key: 'cake2-10' },
-                { key: 'cake2-11' },
-                { key: 'cake2-12' },
-                { key: 'cake2-13' },
-                { key: 'cake2-14' },
-                { key: 'cake2-15' },
-                { key: 'cake2-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'cake3',
-            frames: [
-                { key: 'cake3-01' },
-                { key: 'cake3-02' },
-                { key: 'cake3-03' },
-                { key: 'cake3-04' },
-                { key: 'cake3-05' },
-                { key: 'cake3-06' },
-                { key: 'cake3-07' },
-                { key: 'cake3-08' },
-                { key: 'cake3-09' },
-                { key: 'cake3-10' },
-                { key: 'cake3-11' },
-                { key: 'cake3-12' },
-                { key: 'cake3-13' },
-                { key: 'cake3-14' },
-                { key: 'cake3-15' },
-                { key: 'cake3-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'cake4',
-            frames: [
-                { key: 'cake4-01' },
-                { key: 'cake4-02' },
-                { key: 'cake4-03' },
-                { key: 'cake4-04' },
-                { key: 'cake4-05' },
-                { key: 'cake4-06' },
-                { key: 'cake4-07' },
-                { key: 'cake4-08' },
-                { key: 'cake4-09' },
-                { key: 'cake4-10' },
-                { key: 'cake4-11' },
-                { key: 'cake4-12' },
-                { key: 'cake4-13' },
-                { key: 'cake4-14' },
-                { key: 'cake4-15' },
-                { key: 'cake4-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'cake5',
-            frames: [
-                { key: 'cake5-01' },
-                { key: 'cake5-02' },
-                { key: 'cake5-03' },
-                { key: 'cake5-04' },
-                { key: 'cake5-05' },
-                { key: 'cake5-06' },
-                { key: 'cake5-07' },
-                { key: 'cake5-08' },
-                { key: 'cake5-09' },
-                { key: 'cake5-10' },
-                { key: 'cake5-11' },
-                { key: 'cake5-12' },
-                { key: 'cake5-13' },
-                { key: 'cake5-14' },
-                { key: 'cake5-15' },
-                { key: 'cake5-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'icing1',
-            frames: [
-                { key: 'icing1-01' },
-                { key: 'icing1-02' },
-                { key: 'icing1-03' },
-                { key: 'icing1-04' },
-                { key: 'icing1-05' },
-                { key: 'icing1-06' },
-                { key: 'icing1-07' },
-                { key: 'icing1-08' },
-                { key: 'icing1-09' },
-                { key: 'icing1-10' },
-                { key: 'icing1-11' },
-                { key: 'icing1-12' },
-                { key: 'icing1-13' },
-                { key: 'icing1-14' },
-                { key: 'icing1-15' },
-                { key: 'icing1-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'icing2',
-            frames: [
-                { key: 'icing2-01' },
-                { key: 'icing2-02' },
-                { key: 'icing2-03' },
-                { key: 'icing2-04' },
-                { key: 'icing2-05' },
-                { key: 'icing2-06' },
-                { key: 'icing2-07' },
-                { key: 'icing2-08' },
-                { key: 'icing2-09' },
-                { key: 'icing2-10' },
-                { key: 'icing2-11' },
-                { key: 'icing2-12' },
-                { key: 'icing2-13' },
-                { key: 'icing2-14' },
-                { key: 'icing2-15' },
-                { key: 'icing2-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'icing3',
-            frames: [
-                { key: 'icing3-01' },
-                { key: 'icing3-02' },
-                { key: 'icing3-03' },
-                { key: 'icing3-04' },
-                { key: 'icing3-05' },
-                { key: 'icing3-06' },
-                { key: 'icing3-07' },
-                { key: 'icing3-08' },
-                { key: 'icing3-09' },
-                { key: 'icing3-10' },
-                { key: 'icing3-11' },
-                { key: 'icing3-12' },
-                { key: 'icing3-13' },
-                { key: 'icing3-14' },
-                { key: 'icing3-15' },
-                { key: 'icing3-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'icing4',
-            frames: [
-                { key: 'icing4-01' },
-                { key: 'icing4-02' },
-                { key: 'icing4-03' },
-                { key: 'icing4-04' },
-                { key: 'icing4-05' },
-                { key: 'icing4-06' },
-                { key: 'icing4-07' },
-                { key: 'icing4-08' },
-                { key: 'icing4-09' },
-                { key: 'icing4-10' },
-                { key: 'icing4-11' },
-                { key: 'icing4-12' },
-                { key: 'icing4-13' },
-                { key: 'icing4-14' },
-                { key: 'icing4-15' },
-                { key: 'icing4-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'icing5',
-            frames: [
-                { key: 'icing5-01' },
-                { key: 'icing5-02' },
-                { key: 'icing5-03' },
-                { key: 'icing5-04' },
-                { key: 'icing5-05' },
-                { key: 'icing5-06' },
-                { key: 'icing5-07' },
-                { key: 'icing5-08' },
-                { key: 'icing5-09' },
-                { key: 'icing5-10' },
-                { key: 'icing5-11' },
-                { key: 'icing5-12' },
-                { key: 'icing5-13' },
-                { key: 'icing5-14' },
-                { key: 'icing5-15' },
-                { key: 'icing5-16', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'deco1',
-            frames: [
-                { key: 'deco1-01' },
-                { key: 'deco1-02' },
-                { key: 'deco1-03' },
-                { key: 'deco1-04' },
-                { key: 'deco1-05' },
-                { key: 'deco1-06' },
-                { key: 'deco1-07' },
-                { key: 'deco1-08' },
-                { key: 'deco1-09' },
-                { key: 'deco1-10' },
-                { key: 'deco1-11' },
-                { key: 'deco1-12', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'deco2',
-            frames: [
-                { key: 'deco2-01' },
-                { key: 'deco2-02' },
-                { key: 'deco2-03' },
-                { key: 'deco2-04' },
-                { key: 'deco2-05' },
-                { key: 'deco2-06' },
-                { key: 'deco2-07' },
-                { key: 'deco2-08' },
-                { key: 'deco2-09' },
-                { key: 'deco2-10' },
-                { key: 'deco2-11' },
-                { key: 'deco2-12', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'deco3',
-            frames: [
-                { key: 'deco3-01' },
-                { key: 'deco3-02' },
-                { key: 'deco3-03' },
-                { key: 'deco3-04' },
-                { key: 'deco3-05' },
-                { key: 'deco3-06' },
-                { key: 'deco3-07' },
-                { key: 'deco3-08' },
-                { key: 'deco3-09' },
-                { key: 'deco3-10' },
-                { key: 'deco3-11' },
-                { key: 'deco3-12', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'deco4',
-            frames: [
-                { key: 'deco4-01' },
-                { key: 'deco4-02' },
-                { key: 'deco4-03' },
-                { key: 'deco4-04' },
-                { key: 'deco4-05' },
-                { key: 'deco4-06' },
-                { key: 'deco4-07' },
-                { key: 'deco4-08' },
-                { key: 'deco4-09' },
-                { key: 'deco4-10' },
-                { key: 'deco4-11' },
-                { key: 'deco4-12', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
-
-        this.anims.create({
-            key: 'deco5',
-            frames: [
-                { key: 'deco5-01' },
-                { key: 'deco5-02' },
-                { key: 'deco5-03' },
-                { key: 'deco5-04' },
-                { key: 'deco5-05' },
-                { key: 'deco5-06' },
-                { key: 'deco5-07' },
-                { key: 'deco5-08' },
-                { key: 'deco5-09' },
-                { key: 'deco5-10' },
-                { key: 'deco5-11' },
-                { key: 'deco5-12', duration: 50 }
-            ],
-            frameRate: 32,
-            repeat: 0
-        });
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('GET', url, true);
+        xhttp.send();
     }
 }
