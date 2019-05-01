@@ -2,17 +2,17 @@
   {
     "Name": "Quality Framework QUS - continued",
     "Epics": "7",
-    "Keys": "5",
+    "Keys": "4",
     "Content": {
       "1": {
         "nr": "3",
-        "usKey": "2",
+        "usKey": "7",
         "nrMistakes": "1",
-        "typeMistakes": "Full Sentence"
+        "typeMistakes": "Independent"
       },
       "2": {
         "nr": "3",
-        "usKey": "5",
+        "usKey": "3",
         "nrMistakes": "1",
         "typeMistakes": "Unambiguous"
       },
@@ -20,7 +20,7 @@
         "nr": "3",
         "usKey": "5",
         "nrMistakes": "1",
-        "typeMistakes": "Independent"
+        "typeMistakes": "Problem Oriented"
       },
       "4": {
         "nr": "4",
@@ -30,21 +30,21 @@
       },
       "5": {
         "nr": "4",
-        "usKey": "3",
+        "usKey": "2",
         "nrMistakes": "2",
-        "typeMistakes": "Unambiguous&Independent"
+        "typeMistakes": "Problem Oriented"
       },
       "6": {
         "nr": "4",
         "usKey": "7",
         "nrMistakes": "2",
-        "typeMistakes": "Full Sentence&Unambiguous&Independent"
+        "typeMistakes": "Problem Oriented&Unambiguous&Independent"
       },
       "7": {
         "nr": "5",
-        "usKey": "7",
+        "usKey": "5",
         "nrMistakes": "3",
-        "typeMistakes": "Full Sentence&Unambiguous&Independent"
+        "typeMistakes": "Problem Oriented&Unambiguous&Independent"
       }
     }
   }

@@ -2,31 +2,31 @@
 	{
 		"Name": "Quality Framework QUS",
     "Epics": "7",
-    "Keys": "5",
+    "Keys": "4",
     "Content": {
       "1": {
         "nr": "3",
-        "usKey": "4",
+        "usKey": "6",
         "nrMistakes": "1",
-        "typeMistakes": "Atomic"
+        "typeMistakes": "Full Sentence"
       },
       "2": {
         "nr": "3",
-        "usKey": "4",
+        "usKey": "1",
         "nrMistakes": "1",
         "typeMistakes": "Minimal"
       },
       "3": {
         "nr": "3",
-        "usKey": "2",
+        "usKey": "4",
         "nrMistakes": "1",
-        "typeMistakes": "Problem Oriented"
+        "typeMistakes": "Atomic"
       },
       "4": {
         "nr": "4",
-        "usKey": "1",
+        "usKey": "2",
         "nrMistakes": "2",
-        "typeMistakes": "Atomic&Minimal"
+        "typeMistakes": "Full Sentence"
       },
       "5": {
         "nr": "4",
@@ -38,13 +38,13 @@
         "nr": "5",
         "usKey": "6",
         "nrMistakes": "3",
-        "typeMistakes": "Atomic&Minimal&Problem Oriented"
+        "typeMistakes": "Atomic&Minimal&Full Sentence"
       },
       "7": {
         "nr": "5",
-        "usKey": "6",
+        "usKey": "4",
         "nrMistakes": "3",
-        "typeMistakes": "Atomic&Minimal&Problem Oriented"
+        "typeMistakes": "Atomic&Minimal&Full Sentence"
       }
     }
 	}

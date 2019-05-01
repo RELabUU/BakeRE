@@ -461,10 +461,18 @@
         // Pick some userstories to replace by bad userstories
         var nrs = this.generateRandomNumbers(0, uss.length - 1, n);
 
-        // Decide on the types of mistakes to use
-        var randomNrs = this.generateRandomNumbers(0, types.length - 1, n);
-        for (var j = 0; j < n; j++) {
-            msnrs.push(types[randomNrs[j]]);
+        // Decide which mistakes to use and prepare locations for them
+        var j;
+        if (types.length === 1) {
+            for (j = 0; j < n; j++) {
+                msnrs.push(types[0]);
+            }
+        }
+        else {
+            for (j = 0; j < n; j++) {
+                msnrs.push(types[j]);
+                this.shuffleArray(msnrs);
+            }
         }
 
         // Decide on the mistakes to use

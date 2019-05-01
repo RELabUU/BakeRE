@@ -1,5 +1,5 @@
 {
-  "Title":  "Online Learning Environment",
+  "Title": "Online Learning Environment",
   "Epics": {
     "Number": 8,
     "Epics List": [
@@ -236,7 +236,7 @@
         "Epic Title": "Recordings",
         "Role": "Student",
         "Action": "watch lecture recordings within the learning environment",
-        "Benefit": "I can catch up when I have missed a lecture due to ilness"
+        "Benefit": "I can catch up when I have missed a lecture due to illness"
       },
       {
         "Epic Title": "Recordings",
@@ -300,65 +300,39 @@
         "Epic Title": "Course material",
         "Role": "Student",
         "Action": "have access to the literature and content list(s), as well as my grades and profile information",
-        "Benefit": "I know what is required of me"
+        "Benefit": "I know what my teacher expects me to study for the exam(s)"
       },
       {
         "Epic Title": "Communication",
         "Role": "Student",
         "Action": "post questions or remarks in a public chat, as well as privately message my tutors and peers",
-        "Benefit": "the teacher, teaching assistants and other students can all see and weigh in with possible answers"
+        "Benefit": "all other users can see and weigh in with possible answers"
       }
     ],
     "Minimal": [
       {
         "Epic Title": "Assignments",
         "Role": "Teacher",
-        "Action": "delegate grading rights (some rights are: read, write, export) to my teacher assistants",
+        "Action": "delegate grading rights (including read, write, export) to my teacher assistants",
         "Benefit": "I can reduce my grading load"
       },
       {
         "Epic Title": "Assignments",
         "Role": "Teacher",
         "Action": "restrict the file submission types",
-        "Benefit": "my ta's can avoid checking format constraints. For example, in the past, we had problems with pdfs."
+        "Benefit": "I can avoid additional checks. For example, in the past, we had problems with pdfs."
       },
       {
         "Epic Title": "Course material",
         "Role": "Teacher",
-        "Action": "upload the lists (such as content, literature, grades etc.) to the learning environment",
-        "Benefit": "my students know what I expect them to study for the exam(s) (depends on the uploaded lists)"
+        "Action": "upload the lists (such as content, grades etc.) to the learning environment",
+        "Benefit": "my students know what I expect them to study for the exam(s)"
       },
       {
         "Epic Title": "Communication",
         "Role": "Student",
         "Action": "privately message my colleagues",
         "Benefit": "I can communicate with them (using tools such as PM, DM, email etc.)"
-      }
-    ],
-    "Problem Oriented": [
-      {
-        "Epic Title": "Tests",
-        "Role": "Student",
-        "Action": "see the test scores of my colleagues in an Excel spreadsheet",
-        "Benefit": "I can compare my performance against theirs"
-      },
-      {
-        "Epic Title": "Tests",
-        "Role": "Student",
-        "Action": "receive notifications of test deadlines on my Android phone via the push mechanism",
-        "Benefit": "I do not forget which tests I need to complete"
-      },
-      {
-        "Epic Title": "Course material",
-        "Role": "Student",
-        "Action": "receive a push notification on my iOS device when new material is uploaded",
-        "Benefit": "I know when changes to the material are made"
-      },
-      {
-        "Epic Title": "Communication",
-        "Role": "Teaching assistant",
-        "Action": "clearly be identifiable as an assistant when posting messages",
-        "Benefit": "students will receive a notification with an audible *pling* when I post on the message boards, which will identify me as a TA"
       }
     ],
     "Full Sentence": [
@@ -375,16 +349,42 @@
         "Benefit": "grades"
       },
       {
+        "Epic Title": "Course material",
+        "Role": "Student",
+        "Action": "the literature list of the course(s) in which I am enrolled",
+        "Benefit": "I know what my teacher expects me to study for the exam(s)"
+      },
+      {
+        "Epic Title": "Communication",
+        "Role": "Teaching assistant",
+        "Action": "assistant",
+        "Benefit": "one of the assistants"
+      }
+    ],
+    "Problem Oriented": [
+      {
+        "Epic Title": "Tests",
+        "Role": "Student",
+        "Action": "see the test scores of my colleagues in an Excel spreadsheet",
+        "Benefit": "I can compare my performance against theirs"
+      },
+      {
+        "Epic Title": "Tests",
+        "Role": "Student",
+        "Action": "receive notifications of test deadlines on my Android phone via the push mechanism",
+        "Benefit": "I do not forget which tests I need to complete"
+      },
+      {
         "Epic Title": "Scheduling",
         "Role": "Teacher",
-        "Action": "course schedule within the environment",
-        "Benefit": "schedule time correctly"
+        "Action": "create a course schedule within the learning environment",
+        "Benefit": "my students and teaching assistents can pull the schedule into their online agenda"
       },
       {
         "Epic Title": "Recordings",
         "Role": "Teacher",
-        "Action": "post lectures",
-        "Benefit": "review material explained"
+        "Action": "attach notes in the form of popups to the recordings at certain timestamps",
+        "Benefit": "I can provide additional information where necessary"
       }
     ],
     "Unambiguous": [
@@ -429,7 +429,7 @@
       {
         "Epic Title": "Scheduling",
         "Role": "Student",
-        "Action": "have all scheduling information (using specified format, see us12) in one location",
+        "Action": "have all scheduling information (using specified format, see above) in one location",
         "Benefit": "I can take all courses into account when scheduling my time"
       }
     ]
