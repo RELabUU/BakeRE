@@ -242,21 +242,35 @@
         var lvl1to2;
         var lvl2to3;
         var lvl3to4;
+        var lvl1to2min;
+        var lvl2to3min;
+        var lvl3to4min;
 
         // The points threshold you get for completing a userstory in 25 seconds (out of 45)
         var timePerUserstory = 45;
-        var timeToSucceed = 25;
-        var c = 200 / Math.pow(timePerUserstory, 2);
+        //var timeToSucceed = 25;
+        var timeToSucceed = 30;
+        var b = 200 / Math.pow(timePerUserstory, 2);
+        //var c = 150 / Math.pow(timePerUserstory, 2);
         var x = Math.pow(timeToSucceed, 2);
-        var s = Math.round(200 - c * x);
+        var splus = Math.round(200 - b * x);
+        //var smin = Math.round(150 - c * x);
 
         var nr1 = this.getNrOfUserstories(lvl1);
         var nr2 = this.getNrOfUserstories(lvl2);
         var nr3 = this.getNrOfUserstories(lvl3);
 
-        lvl1to2 = nr1 * s;
-        lvl2to3 = nr2 * s + lvl1to2;
-        lvl3to4 = nr3 * s + lvl2to3;
+        //var nr1min = Math.round(nr1 / 5);
+        //var nr2min = Math.round(nr2 / 5);
+        //var nr3min = Math.round(nr3 / 5);
+
+        //lvl1to2min = nr1min * smin;
+        //lvl2to3min = nr2min * smin;
+        //lvl3to4min = nr3min * smin;
+
+        lvl1to2 = nr1 * splus;// - lvl1to2min;
+        lvl2to3 = nr2 * splus + lvl1to2;// - lvl2to3min;
+        lvl3to4 = nr3 * splus + lvl2to3;// - lvl3to4min;
 
         pts.push(0);
         pts.push(0);
@@ -277,7 +291,7 @@
                 nr = nr + Number(cont[i]['nr']);
             }
             else {
-                nr = nr + (Number(cont[i]['nr']) - Number(cont[1]['nrMistakes']));
+                nr = nr + (Number(cont[i]['nr']) - Number(cont[i]['nrMistakes']));
             }
         }
 

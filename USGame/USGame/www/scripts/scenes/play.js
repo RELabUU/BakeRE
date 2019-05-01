@@ -337,6 +337,9 @@
         if (progress[0] === lvl0) {
             this.tutorialUI();
         }
+        else if (progress[0] === lvl2 || progress[0] === lvl3) {
+            this.pickMistakes();
+        }
 
         if (progress[0] === lvl4) {
             orderText = "As a " + order['Role'] + " I want to " + order['Action'] + " so that " + order['Benefit'];
