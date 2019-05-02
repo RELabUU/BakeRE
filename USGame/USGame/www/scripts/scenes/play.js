@@ -59,9 +59,7 @@
         roleMenu.on('pointerup', function (pointer, gameObject) {
             if (progress[0] === lvl0 && currentTask !== undefined) {
                 if (currentTask.type === "tap role" && tapRoleComplete === false) {
-                    //this.time.delayedCall(1000, function () {
                     tapRoleComplete = true;
-                    //}, [], this);
                 }
             }
             this.menuManager(roles, actions, benefits, roleMenu.width, roleMenu.height, w, h, "Roles");
@@ -1068,6 +1066,53 @@
         pauseText.setDepth(10);
         pauseText.text = "II";
 
+        if (progress[0] === lvl2 || progress[0] === lvl3) {
+            var ep = progress[0]['Epics'];
+            var cont = progress[0]['Content'];
+            var typecont = cont[ep];
+            var tcont = typecont['typeMistakes'];
+            var types = tcont.split("&");
+
+            category1 = this.make.text(textconfigMenuHeader);
+            category1.setOrigin(0.5, 0.5);
+            category1.x = w / 4;
+            category1.y = 4 * h / 5;
+            category1.setDepth(150);
+            category1.text = types[0];
+
+            category2 = this.make.text(textconfigMenuHeader);
+            category2.setOrigin(0.5, 0.5);
+            category2.x = 2 * w / 4;
+            category2.y = 4 * h / 5;
+            category2.setDepth(150);
+            category2.text = types[1];
+
+            category3 = this.make.text(textconfigMenuHeader);
+            category3.setOrigin(0.5, 0.5);
+            category3.x = 3 * w / 4;
+            category3.y = 4 * h / 5;
+            category3.setDepth(150);
+            category3.text = types[2];
+
+            category1.setInteractive(new Phaser.Geom.Rectangle(0, 0, category1.width, category1.height), Phaser.Geom.Rectangle.Contains);
+            category1.on('pointerup', function (pointer) {
+                this.handleTipMenu(category1.text);
+            }, this);
+            category2.setInteractive(new Phaser.Geom.Rectangle(0, 0, category2.width, category2.height), Phaser.Geom.Rectangle.Contains);
+            category2.on('pointerup', function (pointer) {
+                this.handleTipMenu(category2.text);
+            }, this);
+            category3.setInteractive(new Phaser.Geom.Rectangle(0, 0, category3.width, category3.height), Phaser.Geom.Rectangle.Contains);
+            category3.on('pointerup', function (pointer) {
+                this.handleTipMenu(category3.text);
+            }, this);
+
+            category1.visible = false;
+            category2.visible = false;
+            category3.visible = false;
+            pausedCategory = false;
+        }
+
         pauseText.setInteractive(new Phaser.Geom.Rectangle(0, 0, pauseText.width, pauseText.height), Phaser.Geom.Rectangle.Contains);
         pauseText.on('pointerup', function (pointer) {
             this.handlePauseMenu();
@@ -1082,11 +1127,33 @@
             pauseTimeEnd = undefined;
             conText.text = "Paused";
             this.openContext();
+            if (progress[0] === lvl2 || progress[0] === lvl3) {
+                category1.visible = true;
+                category2.visible = true;
+                category3.visible = true;
+            }
         }
         else {
             paused = false;
             pauseTimeEnd = new Date();
+            if (progress[0] === lvl2 || progress[0] === lvl3) {
+                category1.visible = false;
+                category2.visible = false;
+                category3.visible = false;
+            }
             this.closeContext();
+        }
+    }
+
+    handleTipMenu(category) {
+        if (pausedCategory === true) {
+            pausedCategory = false;
+            console.log(category);
+            oText.text = tips[category];
+        }
+        else {
+            pausedCategory = true;
+            oText.text = orderText;
         }
     }
 
@@ -1143,7 +1210,8 @@
         conText.visible = false;
 
         this.loadIntroductions();
-        this.toggleIntroduction(intr[0]);
+        //this.toggleIntroduction(intr[0]);
+        this.toggleIntroduction(intr[1]);
     }
 
     updateProgressBar(level) {
@@ -1249,16 +1317,16 @@
     toggleContext() {
         if (introText.visible === true) {
             // Either skip to the next intro slide or close the introduction and start the game
-            if (introText.text === intr[intr.length - 1]) {
+            if (introIndex === intr["nr"]) {
                 introText.visible = false;
-                tutorialProgress = "Complete";
                 if (progress[0] === lvl0) {
                     this.closeFlashingSigns();
+                    tutorialProgress = "Complete";
                 }
                 this.openContext();
             }
             else {
-                for (var i = 0; i < intr.length; i++) {
+                /*for (var i = 1; i < intr["nr"]; i++) {
                     if (intr[i] === introText.text) {
                         introText.text = intr[i + 1];
                         if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
@@ -1267,6 +1335,12 @@
                         }
                         break;
                     }
+                }*/
+                introIndex = introIndex + 1;
+                introText.text = intr[introIndex];
+                if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
+                    tutorialProgress = introText.text;
+                    this.tutorialManager();
                 }
             }
         }
@@ -1314,8 +1388,18 @@
         introText.y = window.innerHeight / 2;
         introText.setOrigin(0.5, 0.5);
         introText.setDepth(105);
-
-        introText.text = txt;
+        
+        var content = [];
+        for (var i = 0; i < txt.length; i++) {
+            if (txt[i] === "") {
+                content[i] = "";
+            }
+            else {
+                content[i] = txt[i];
+            }
+        }
+        introText.text = content;
+        introText.setLineSpacing(5);
 
         this.time.delayedCall(2000, function () {
             orderBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight), Phaser.Geom.Rectangle.Contains);
@@ -1323,7 +1407,9 @@
     }
 
     loadIntroductions() {
-        intr = intros[progress[0]['Name']][0].split("@");
+        introIndex = 1;
+        intr = intros2[progress[0]['Name']];
+        //intr = intros[progress[0]['Name']][0].split("@");
     }
 
     closeContext() {
@@ -2028,6 +2114,10 @@
                 //userstoryline
                 //currentTask = wait or tap screen
                 currentTask = { type: "tap", complete: false };
+                menuVisible = "None";
+                menuBG.visible = false;
+                this.createMenuText();
+                this.textsFalse();
                 userstoryFlash.visible = true;
                 break;
             case "#6":
@@ -2063,12 +2153,15 @@
         if (currentTask.complete === true) {
             // Toggle introduction again, at the correct part in the tutorial
             currentTask = undefined;
-            for (var i = 0; i < intr.length; i++) {
+            /*for (var i = 0; i < intr.length; i++) {
                 if (intr[i] === introText.text) {
                     this.toggleIntroduction(intr[i + 1]);
                     break;
                 }
-            }
+            }*/
+            introIndex = introIndex + 1;
+            //introText.text = intr[introIndex];
+            this.toggleIntroduction(intr[introIndex]);
         }
     }
 

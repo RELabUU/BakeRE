@@ -48,6 +48,8 @@ var progressRects = [];
 
 // Texts for descriptions, tips, etc.
 var intros;
+var intros2;
+var introIndex;
 var tips;
 
 // The possible databases (choose at start of the game which one to use)
@@ -140,6 +142,10 @@ var pauseTimeStart;
 var pauseTimeEnd;
 var times = [];
 var timeIndex = 0;
+var category1;
+var category2;
+var category3;
+var pausedCategory;
 
 // #region Text configs
 // Config for menu text

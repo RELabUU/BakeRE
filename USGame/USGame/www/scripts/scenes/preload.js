@@ -332,6 +332,7 @@
 
         var texts = this.cache.json.get('texts');
         intros = texts['Introductions'];
+        intros2 = texts['Intros'];
         tips = texts['Tips'];
 
         var l0 = this.cache.json.get('lvl0');
