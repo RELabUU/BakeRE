@@ -142,6 +142,7 @@ var pauseTimeStart;
 var pauseTimeEnd;
 var times = [];
 var timeIndex = 0;
+var categoryHeader;
 var category1;
 var category2;
 var category3;
@@ -185,7 +186,8 @@ var textconfigMenuHeader = {
     style: {
         fontFamily: 'Dosis',
         fontSize: 24,
-        fill: '#000000'
+        fill: '#000000',
+        align: 'center'
     }
 };
 

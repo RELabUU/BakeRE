@@ -1073,40 +1073,48 @@
             var tcont = typecont['typeMistakes'];
             var types = tcont.split("&");
 
+            categoryHeader = this.make.text(textconfigMenuHeader);
+            categoryHeader.setOrigin(0.5, 0.5);
+            categoryHeader.x = w / 2;
+            categoryHeader.y = 7 * h / 10;
+            categoryHeader.setDepth(150);
+            categoryHeader.text = "More info on categories:";
+
             category1 = this.make.text(textconfigMenuOrder);
             category1.setOrigin(0.5, 0.5);
             category1.x = w / 4;
-            category1.y = 4 * h / 5;
+            category1.y = 5 * h / 6;
             category1.setDepth(150);
             category1.text = types[0];
 
             category2 = this.make.text(textconfigMenuOrder);
             category2.setOrigin(0.5, 0.5);
             category2.x = 2 * w / 4;
-            category2.y = 4 * h / 5;
+            category2.y = 5 * h / 6;
             category2.setDepth(150);
             category2.text = types[1];
 
             category3 = this.make.text(textconfigMenuOrder);
             category3.setOrigin(0.5, 0.5);
             category3.x = 3 * w / 4;
-            category3.y = 4 * h / 5;
+            category3.y = 5 * h / 6;
             category3.setDepth(150);
             category3.text = types[2];
 
-            category1.setInteractive(new Phaser.Geom.Rectangle(0, 0, category1.width, category1.height), Phaser.Geom.Rectangle.Contains);
+            category1.setInteractive(new Phaser.Geom.Rectangle(-0.1 * category1.width, -0.1 * category1.height, category1.width * 1.2, category1.height * 1.2), Phaser.Geom.Rectangle.Contains);
             category1.on('pointerup', function (pointer) {
                 this.handleTipMenu(category1.text);
             }, this);
-            category2.setInteractive(new Phaser.Geom.Rectangle(0, 0, category2.width, category2.height), Phaser.Geom.Rectangle.Contains);
+            category2.setInteractive(new Phaser.Geom.Rectangle(-0.1 * category2.width, -0.1 * category2.height, category2.width, category2.height), Phaser.Geom.Rectangle.Contains);
             category2.on('pointerup', function (pointer) {
                 this.handleTipMenu(category2.text);
             }, this);
-            category3.setInteractive(new Phaser.Geom.Rectangle(0, 0, category3.width, category3.height), Phaser.Geom.Rectangle.Contains);
+            category3.setInteractive(new Phaser.Geom.Rectangle(-0.1 * category3.width, -0.1 * category3.height, category3.width, category3.height), Phaser.Geom.Rectangle.Contains);
             category3.on('pointerup', function (pointer) {
                 this.handleTipMenu(category3.text);
             }, this);
 
+            categoryHeader.visible = false;
             category1.visible = false;
             category2.visible = false;
             category3.visible = false;
@@ -1126,8 +1134,10 @@
             pauseTimeStart = new Date();
             pauseTimeEnd = undefined;
             this.openContext();
-            conText.text = "Paused";
+            conText.text = "Context";
             if (progress[0] === lvl2 || progress[0] === lvl3) {
+                oText.y = 4 * window.innerHeight / 9;
+                categoryHeader.visible = true;
                 category1.visible = true;
                 category2.visible = true;
                 category3.visible = true;
@@ -1137,6 +1147,7 @@
             paused = false;
             pauseTimeEnd = new Date();
             if (progress[0] === lvl2 || progress[0] === lvl3) {
+                categoryHeader.visible = false;
                 category1.visible = false;
                 category2.visible = false;
                 category3.visible = false;
@@ -1146,6 +1157,8 @@
     }
 
     handleTipMenu(category) {
+        oText.y = 4 * window.innerHeight / 9;
+
         if (pausedCategory === false) {
             pausedCategory = true;
             conText.text = category;
@@ -1154,7 +1167,7 @@
         else {
             if (conText.text === category) {
                 pausedCategory = false;
-                conText.text = "Paused";
+                conText.text = "Context";
                 oText.text = orderText;
             }
             else {
@@ -1210,9 +1223,9 @@
         oText.visible = false;
 
         conText = this.make.text(textconfigMenuHeader);
-        conText.setOrigin(0.5, 0.5);
-        conText.x = window.innerWidth / 2;
-        conText.y = window.innerHeight / 4;
+        conText.setOrigin(0.5, 0);
+        conText.x = w / 2;
+        conText.y = h / 7;
         conText.text = "Context";
         conText.setDepth(101);
         conText.visible = false;
@@ -1334,16 +1347,6 @@
                 this.openContext();
             }
             else {
-                /*for (var i = 1; i < intr["nr"]; i++) {
-                    if (intr[i] === introText.text) {
-                        introText.text = intr[i + 1];
-                        if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
-                            tutorialProgress = introText.text;
-                            this.tutorialManager();
-                        }
-                        break;
-                    }
-                }*/
                 introIndex = introIndex + 1;
                 introText.text = intr[introIndex];
                 if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
@@ -1439,6 +1442,7 @@
         oText.visible = true;
 
         conText.text = "Context";
+        oText.y = window.innerHeight / 2;
 
         jingleSound.play();
 
