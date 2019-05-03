@@ -132,6 +132,43 @@
       ]
     },
     "Quality Framework QUS": {
+      "nr": 3,
+      "1": [
+        "Welcome back!"
+      ],
+      "2": [
+
+      ],
+      "3": [
+        "Good luck!"
+      ]
+    },
+    "Quality Framework QUS - continued": {
+      "nr": 3,
+      "1": [
+        "Welcome back!"
+      ],
+      "2": [
+
+      ],
+      "3": [
+        "Good luck!"
+      ]
+    },
+    "Acceptance Tests": {
+      "nr": 3,
+      "1": [
+        "Welcome back!"
+      ],
+      "2": [
+
+      ],
+      "3": [
+        "Good luck!"
+      ]
+    },
+    "Flawless user story": {
+      "nr": 3,
       "1": [
         "Welcome back!"
       ],

@@ -1073,21 +1073,21 @@
             var tcont = typecont['typeMistakes'];
             var types = tcont.split("&");
 
-            category1 = this.make.text(textconfigMenuHeader);
+            category1 = this.make.text(textconfigMenuOrder);
             category1.setOrigin(0.5, 0.5);
             category1.x = w / 4;
             category1.y = 4 * h / 5;
             category1.setDepth(150);
             category1.text = types[0];
 
-            category2 = this.make.text(textconfigMenuHeader);
+            category2 = this.make.text(textconfigMenuOrder);
             category2.setOrigin(0.5, 0.5);
             category2.x = 2 * w / 4;
             category2.y = 4 * h / 5;
             category2.setDepth(150);
             category2.text = types[1];
 
-            category3 = this.make.text(textconfigMenuHeader);
+            category3 = this.make.text(textconfigMenuOrder);
             category3.setOrigin(0.5, 0.5);
             category3.x = 3 * w / 4;
             category3.y = 4 * h / 5;
@@ -1125,8 +1125,8 @@
             timeIndex++;
             pauseTimeStart = new Date();
             pauseTimeEnd = undefined;
-            conText.text = "Paused";
             this.openContext();
+            conText.text = "Paused";
             if (progress[0] === lvl2 || progress[0] === lvl3) {
                 category1.visible = true;
                 category2.visible = true;
@@ -1146,14 +1146,22 @@
     }
 
     handleTipMenu(category) {
-        if (pausedCategory === true) {
-            pausedCategory = false;
-            console.log(category);
+        if (pausedCategory === false) {
+            pausedCategory = true;
+            conText.text = category;
             oText.text = tips[category];
         }
         else {
-            pausedCategory = true;
-            oText.text = orderText;
+            if (conText.text === category) {
+                pausedCategory = false;
+                conText.text = "Paused";
+                oText.text = orderText;
+            }
+            else {
+                pausedCategory = true;
+                conText.text = category;
+                oText.text = tips[category];
+            }
         }
     }
 
@@ -1382,6 +1390,8 @@
 
         orderBG.visible = true;
         bg.visible = true;
+        conText.visible = true;
+        conText.text = "Introduction";
 
         introText = this.make.text(textconfigMenuOrder);
         introText.x = window.innerWidth / 2;
@@ -1427,6 +1437,8 @@
         bg.visible = true;
         conText.visible = true;
         oText.visible = true;
+
+        conText.text = "Context";
 
         jingleSound.play();
 
