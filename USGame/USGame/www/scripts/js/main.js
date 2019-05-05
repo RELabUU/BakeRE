@@ -53,6 +53,7 @@ var progressRects = [];
 var intros;
 var intros2;
 var introIndex;
+var introIndex2;
 var tips;
 var introCircles;
 

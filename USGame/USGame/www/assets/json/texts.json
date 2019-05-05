@@ -1,24 +1,4 @@
 {
-  "Introductions": {
-    "Tutorial": [
-      "Welcome to the BakeRE! Within this game, you produce user stories by making cakes. User stories are sentences using the following format:@'As a <Role> I want to <Action> so that <Benefit>'.@This is a very useful tool within the realm of Requirements Engineering, as they are short, to the point and readable, without losing important information.@But back to the game; within BakeRE, every cake consists of three ingredients - a cakebase, icing and some decorations. This mirrors the makeup of a user story with their Role-Action-Benefit setup.@To complete a batch of cakes, you have to complete all correct user stories within that batch. To complete a level, you have to complete all batches within the level! The amount of user stories and batches yet to complete can be seen to the left of the screen in the progressbar.@#1@To the right, you see the user story menu.@#2@To create a user story, you have to get one part from each of the different categories and combine them into a cake. Try it out by opening the 'Role'/'Cakebase' menu!@#3@Here, you can pick your ingredient and drag it to the plate on the left. Try it out now!@#4@Good job! You can see the user story you are creating as a cake on the plate, and as an actual user story at the bottom of the screen.@#5@When three ingredients are brought together the user story is judged and, if correct, points are added to your total (depending on the time it took you to complete it).@#6@However, when a user story is incorrect, points are subtracted, so be careful! Sometimes being precise is better than being fast. (Points gained during the tutorial do not count towards total points)@Now with this in mind, try to complete the three user stories in this batch to finish the tutorial. The slide after next slide will have the context of the batch of user stories; this will always be shown at the start of a new batch, so read this carefully!@When you want to take another look at it, you can press the pause button at the bottom of the screen. You can always replay the tutorial if necessary. Good luck!"
-    ],
-    "user story Structure": [
-      "Welcome back! It is time for the next level. Within this level, the focus lies on correct user story structure. As was briefly explained in the tutorial, a user story has the following structure: 'As a <Role> I want to <Action> so that <Benefit>'.@You will find that in normal use, a benefit is occasionally an optional addition. However, in the BakeRE, every cake needs a decoration. Therefore, for our purposes, every user story has these three parts.@Please read the context at the start of each level very carefully and empty all batches by matching the correct user stories! When in doubt, you can always review the context again by clicking on the pause button at the bottom of the screen. Good luck!"
-    ],
-    "Quality Framework QUS": [
-      "Hello again! Let’s continue on to the next stage. Within these next few levels, we will introduce faulty user stories. These user stories are within the batches, but should not be completed and do not count towards finishing a level. This is because they do not conform to specific Quality Frameworks. A quality framework is, as the name suggests, a framework that can be used to assure high user story quality.@When conforming to a quality framework, the user story becomes as clear and concise as possible, but does not tip over to the other side and become overly small and vague.The framework that we focus on within this game is called the 'Quality user story Framework' or 'QUS' for short. QUS consists of 11 criteria, but within this game we will only focus on 7 of them.@The first of these criteria, 'Well-formed' (does every user story contain at least a Role-Action-Benefit) we have already tackled in the levels beforehand. Within this level, we will introduce 3 more; Atomic, Minimal and Problem Oriented. @An Atomic user story only tackles one problem at a time. For example; 'As a student, I want to see my grades and communicate with my teacher about these grades, so that...' is not atomic, as it tackles two different problems within one user story.@Next, a Minimal user story contains nothing more than a Role, an Action and a Benefit. For example, 'As a student, I want to see my progress (some examples include grades, tests, descriptions etc.), so that...' is not minimal, as it includes additional information that is not a Role, an Action nor a Benefit.@Finally, a Problem Oriented user story only specifies the problem and not the solution to it. For example, 'As a student, I want to see my grades within an Excel sheet, so that...' is not Problem Oriented, as it includes the Excel sheet solution instead of simply stating the problem.@Try to finish the next set of batches without making any of these mistakes. When you are unsure about the criteria, check them again by clicking the pause button at the bottom of the screen. Good luck!"
-    ],
-    "Quality Framework QUS - continued": [
-      "Hey there! In this level, we continue with the QUS framework by introducing 3 more criteria; Full Sentence, Unambiguous and Independent. Let's jump right into it, shall we? @A Full Sentence user story is, as the name implies, a correct, well-formed full sentence. For example; 'As a student, I want to see grades, so that progress' is not a full sentence user story, as it is not a well-formed english sentence.@Next, an unambiguous user story is a user story that clearly describes its parts without introducing any ambiguity. For example; 'As a student, I want to see the grades, so that I know how I'm doing' is not an unambiguous user story, as it's very vague on which grades it means and what exactly the student wishes to gain from seeing these grades.@Finally, an Independent user story does not depend on other user stories within the list to make a point. For example, 'As a student, I want to see my grades (as described in US7), so that...' is not an independent user story, as it depends on another user story (user story 7), to explain its purpose.@Once again, complete all correct user stories within the batches without accidentally creating any of the faulty user stories to finish this level. Good luck!"
-    ],
-    "Acceptance Tests": [
-      "Nice to see you again! For this final level, we are going to look at something other than user stories, but closely related; acceptance tests. These tests are a method of checking whether or not a user story has been implemented correctly. Acceptance tests do not have such a set structure as user stories, but one of the most popular structures is the following; 'Given <some context>, When <some action is carried out>, Then <some observable consequence occurs>'. @These will be your new cake parts, so your cakebases will be the 'Given', the icing will be the 'When' and the decorations will be the 'Then'. Try to make the correct acceptance tests given the context (which is a user story in this case). Just like before, complete the batches to complete the level. There are no more mistakes within this level, every acceptance test in the batch must be completed. Good luck!"
-    ],
-    "Flawless user story": [
-      "To complete this level, you have to create at least one flawless user story from the next batches! Everytime you make a mistake, the batch will be renewed; try to really focus on the possibilities and read the context!"
-    ]
-  },
   "Tips": {
     "Well Formed": "When creating your user stories, always make sure that there is a Role, an Action and a Benefit - and that these match with each other! Reread the context carefully when you are unsure of the possible matches.",
     "Atomic": "Make sure that your user stories only tackle one issue at a time. A tell to look for is the word 'and' within either an action or a benefit; I want to do this <and> this usually points towards multiple problems within one user story - therefore not atomic!",
@@ -28,35 +8,10 @@
     "Unambiguous": "When creating your user stories, make sure that the descriptors are specific enough. Do you have phrases or words like 'thingss' or 'the duties' that are too vague and could mean anything? Then the user story is not unambiguous!",
     "Independent": "Make sure that your user stories stand on their own. When you see a pointer towards another user story (e.g. 'please see user story 8' or 'check the pdf'), your user story is not independent as it depends on these other files!"
   },
-  "Criteria": {
-    "Quality Framework QUS": [
-      "An Atomic user story only tackles one problem at a time. For example; 'As a student, I want to see my grades and ",
-      "communicate with my teacher about these grades, so that...' is not atomic, as it tackles two different problems within one user story. ",
-      "",
-      "Next, a Minimal user story contains nothing more than a Role, an Action and a Benefit. ",
-      "For example, 'As a student, I want to see my progress (some examples include grades, tests, descriptions etc.), ",
-      "so that...' is not minimal, as it includes additional information that is not a Role, an Action nor a Benefit. ",
-      "",
-      "Finally, a Problem Oriented user story only specifies the problem and not the solution to it. For example, 'As a student, ",
-      "I want to see my grades within an Excel sheet, so that...' is not Problem Oriented, as it includes the Excel sheet solution ",
-      "instead of simply stating the problem. "
-    ],
-    "Quality Framework QUS - continued": [
-      "A Full Sentence user story is, as the name implies, a correct, well-formed full sentence. For example; 'As a student, ",
-      "I want to see grades, so that progress' is not a full sentence user story, as it is not a well-formed english sentence. ",
-      "",
-      "Next, an unambiguous user story is a user story that clearly describes its parts without introducing any ambiguity. ",
-      "For example; 'As a student, I want to see the grades, so that I know how I'm doing' is not an unambiguous user story, ",
-      "as it's very vague on which grades it means and what exactly the student wishes to gain from seeing these grades. ",
-      "",
-      "Finally, an Independent user story does not depend on other user stories within the list to make a point. ",
-      "For example, 'As a student, I want to see my grades (as described in US7), so that...' is not an independent user story, as ",
-      "it depends on another user story (user story 7), to explain its purpose. "
-    ]
-  },
-  "Intros": {
+  "Introductions": {
     "Tutorial": {
       "nr": 19,
+      "nr2": 13,
       "1": [
         "Welcome to the BakeRE!"
       ],
@@ -113,10 +68,13 @@
         "Now with this in mind, try to complete the three user stories in this batch to finish the tutorial.",
         "",
         "The slide after this will have the context of the batch of user stories.",
-        "When you want to take another look at it, you can press the pause button at the bottom of the screen.",
-        "You can always replay the tutorial if necessary."
+        "When you want to take another look at it, you can press the pause button at the bottom of the screen."
       ],
-      "19": [ "Good luck!" ]
+      "19": [
+        "You can always replay the tutorial if necessary.",
+        "",
+        "Good luck!"
+      ]
     },
     "User story Structure": {
       "nr": 3,
@@ -133,14 +91,27 @@
       ]
     },
     "Quality Framework QUS": {
-      "nr": 3,
+      "nr": 5,
       "1": [
         "Welcome back!"
       ],
       "2": [
-
+        "From this level forward, we introduce faulty user stories into the mix.",
+        "",
+        "These user stories could be structurally correct, but do not comply to one or more of the QUS quality constraints.",
+        "To complete the level, finish all correct user stories and leave the faulty ones in the batch."
       ],
       "3": [
+        "The QUS categories to focus on in this first level are:",
+        "",
+        "Full Sentence",
+        "Atomic",
+        "Minimal"
+      ],
+      "4": [
+        "For a refresher on the categories, open the pause menu and click the corresponding category name." 
+      ],
+      "5": [
         "Good luck!"
       ]
     },
@@ -150,9 +121,20 @@
         "Welcome back!"
       ],
       "2": [
-
+        "To win this level, once again complete all user stories across the different batches without using the faulty ones."
       ],
       "3": [
+        "The QUS categories to focus on in this level are:",
+        "",
+        "Independent",
+        "Unambiguous",
+        "Problem Oriented"
+      ],
+      "4": [
+        "Remember that you can always review the context by opening the pause menu,",
+        "as well as a refresher on the categories by clicking on the corresponding category name within the menu."
+      ],
+      "5": [
         "Good luck!"
       ]
     },
@@ -162,9 +144,22 @@
         "Welcome back!"
       ],
       "2": [
-
+        "For this final level, we are going to look at something other than user stories, but closely related; acceptance tests."
       ],
       "3": [
+        "For the purpose of this game, the structure is as follows:",
+        "",
+        "'Given <some context>, When <some action is carried out>, Then <some observable consequence occurs>'."
+      ],
+      "4": [
+        "Try to make the correct acceptance tests given the context (which is a user story in this case).",
+        "",
+        "Just like before, complete all batches to complete the level."
+      ],
+      "5": [
+        "There are no more mistakes within this level, every acceptance test in the batch must be completed."
+      ],
+      "6": [
         "Good luck!"
       ]
     },
@@ -174,7 +169,9 @@
         "Welcome back!"
       ],
       "2": [
-
+        "To complete this level, you have to create at least one flawless user story from the next batches!",
+        "",
+        "Everytime you make a mistake, the batch will be renewed; try to really focus on the possibilities and read the context!"
       ],
       "3": [
         "Good luck!"

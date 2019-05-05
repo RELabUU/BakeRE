@@ -419,7 +419,6 @@
 
         var level = progress[0];
         var cont = level['Content'];
-        //progress[0] === lvlF
         var curr = cont[progress[1]];
         var n = curr['nr'];
 
@@ -1350,10 +1349,17 @@
             }
             else {
                 introIndex = introIndex + 1;
+                introIndex2 = introIndex2 + 1;
                 introText.text = intr[introIndex];
                 this.introProgress();
                 if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
                     tutorialProgress = introText.text;
+                    introIndex2 = introIndex2 - 1;
+
+                    if (introCircles !== undefined) {
+                        introCircles.destroy();
+                    }
+
                     this.tutorialManager();
                 }
             }
@@ -1426,7 +1432,8 @@
 
     loadIntroductions() {
         introIndex = 1;
-        intr = intros2[progress[0]['Name']];
+        introIndex2 = 1;
+        intr = intros[progress[0]['Name']];
     }
 
     introProgress() {
@@ -1435,7 +1442,13 @@
 
         var circle;
         var circleOffset = w / 20;
-        var circleNr = intr['nr'];
+        var circleNr;
+        if (progress[0] === lvl0) {
+            circleNr = intr['nr2'];
+        }
+        else {
+            circleNr = intr['nr'];
+        }
 
         if (introCircles !== undefined) {
             introCircles.destroy();
@@ -1444,11 +1457,21 @@
 
         for (var j = 0; j < circleNr; j++) {
             circle = this.add.graphics({ lineStyle: { color: 0x000000 }, fillStyle: { color: 0x000000 } });
-            if (introIndex === (j + 1)) {
-                circle.fillCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+            if (progress[0] !== lvl0) {
+                if (introIndex === (j + 1)) {
+                    circle.fillCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+                }
+                else {
+                    circle.strokeCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+                }
             }
             else {
-                circle.strokeCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+                if (introIndex2 === (j + 1)) {
+                    circle.fillCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+                }
+                else {
+                    circle.strokeCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+                }
             }
             introCircles.add(circle);
         }
@@ -2194,6 +2217,7 @@
             // Toggle introduction again, at the correct part in the tutorial
             currentTask = undefined;
             introIndex = introIndex + 1;
+            introIndex2 = introIndex2 + 1;
             this.toggleIntroduction(intr[introIndex]);
         }
     }
