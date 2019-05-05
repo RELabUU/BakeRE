@@ -1340,10 +1340,12 @@
             if (introIndex === intr["nr"]) {
                 introText.visible = false;
                 introCircles.destroy();
+
                 if (progress[0] === lvl0) {
                     this.closeFlashingSigns();
                     tutorialProgress = "Complete";
                 }
+
                 this.openContext();
             }
             else {

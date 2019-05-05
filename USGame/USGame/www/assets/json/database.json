@@ -431,6 +431,12 @@
         "Role": "Student",
         "Action": "have all scheduling information (using specified format, see above) in one location",
         "Benefit": "I can take all courses into account when scheduling my time"
+      },
+      {
+        "Epic Title": "Recordings",
+        "Role": "Teacher",
+        "Action": "attach notes (see US2) to the recordings at certain timestamps",
+        "Benefit": "I can provide additional information where necessary"
       }
     ]
   },
