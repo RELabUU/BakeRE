@@ -51,6 +51,7 @@ var intros;
 var intros2;
 var introIndex;
 var tips;
+var introCircles;
 
 // The possible databases (choose at start of the game which one to use)
 var databases = [];

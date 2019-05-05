@@ -1231,7 +1231,6 @@
         conText.visible = false;
 
         this.loadIntroductions();
-        //this.toggleIntroduction(intr[0]);
         this.toggleIntroduction(intr[1]);
     }
 
@@ -1340,6 +1339,7 @@
             // Either skip to the next intro slide or close the introduction and start the game
             if (introIndex === intr["nr"]) {
                 introText.visible = false;
+                introCircles.destroy();
                 if (progress[0] === lvl0) {
                     this.closeFlashingSigns();
                     tutorialProgress = "Complete";
@@ -1349,6 +1349,7 @@
             else {
                 introIndex = introIndex + 1;
                 introText.text = intr[introIndex];
+                this.introProgress();
                 if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
                     tutorialProgress = introText.text;
                     this.tutorialManager();
@@ -1401,6 +1402,8 @@
         introText.y = window.innerHeight / 2;
         introText.setOrigin(0.5, 0.5);
         introText.setDepth(105);
+
+        this.introProgress();
         
         var content = [];
         for (var i = 0; i < txt.length; i++) {
@@ -1422,7 +1425,31 @@
     loadIntroductions() {
         introIndex = 1;
         intr = intros2[progress[0]['Name']];
-        //intr = intros[progress[0]['Name']][0].split("@");
+    }
+
+    introProgress() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        var circle;
+        var circleOffset = w / 20;
+        var circleNr = intr['nr'];
+
+        if (introCircles !== undefined) {
+            introCircles.destroy();
+        }
+        introCircles = this.add.container(w / 2 - (circleOffset * (circleNr - 1)) / 2, 5 * h / 6).setDepth(105);
+
+        for (var j = 0; j < circleNr; j++) {
+            circle = this.add.graphics({ lineStyle: { color: 0x000000 }, fillStyle: { color: 0x000000 } });
+            if (introIndex === (j + 1)) {
+                circle.fillCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+            }
+            else {
+                circle.strokeCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
+            }
+            introCircles.add(circle);
+        }
     }
 
     closeContext() {
@@ -2000,11 +2027,6 @@
         uss = [];
         mss = [];
 
-        //this.createLevel(0);
-        //this.toggleIntroduction();
-        //this.updateProgressBar(progress[0]);
-        //oText.text = orderText;
-
         this.scene.start('Menu');
     }
 
@@ -2169,14 +2191,7 @@
         if (currentTask.complete === true) {
             // Toggle introduction again, at the correct part in the tutorial
             currentTask = undefined;
-            /*for (var i = 0; i < intr.length; i++) {
-                if (intr[i] === introText.text) {
-                    this.toggleIntroduction(intr[i + 1]);
-                    break;
-                }
-            }*/
             introIndex = introIndex + 1;
-            //introText.text = intr[introIndex];
             this.toggleIntroduction(intr[introIndex]);
         }
     }
