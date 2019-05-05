@@ -11,6 +11,9 @@ var roleBuild;
 var actionBuild;
 var benefitBuild;
 
+var players = [];
+var txt_progress;
+
 // The contents of the userstory currently being made. It is comprised of standardtext and three variables for role-action-benefit
 var usText;
 var oText;
