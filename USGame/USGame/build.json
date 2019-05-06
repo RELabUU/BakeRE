@@ -1,10 +1,10 @@
 {
      "android": {
          "release": {
-             "keystore": "",
-             "storePassword": "",
-             "alias": "",
-             "password" : "",
+             "keystore": "c:\\Users\\merle\\Documents\\Universiteit\\Master\\jd-release-key.keystore",
+             "storePassword": "BakeREadmin11!",
+             "alias": "android-key2",
+             "password" : "BakeREadmin11!",
              "keystoreType": ""
          }
      }

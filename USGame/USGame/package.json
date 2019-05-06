@@ -4,7 +4,10 @@
     "private": true,
     "dependencies": {
         "body-parser": "^1.19.0",
+        "cordova-android": "^5.2.1",
+        "cordova-ios": "^4.2.0",
         "cordova-plugin-screen-orientation": "^3.0.1",
+        "cordova-windows": "^4.4.2",
         "es6-promise-plugin": "^4.2.2",
         "express": "^4.16.4",
         "mongojs": "^2.6.0",
@@ -14,6 +17,11 @@
     "cordova": {
         "plugins": {
             "cordova-plugin-screen-orientation": {}
-        }
+        },
+        "platforms": [
+            "android",
+            "ios",
+            "windows"
+        ]
     }
 }
