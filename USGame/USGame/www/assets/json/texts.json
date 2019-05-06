@@ -1,24 +1,24 @@
 {
   "Tips": {
-    "Well Formed": "When creating your user stories, always make sure that there is a Role, an Action and a Benefit - and that these match with each other! Reread the context carefully when you are unsure of the possible matches.",
-    "Atomic": "Make sure that your user stories only tackle one issue at a time. A tell to look for is the word 'and' within either an action or a benefit; I want to do this <and> this usually points towards multiple problems within one user story - therefore not atomic!",
-    "Minimal": "Make sure that your user stories contain only a role, an action and a benefit. If a user story contains additional information such as examples and extra descriptions, a user story is not mimimal.",
-    "Problem Oriented": "Always check if your user stories only specify problems, not solutions. If any of your user stories include specific solutions, program names, resources etc, it is most likely not problem oriented!",
-    "Full Sentence": "Always read the user story while making it and check if it makes grammatical sense as a sentence. Does this sound like a natural English sentence? Are their any random words without context?",
-    "Unambiguous": "When creating your user stories, make sure that the descriptors are specific enough. Do you have phrases or words like 'thingss' or 'the duties' that are too vague and could mean anything? Then the user story is not unambiguous!",
-    "Independent": "Make sure that your user stories stand on their own. When you see a pointer towards another user story (e.g. 'please see user story 8' or 'check the pdf'), your user story is not independent as it depends on these other files!"
+    "Well Formed": "When creating your user stories, make sure that there is a Role, an Action and a Benefit - and that these match with each other! Reread the context carefully when you are unsure of the possible matches.",
+    "Atomic": "Your user stories should tackle only one issue at a time. Hint: search for the word 'and' within either an action or a benefit, for this work usually refers to multiple problems within one user story - therefore not atomic!",
+    "Minimal": "Your user stories should contain only a role, an action and a benefit. Additional information such as examples and extra descriptions make your  story not minimal.",
+    "Problem Oriented": "Always check if your user stories only specify problems, not solutions. References to technologies, programs, or resources generally indicate your story is not problem oriented!",
+    "Full Sentence": "Check if your user story is a grammatically correct sentence in English. Avoid partial sentences without subject or verb.",
+    "Unambiguous": "Your written user stories should prevent multiple interpretations. Are there phrases or words like 'things', 'the duties', 'to manage' that are too vague and could mean anything? Then the user story is not unambiguous!",
+    "Independent": "Make sure that your user stories stand on their own. Pointers towards other artifacts (e.g., 'please see user story 8' or 'check the pdf') make your user story not independent!"
   },
   "Introductions": {
     "Tutorial": {
       "nr": 19,
       "nr2": 13,
       "1": [
-        "Welcome to the BakeRE!"
+        "Welcome to BakeRE!"
       ],
       "2": [
-        "Within this game, you produce user stories by making cakes.",
+        "In this game, you author user stories by making cakes.",
         "",
-        "Within BakeRE, every cake consists of three ingredients - a cakebase, icing and some decorations.",
+        "Every cake consists of three ingredients: cake bottom, icing and decorations.",
         "This mirrors the makeup of a user story with their Role-Action-Benefit structure."
       ],
       "3": [
@@ -27,48 +27,48 @@
         "'As a <Role> I want to <Action> so that <Benefit>'"
       ],
       "4": [
-        "To complete a batch of cakes, you have to complete all correct user stories within that batch,",
+        "To complete a batch of cakes, you have to complete all correct user stories in that batch,",
         "",
-        "and to complete a level, you have to complete all batches within the level."
+        "and to complete a level, you have to complete all batches in the level."
       ],
       "5": [
-        "The amount of user stories and batches yet to complete can be seen to the left of the screen in the progressbar."
+        "The progress bar on the left shows your progress within a level."
       ],
       "6": "#1",
       "7": [
-        "To the right, you see the user story menu."
+        "On the right, you see the user story menu."
       ],
       "8": "#2",
       "9": [
-        "To create a user story, you have to get one part from each of the different categories and combine them into a cake.",
+        "To write a user story, you pick one role/bottom, one action/icing, and one benefit/decoration and combine them into a cake.",
         "",
-        "Try it out by opening the 'Role'/'Cakebase' menu!"
+        "Try it out by opening the 'Role'/'Cake bottom' menu!"
       ],
       "10": "#3",
       "11": [
-        "Here, you can pick your ingredients and drag them to the plate on the left.",
+        "Here, you can pick your ingredients and drag them to the dish on the left.",
         "",
         "Try it out now!"
       ],
       "12": "#4",
       "13": [
-        "Good job! You can see the user story you are creating as a cake on the plate, and as an actual user story at the bottom of the screen."
+        "Good job! The cake you are creating is mapped to your user story at the bottom of the screen."
       ],
       "14": "#5",
       "15": [
-        "When three ingredients are brought together the user story is judged and, if correct, points are added to your total (depending on the time it took you to complete it)."
+        "When you combine three ingredients, BakeRE evaluated your user story and, if correct, you gain points (the faster, the more points)."
       ],
       "16": "#6",
       "17": [
-        "However, when a user story is incorrect, points are subtracted, so be careful! Sometimes being precise is better than being fast.",
+        "When a user story is incorrect, points are detracted, so be careful! Sometimes being precise is better than being fast.",
         "",
-        "(Points gained during the tutorial do not count towards total points)"
+        "(Points gained in the tutorial do not add up to your score)"
       ],
       "18": [
-        "Now with this in mind, try to complete the three user stories in this batch to finish the tutorial.",
+        "With this in mind, complete the three user stories in this batch to finish the tutorial.",
         "",
-        "The slide after this will have the context of the batch of user stories.",
-        "When you want to take another look at it, you can press the pause button at the bottom of the screen."
+        "You will now see the context of the batch of user stories.",
+        "To take another look at the context, press the pause button."
       ],
       "19": [
         "You can always replay the tutorial if necessary.",
@@ -82,9 +82,9 @@
         "Welcome back!"
       ],
       "2": [
-        "To win this level, once again complete all user stories across the different batches.",
+        "To win this level, complete again all user stories across the different batches.",
         "",
-        "Remember that you can always review the context again by clicking on the pause button at the bottom of the screen."
+        "You can always review the context by pausing BakeRE."
       ],
       "3": [
         "Good luck!"
@@ -98,11 +98,11 @@
       "2": [
         "From this level forward, we introduce faulty user stories into the mix.",
         "",
-        "These user stories could be structurally correct, but do not comply to one or more of the QUS quality constraints.",
-        "To complete the level, finish all correct user stories and leave the faulty ones in the batch."
+        "These user stories can be structurally correct, but do not comply with some of the QUS quality criteria.",
+        "To complete the level, associate all correct user stories and leave out the faulty ones."
       ],
       "3": [
-        "The QUS categories to focus on in this first level are:",
+        "The QUS categories to focus on are:",
         "",
         "Full Sentence",
         "Atomic",
@@ -121,18 +121,18 @@
         "Welcome back!"
       ],
       "2": [
-        "To win this level, once again complete all user stories across the different batches without using the faulty ones."
+        "To win this level, complete all user stories across the batches without associating the faulty ones."
       ],
       "3": [
-        "The QUS categories to focus on in this level are:",
+        "The QUS categories to focus on are:",
         "",
         "Independent",
         "Unambiguous",
         "Problem Oriented"
       ],
       "4": [
-        "Remember that you can always review the context by opening the pause menu,",
-        "as well as a refresher on the categories by clicking on the corresponding category name within the menu."
+        "You can always review the context by opening the pause menu,",
+        "which also shows a refresher of those categories."
       ],
       "5": [
         "Good luck!"
@@ -144,20 +144,20 @@
         "Welcome back!"
       ],
       "2": [
-        "For this final level, we are going to look at something other than user stories, but closely related; acceptance tests."
+        "In this final level, we look at the back of a user story car: acceptance tests."
       ],
       "3": [
-        "For the purpose of this game, the structure is as follows:",
+        "We follow Dan North's syntax:",
         "",
         "'Given <some context>, When <some action is carried out>, Then <some observable consequence occurs>'."
       ],
       "4": [
-        "Try to make the correct acceptance tests given the context (which is a user story in this case).",
+        "Create correct acceptance tests given the context (a user story, in this case).",
         "",
         "Just like before, complete all batches to complete the level."
       ],
       "5": [
-        "There are no more mistakes within this level, every acceptance test in the batch must be completed."
+        "There are no mistakes in this level: every acceptance test has to be completed."
       ],
       "6": [
         "Good luck!"
@@ -171,7 +171,7 @@
       "2": [
         "To complete this level, you have to create at least one flawless user story from the next batches!",
         "",
-        "Everytime you make a mistake, the batch will be renewed; try to really focus on the possibilities and read the context!"
+        "Every time you make a mistake, the batch is renewed; focus and provide the right answer!"
       ],
       "3": [
         "Good luck!"
