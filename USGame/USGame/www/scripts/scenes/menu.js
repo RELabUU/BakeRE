@@ -102,11 +102,11 @@
 
                 for (var x = 1; x <= 5; x++) {
                     if (name.includes("Level " + x)) {
-                        progress[0] = levels[x];
+                        progress.currentLevel = levels[x];
                         break;
                     }
                     else if (x === 5) {
-                        progress[0] = levels[0];
+                        progress.currentLevel = levels[0];
                         break;
                     }
                 }
@@ -138,10 +138,10 @@
             var sText = this.make.text(textconfigScore);
             sText.x = w / 40;
             sText.y = h / 20;
-            sText.text = "Score: " + progress[4].reduce(function (a, b) { return a + b; }, 0);
+            sText.text = "Score: " + progress.pointsPerLevel.reduce(function (a, b) { return a + b; }, 0);
         }
         else {
-            txt_progress.text = "Name: " + progress[8].join("");
+            txt_progress.text = "Name: " + progress.player.join("");
             this.createTextMenu();
         }
 
@@ -172,16 +172,26 @@
         var timePerUserstory = 45;
         var timeToSucceed = 30;
         var b = 200 / Math.pow(timePerUserstory, 2);
+        var c = 150 / Math.pow(timePerUserstory, 2);
         var x = Math.pow(timeToSucceed, 2);
         var splus = Math.round(200 - b * x);
+        var smin = Math.round(150 - c * x);
 
         var nr1 = this.getNrOfUserstories(lvl1);
         var nr2 = this.getNrOfUserstories(lvl2);
         var nr3 = this.getNrOfUserstories(lvl3);
 
-        lvl1to2 = nr1 * splus;
-        lvl2to3 = nr2 * splus + lvl1to2;
-        lvl3to4 = nr3 * splus + lvl2to3;
+        var nr1min = Math.round(nr1 / 5);
+        var nr2min = Math.round(nr2 / 5);
+        var nr3min = Math.round(nr3 / 5);
+
+        lvl1to2min = nr1min * smin;
+        lvl2to3min = nr2min * smin;
+        lvl3to4min = nr3min * smin;
+
+        lvl1to2 = nr1 * splus - lvl1to2min;
+        lvl2to3 = nr2 * splus + lvl1to2 - lvl2to3min;
+        lvl3to4 = nr3 * splus + lvl2to3 - lvl3to4min;
 
         pts.push(0);
         pts.push(0);
@@ -223,13 +233,13 @@
         for (var i = 0; i < l; i++) {
             var unlocked;
             points = ptsNeeded[i];
-            totalPoints = progress[4].reduce(function (a, b) { return a + b; }, 0);
+            totalPoints = progress.pointsPerLevel.reduce(function (a, b) { return a + b; }, 0);
 
             if (menuType === 2) {
                 if (i === 0) {
                     unlocked = true;
                 }
-                else if (totalPoints >= points && progress[7][i - 1] === true) {
+                else if (totalPoints >= points && progress.completedLevels[i - 1] === true) {
                     unlocked = true;
                 }
                 else {
@@ -263,11 +273,20 @@
                 txt = "Tutorial";
             }
             else if (menuType === 2) {
-                txt = [
-                    "Level " + i,
-                    "",
-                    "Points needed: " + points
-                ];
+                if (unlocked === true) {
+                    txt = [
+                        "Level " + i,
+                        "",
+                        "Current points: " + progress.pointsPerLevel[i]
+                    ];
+                }
+                else {
+                    txt = [
+                        "Level " + i,
+                        "",
+                        "Points needed: " + points
+                    ];
+                }
             }
 
             var t = this.add.text(
@@ -326,21 +345,21 @@
 
     addLetters(char) {
         if (char === "↶") {
-            if (progress[8].length > 0) {
-                progress[8].pop();
+            if (progress.player.length > 0) {
+                progress.player.pop();
             } 
         }
         else if (char === "↷") {
             this.checkName();
         }
         else {
-            progress[8].push(char);
+            progress.player.push(char);
         }
     }
 
     checkName() {
         var name = "";
-        var n = progress[8].join("");
+        var n = progress.player.join("");
         var url = "http://www.bakere.tech/getname.php";
 
         var xhttp = new XMLHttpRequest();
@@ -371,8 +390,19 @@
     }
 
     sendName() {
-        var name = "%27" + progress[8].join("") + "%27";
-        var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=0";
+        var timestr = "";
+        var timestring = "";
+
+        for (var j = 0; j <= 4; j++) {
+            var times = progress.totalTime[j];
+            for (var i = 1; i <= times.length; i++) {
+                timestr = "&time" + j + i + "=" + times[i - 1];
+                timestring = timestring + timestr;
+            }
+        }
+
+        var name = "%27" + progress.player.join("") + "%27";
+        var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=0" + timestring;
 
         var xhttp = new XMLHttpRequest();
         xhttp.open('GET', url, true);

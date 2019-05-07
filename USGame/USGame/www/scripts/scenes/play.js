@@ -15,7 +15,7 @@
     create() {
         var background = this.add.image(window.innerWidth / 2, window.innerHeight / 4, 'background3');
         background.setTint(0x36627b, 0x36627b, 0xf4ab2b, 0xf4ab2b);
-        if (progress[0] === lvl0) {
+        if (progress.currentLevel === lvl0) {
             background.setInteractive();
         }
 
@@ -57,7 +57,7 @@
 
         // Switch between menu states; None = closed, Roles = roles, Actions = actions & Benefits = benefits
         roleMenu.on('pointerup', function (pointer, gameObject) {
-            if (progress[0] === lvl0 && currentTask !== undefined) {
+            if (progress.currentLevel === lvl0 && currentTask !== undefined) {
                 if (currentTask.type === "tap role" && tapRoleComplete === false) {
                     tapRoleComplete = true;
                 }
@@ -82,7 +82,7 @@
         // Take care of the different types of textslides that could be on the screen (Introduction, Context & Debriefing)
         orderBG.on('pointerup', function (pointer, gameobject) {
             if (paused === false) {
-                if (progress[0] === lvl0 && currentTask !== undefined) {
+                if (progress.currentLevel === lvl0 && currentTask !== undefined) {
                     this.checkTutorialTasks();
                 }
                 else {
@@ -95,7 +95,7 @@
         }, this);
 
         background.on('pointerup', function () {
-            if (progress[0] === lvl0 && currentTask !== undefined) {
+            if (progress.currentLevel === lvl0 && currentTask !== undefined) {
                 if (currentTask.type === "tap") {
                     tapComplete = true;
                 }
@@ -258,7 +258,7 @@
         }
 
         if (orderBG.visible === false) {
-            if (progress[0] === lvl0 && tutorialProgress !== "Complete") {
+            if (progress.currentLevel === lvl0 && tutorialProgress !== "Complete") {
                 this.checkTutorialTasks();
             }
             else if (this.startTime !== undefined) {
@@ -326,27 +326,27 @@
             this.pickEpics(lvlF);
         }
         else {
-            this.pickEpics(progress[0]);
+            this.pickEpics(progress.currentLevel);
         }
 
         order = eps[0];
         this.pickUserStories(order);
 
-        if (progress[0] === lvl0) {
+        if (progress.currentLevel === lvl0) {
             this.tutorialUI();
         }
-        else if (progress[0] === lvl2 || progress[0] === lvl3) {
+        else if (progress.currentLevel === lvl2 || progress.currentLevel === lvl3) {
             this.pickMistakes();
         }
 
-        if (progress[0] === lvl4) {
+        if (progress.currentLevel === lvl4) {
             orderText = "As a " + order['Role'] + " I want to " + order['Action'] + " so that " + order['Benefit'];
         }
         else {
             orderText = order['Epic Text'];
         }
 
-        console.log(progress[0]['Name']);
+        console.log(progress.currentLevel['Name']);
     }
 
     pickEpics(level) {
@@ -397,7 +397,7 @@
         var usNr;
         var screenNr;
 
-        if (progress[0] === lvl4) {
+        if (progress.currentLevel === lvl4) {
             for (var k = 0; k < accTests['Number']; k++) {
                 if (startEp["Role"] === accTests['Acceptance Tests'][k]["Role"] && startEp["Action"] === accTests['Acceptance Tests'][k]["Action"] && startEp["Benefit"] === accTests['Acceptance Tests'][k]["Benefit"]) {
                     usContent.push(accTests['Acceptance Tests'][k]);
@@ -417,9 +417,9 @@
             usNr = 5;
         }
 
-        var level = progress[0];
+        var level = progress.currentLevel;
         var cont = level['Content'];
-        var curr = cont[progress[1]];
+        var curr = cont[progress.currentEpic];
         var n = curr['nr'];
 
         // No more than n userstories should be shown on screen, n is never more than 5
@@ -436,17 +436,17 @@
             uss.push(usContent[nrs[i]]);
         }
 
-        progress[2] = uss;
-        progress[5][0] = this.generateRandomNumbers(1, 5, uss.length);
-        progress[5][1] = this.generateRandomNumbers(1, 5, uss.length);
-        progress[5][2] = this.generateRandomNumbers(1, 5, uss.length);
+        progress.currentUserstories = uss;
+        progress.colours[0] = this.generateRandomNumbers(1, 5, uss.length);
+        progress.colours[1] = this.generateRandomNumbers(1, 5, uss.length);
+        progress.colours[2] = this.generateRandomNumbers(1, 5, uss.length);
     }
 
     pickMistakes() {
-        var level = progress[0];
+        var level = progress.currentLevel;
 
         var cont = level['Content'];
-        var curr = cont[progress[1]];
+        var curr = cont[progress.currentEpic];
 
         var n = curr['nrMistakes'];
         var typeOfM = curr['typeMistakes'];
@@ -504,8 +504,8 @@
             uss[nrs[a]] = mss[a];
         }
 
-        progress[2] = uss;
-        progress[3] = mss;
+        progress.currentUserstories = uss;
+        progress.currentMistakes = mss;
     }
 
     // #endregion
@@ -675,7 +675,7 @@
         gameObject.list[1].visible = false;
         gameObject.list[2].visible = false;
 
-        if (progress[0] === lvl0 && currentTask !== undefined) {
+        if (progress.currentLevel === lvl0 && currentTask !== undefined) {
             if (currentTask.type === "drag") {
                 this.time.delayedCall(500, function () {
                     dragComplete = true;
@@ -688,24 +688,17 @@
 
     // #region Debriefing
 
-    debriefing() {
-        // Contains: 
-        // - Score per level (score)
-        // - Total score of game (progress[4])
-        // - Time spent on level (progress[6])
-        // - Tip (mistakesMade)
-        // - Top (?)
-
+    debriefing(lvlNr) {
         orderBG.visible = true;
         bg.visible = true;
 
         var sc = score;
         var total = 0;
-        var t = progress[6];
+        var t = progress.totalTime[lvlNr].reduce(function (a, b) { return a + b; }, 0);
         var mistakeText = "";
 
-        for (var i = 0; i < progress[4].length; i++) {
-            total = total + progress[4][i];
+        for (var i = 0; i < progress.pointsPerLevel.length; i++) {
+            total = total + progress.totalTime[i].reduce(function (a, b) { return a + b; }, 0);
         }
 
         if (mistakesMade.length === 0) {
@@ -904,7 +897,7 @@
             case roles:
                 strs = strsr;
                 checkEmpty = rolesEmptied;
-                if (progress[0] === lvl4) {
+                if (progress.currentLevel === lvl4) {
                     str = 'Given';
                 }
                 else {
@@ -914,7 +907,7 @@
             case actions:
                 strs = strsa;
                 checkEmpty = actionsEmptied;
-                if (progress[0] === lvl4) {
+                if (progress.currentLevel === lvl4) {
                     str = 'When';
                 }
                 else {
@@ -924,7 +917,7 @@
             case benefits:
                 strs = strsb;
                 checkEmpty = benefitsEmptied;
-                if (progress[0] === lvl4) {
+                if (progress.currentLevel === lvl4) {
                     str = 'Then';
                 }
                 else {
@@ -1047,7 +1040,7 @@
         this.createMenuBG(w, h, spriteWidth, us);
         this.createOrderBG(w, h, orderText);
         this.createUserStoryLine();
-        this.updateProgressBar(progress[0]);
+        this.updateProgressBar(progress.currentLevel);
     }
 
     createPauseMenu() {
@@ -1065,9 +1058,9 @@
         pauseText.setDepth(10);
         pauseText.text = "II";
 
-        if (progress[0] === lvl2 || progress[0] === lvl3) {
-            var ep = progress[0]['Epics'];
-            var cont = progress[0]['Content'];
+        if (progress.currentLevel === lvl2 || progress.currentLevel === lvl3) {
+            var ep = progress.currentLevel['Epics'];
+            var cont = progress.currentLevel['Content'];
             var typecont = cont[ep];
             var tcont = typecont['typeMistakes'];
             var types = tcont.split("&");
@@ -1134,7 +1127,7 @@
             pauseTimeEnd = undefined;
             this.openContext();
             conText.text = "Context";
-            if (progress[0] === lvl2 || progress[0] === lvl3) {
+            if (progress.currentLevel === lvl2 || progress.currentLevel === lvl3) {
                 oText.y = 4 * window.innerHeight / 9;
                 categoryHeader.visible = true;
                 category1.visible = true;
@@ -1145,7 +1138,7 @@
         else {
             paused = false;
             pauseTimeEnd = new Date();
-            if (progress[0] === lvl2 || progress[0] === lvl3) {
+            if (progress.currentLevel === lvl2 || progress.currentLevel === lvl3) {
                 categoryHeader.visible = false;
                 category1.visible = false;
                 category2.visible = false;
@@ -1261,13 +1254,13 @@
         var mistInBatch;
 
         // Progress bar (inner) --> how many do you need to complete the batch?
-        if (progress[1] <= level['Epics']) {
-            nrInBatch = level['Content'][progress[1]]['nr'];
-            mistInBatch = level['Content'][progress[1]]['nrMistakes'];
+        if (progress.currentEpic <= level['Epics']) {
+            nrInBatch = level['Content'][progress.currentEpic]['nr'];
+            mistInBatch = level['Content'][progress.currentEpic]['nrMistakes'];
         }
         else {
-            nrInBatch = level['Content'][progress[1] - 1]['nr'];
-            mistInBatch = level['Content'][progress[1] - 1]['nrMistakes'];
+            nrInBatch = level['Content'][progress.currentEpic - 1]['nr'];
+            mistInBatch = level['Content'][progress.currentEpic - 1]['nrMistakes'];
         }
 
         if (mistInBatch === "") {
@@ -1286,10 +1279,10 @@
             for (var k = 0; k < ul; k++) {
                 rect = this.add.graphics();
 
-                if (j > Number(level['Epics']) - progress[1]) {
+                if (j > Number(level['Epics']) - progress.currentEpic) {
                     rect.fillStyle(0x36627b, 1); // blue: 0x36627b
                 }
-                else if (j === Number(level['Epics']) - progress[1]) {
+                else if (j === Number(level['Epics']) - progress.currentEpic) {
                     if (k >= ul - us) {
                         rect.fillStyle(0x36627b, 1);
                     }
@@ -1309,11 +1302,11 @@
         }
 
         // Progress bar (outer) --> batch (epic) 2/6 (how many batches in a level?)
-        console.log('Batches in level: ' + progress[1] + '/' + level['Epics']);
+        console.log('Batches in level: ' + progress.currentEpic + '/' + level['Epics']);
 
         for (var i = 0; i <= Number(level['Epics']); i++) {
             circle = this.add.graphics();
-            if (i > Number(level['Epics']) - progress[1]) {
+            if (i > Number(level['Epics']) - progress.currentEpic) {
                 circle.fillStyle(0xf4ab2b, 1); // orange: 0xf4ab2b
             }
             else {
@@ -1325,7 +1318,7 @@
     }
 
     setUserStoryText() {
-        if (progress[0] === lvl4) {
+        if (progress.currentLevel === lvl4) {
             usText.text = 'Given ' + roleText + ' When ' + actionText + ' Then ' + benefitText + '.';
         }
         else {
@@ -1340,7 +1333,7 @@
                 introText.visible = false;
                 introCircles.destroy();
 
-                if (progress[0] === lvl0) {
+                if (progress.currentLevel === lvl0) {
                     this.closeFlashingSigns();
                     tutorialProgress = "Complete";
                 }
@@ -1433,7 +1426,7 @@
     loadIntroductions() {
         introIndex = 1;
         introIndex2 = 1;
-        intr = intros[progress[0]['Name']];
+        intr = intros[progress.currentLevel['Name']];
     }
 
     introProgress() {
@@ -1443,7 +1436,7 @@
         var circle;
         var circleOffset = w / 20;
         var circleNr;
-        if (progress[0] === lvl0) {
+        if (progress.currentLevel === lvl0) {
             circleNr = intr['nr2'];
         }
         else {
@@ -1457,7 +1450,7 @@
 
         for (var j = 0; j < circleNr; j++) {
             circle = this.add.graphics({ lineStyle: { color: 0x000000 }, fillStyle: { color: 0x000000 } });
-            if (progress[0] !== lvl0) {
+            if (progress.currentLevel !== lvl0) {
                 if (introIndex === (j + 1)) {
                     circle.fillCircleShape(new Phaser.Geom.Circle(j * circleOffset, 0, 5));
                 }
@@ -1544,7 +1537,7 @@
         switch (menuVisible) {
             case 'Roles':
                 strs = strsr;
-                if (progress[0] === lvl4) {
+                if (progress.currentLevel === lvl4) {
                     str = 'Given';
                 }
                 else {
@@ -1555,7 +1548,7 @@
                 break;
             case 'Actions':
                 strs = strsa;
-                if (progress[0] === lvl4) {
+                if (progress.currentLevel === lvl4) {
                     str = 'When';
                 }
                 else {
@@ -1566,7 +1559,7 @@
                 break;
             case 'Benefits':
                 strs = strsb;
-                if (progress[0] === lvl4) {
+                if (progress.currentLevel === lvl4) {
                     str = 'Then';
                 }
                 else {
@@ -1593,7 +1586,7 @@
             var container;
             var cont;
 
-            cream = this.add.sprite(spriteWidth / 2, 11 * spriteHeight / 32, icon + progress[5][n][indices[i]]).setScale(0.25);
+            cream = this.add.sprite(spriteWidth / 2, 11 * spriteHeight / 32, icon + progress.colours[n][indices[i]]).setScale(0.25);
 
             cont = this.add.graphics();
             cont.fillStyle(0xf2f2f2);
@@ -1646,13 +1639,34 @@
 
     // #region Batch/Level/Game-Over check
     checkGameOver() {
+        var lvlNr;
         var counter;
         var donezo = false;
         var mistakeFound = false;
         var loopDone = false;
 
+        switch (progress.currentLevel) {
+            case lvl0:
+                lvlNr = 0;
+                break;
+            case lvl1:
+                lvlNr = 1;
+                break;
+            case lvl2:
+                lvlNr = 2;
+                break;
+            case lvl3:
+                lvlNr = 3;
+                break;
+            case lvl4:
+                lvlNr = 4;
+                break;
+            default:
+                break;
+        }
+
         for (var i = 0; i < uss.length; i++) {
-            if (progress[0] === lvl4) {
+            if (progress.currentLevel === lvl4) {
                 // Check if the created userstory exists
                 if (roleText === uss[i]["Given"] && actionText === uss[i]["When"] && benefitText === uss[i]["Then"]) {
                     if (flawless.inProgress === true) {
@@ -1669,9 +1683,9 @@
                 if (roleText === uss[i]["Role"] && actionText === uss[i]["Action"] && benefitText === uss[i]["Benefit"]) {
 
                     // If we're in a level with mistakes, also check if the found userstory is in the mistake list
-                    if (progress[3].length !== 0) {
-                        for (var j = 0; j < progress[3].length; j++) {
-                            if (roleText === progress[3][j]["Role"] && actionText === progress[3][j]["Action"] && benefitText === progress[3][j]["Benefit"]) {
+                    if (progress.currentMistakes.length !== 0) {
+                        for (var j = 0; j < progress.currentMistakes.length; j++) {
+                            if (roleText === progress.currentMistakes[j]["Role"] && actionText === progress.currentMistakes[j]["Action"] && benefitText === progress.currentMistakes[j]["Benefit"]) {
 
                                 // Userstory exists, but a mistake has been made
                                 mistakeFound = true;
@@ -1682,7 +1696,7 @@
                                         mistakesMade.push(tups[y]);
                                     }
                                 }
-                                this.userStoryDoesNotExist();
+                                this.userStoryDoesNotExist(lvlNr);
                                 return;
                             }
                             else {
@@ -1713,7 +1727,6 @@
 
             if (roleText !== '<???>' && actionText !== '<???>' && benefitText !== '<???>') {
                 if (flawless.inProgress === true && flawless.completed === false) {
-                    //this.userStoryDoesNotExist();
                     wrongSound.play();
                     console.log("Not a valid userstory :(");
 
@@ -1726,12 +1739,12 @@
                     eps = [];
                     times = [];
 
-                    this.putStuffBack(false);
+                    this.putStuffBack(false, lvlNr);
                     this.setUserStoryText();
 
                     // Generate a new mini level with one batch that has to be completed without errors
-                    progress[0] = lvlF;
-                    progress[1] = 1;
+                    progress.currentLevel = lvlF;
+                    progress.currentEpic = 1;
                     this.scene.restart();
                 }
                 else {
@@ -1745,13 +1758,13 @@
                     tup[0] = "Well Formed";
                     tup[1] = us;
                     mistakesMade.push(tup);
-                    this.userStoryDoesNotExist();
+                    this.userStoryDoesNotExist(lvlNr);
                 }
             }
         }
     }
 
-    putStuffBack(correct) {
+    putStuffBack(correct, lvlNr) {
         // Put everything back
         roleText = "<???>";
         actionText = "<???>";
@@ -1777,10 +1790,10 @@
         building[2] = "";
 
         if (correct === true) {
-            this.calculateScore(true);
+            this.calculateScore(true, lvlNr);
         }
         else {
-            this.calculateScore(false);
+            this.calculateScore(false, lvlNr);
         }
 
         this.startTimer();
@@ -1819,7 +1832,7 @@
         this.textsFalse();
     }
 
-    calculateScore(correct) {
+    calculateScore(correct, lvlNr) {
         var timePerUserstory = 45;
         var b = 200 / Math.pow(timePerUserstory, 2);
         var c = 150 / Math.pow(timePerUserstory, 2);
@@ -1828,7 +1841,7 @@
         var splus = Math.round(200 - b * x);
         var smin = Math.round(150 - c * x);
 
-        progress[6] = progress[6] + time;
+        progress.totalTime[lvlNr][progress.currentEpic - 1] = progress.totalTime[lvlNr][progress.currentEpic - 1] + time;
 
         if (smin < 0) {
             smin = 0;
@@ -1854,12 +1867,13 @@
     userStoryExists(index) {
         this.emptyMenu();
         times = [];
+        var scoreTotal = 0;
 
         uss.splice(index, 1);
-        progress[5][0].splice(index, 1);
-        progress[5][1].splice(index, 1);
-        progress[5][2].splice(index, 1);
-        this.updateProgressBar(progress[0]);
+        progress.colours[0].splice(index, 1);
+        progress.colours[1].splice(index, 1);
+        progress.colours[2].splice(index, 1);
+        this.updateProgressBar(progress.currentLevel);
 
         // Congratulate player
         emitter.on = true;
@@ -1868,7 +1882,7 @@
 
         this.disableMenuButtons();
 
-        var level = progress[0];
+        var level = progress.currentLevel;
         var lvlNr;
         switch (level) {
             case lvl0:
@@ -1891,23 +1905,23 @@
         }
 
         this.time.delayedCall(1500, function () {
-            this.putStuffBack(true);
+            this.putStuffBack(true, lvlNr);
 
             if (uss.length - mss.length === 0 || flawless.completed === true) {
                 uss = [];
-                var ep = progress[1];
-                progress[1] = ep + 1;
-                var epic = eps[progress[1] - 1];
+                var ep = progress.currentEpic;
+                progress.currentEpic = ep + 1;
+                var epic = eps[progress.currentEpic - 1];
 
-                if (progress[1] > level['Epics']) {
+                if (progress.currentEpic > level['Epics']) {
                     var s = 200 / Math.pow(45, 2);
                     var minScore = Math.round(200 - s * Math.pow(40, 2));
 
-                    var e = progress[0]['Epics'];
-                    var con = progress[0]['Content'];
+                    var e = progress.currentLevel['Epics'];
+                    var con = progress.currentLevel['Content'];
                     var amount = 0;
                     for (var a = 1; a <= e; a++) {
-                        if (progress[0] === lvl0 || progress[0] === lvl1 || progress[0] === lvl4) {
+                        if (progress.currentLevel === lvl0 || progress.currentLevel === lvl1 || progress.currentLevel === lvl4) {
                             amount = amount + Number(con[a]['nr']);
                         }
                         else {
@@ -1916,24 +1930,22 @@
                     }
 
                     var minTotal = minScore * amount;
-                    console.log("Minimum score: " + minScore);
-                    console.log("Minimum total: " + minTotal);
 
-                    if (progress[0] !== lvl0) {
+                    if (progress.currentLevel !== lvl0) {
                         if (score > minTotal || flawless.completed === true) {
                             if (flawless.inProgress === true) {
                                 lvlNr = flawless.lvlNr;
                             }
-                            progress[4][lvlNr] = score;
-                            progress[7][lvlNr] = true;
+                            progress.pointsPerLevel[lvlNr] = score;
+                            progress.completedLevels[lvlNr] = true;
 
                             flawless.inProgress = false;
                             flawless.completed = false;
 
-                            var scoreTotal = progress[4].reduce(function (a, b) { return a + b; }, 0);
-                            this.sendScore(scoreTotal);
+                            scoreTotal = progress.pointsPerLevel.reduce(function (a, b) { return a + b; }, 0);
+                            this.sendScore(scoreTotal, lvlNr);
 
-                            this.fireworks();
+                            this.fireworks(lvlNr);
 
                             var pc = progressCircles.length;
                             var pr = progressRects.length;
@@ -1960,15 +1972,18 @@
                             times = [];
 
                             // Generate a new mini level with one batch that has to be completed without errors
-                            progress[0] = lvlF;
-                            progress[1] = 1;
+                            progress.currentLevel = lvlF;
+                            progress.currentEpic = 1;
                             this.scene.restart();
                         }
                     }
                     else {
-                        progress[7][lvlNr] = true;
+                        progress.pointsPerLevel[lvlNr] = 0;
+                        progress.completedLevels[lvlNr] = true;
+                        scoreTotal = progress.pointsPerLevel.reduce(function (a, b) { return a + b; }, 0);
+                        this.sendScore(scoreTotal, lvlNr);
 
-                        this.fireworks();
+                        this.fireworks(lvlNr);
 
                         var pcl = progressCircles.length;
                         var prl = progressRects.length;
@@ -1993,9 +2008,9 @@
                         strsb = [];
                         this.pickMistakes();
                     }
-                    this.updateProgressBar(progress[0]);
+                    this.updateProgressBar(progress.currentLevel);
 
-                    if (progress[0] === lvl4) {
+                    if (progress.currentLevel === lvl4) {
                         orderText = "As a " + epic['Role'] + " I want to " + epic['Action'] + " so that " + epic['Benefit'];
                     }
                     else {
@@ -2014,7 +2029,7 @@
         }, [], this);
     }
 
-    userStoryDoesNotExist() {
+    userStoryDoesNotExist(lvlNr) {
         // Tell player they made a mistake
         wrongSound.play();
         console.log("Not a valid userstory :(");
@@ -2029,7 +2044,7 @@
             strsa.push(actionText);
             strsb.push(benefitText);
 
-            this.putStuffBack(false);
+            this.putStuffBack(false, lvlNr);
             this.setUserStoryText();
 
             this.enableMenuButtons();
@@ -2044,7 +2059,6 @@
     }
 
     nextLevel() {
-        progress[6] = 0;
         score = 0;
         scoreText.text = "Score: " + score;
 
@@ -2055,12 +2069,12 @@
         this.scene.start('Menu');
     }
 
-    fireworks() {
+    fireworks(lvlNr) {
         strsr = [];
         strsa = [];
         strsb = [];
 
-        progress[1] = 1;
+        progress.currentEpic = 1;
 
         jingle2Sound.play();
         firework1.on = true;
@@ -2079,10 +2093,7 @@
             firework1.on = false;
             firework2.on = false;
             firework3.on = false;
-            this.debriefing();
-            //this.nextLevel();
-            // or
-            //this.restartGame();
+            this.debriefing(lvlNr);
         }, [], this);
     }
 
@@ -2124,14 +2135,22 @@
     restartGame() {
         this.emptyLevel();
 
+        times0 = [0, 0];
+        times1 = [0, 0, 0, 0, 0];
+        times2 = [0, 0, 0, 0, 0, 0, 0];
+        times3 = [0, 0, 0, 0, 0, 0, 0];
+        times4 = [0, 0, 0, 0, 0];
+
         // Set the progress array to the start conditions; tutorial at epic 1. 
-        progress[0] = lvl0;
-        progress[1] = 1;
-        progress[2] = [];
-        progress[3] = [];
-        progress[4] = 0;
-        progress[5] = [];
-        progress[6] = 0;
+        progress.currentLevel = lvl0;
+        progress.currentEpic = 1;
+        progress.currentUserstories = [];
+        progress.currentMistakes = [];
+        progress.pointsPerLevel = [0, 0, 0, 0, 0];
+        progress.colours = [];
+        progress.totalTime = [times0, times1, times2, times3, times4];
+        progress.completedLevels = [false, false, false, false, false];
+        progress.player = [];
 
         building = [];
 
@@ -2305,9 +2324,22 @@
 
     // --------------------------------------------------------------------------- //
 
-    sendScore(s) {
-        var name = "%27" + progress[8].join("") + "%27";
-        var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=" + s;
+    sendScore(s, lvlNr) {
+        var timestr = "";
+        var timestring = "";
+
+        for (var j = 0; j <= 4; j++) {
+            var times = progress.totalTime[j];
+            for (var i = 1; i <= times.length; i++) {
+                timestr = "&time" + j + i + "=" + times[i - 1];
+                timestring = timestring + timestr;
+            }
+        }
+
+        var name = "%27" + progress.player.join("") + "%27";
+        var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=" + s + timestring;
+
+        console.log(timestring);
         console.log(url);
 
         var xhttp = new XMLHttpRequest();

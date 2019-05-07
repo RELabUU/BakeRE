@@ -39,7 +39,25 @@ var menuGroup = [];
 // progress[6] = current total time (of completed batches)
 // progress[7] = completed levels (array of bools)
 // progress[8] = player name
-var progress = [];
+//var progress = [];
+
+var times0 = [0, 0];
+var times1 = [0, 0, 0, 0, 0];
+var times2 = [0, 0, 0, 0, 0, 0, 0];
+var times3 = [0, 0, 0, 0, 0, 0, 0];
+var times4 = [0, 0, 0, 0, 0];
+
+var progress = {
+    currentLevel: lvl0,
+    currentEpic: 1,
+    currentUserstories: [],
+    currentMistakes: [],
+    pointsPerLevel: [0, 0, 0, 0, 0],
+    colours: [],
+    totalTime: [times0, times1, times2, times3, times4],
+    completedLevels: [false, false, false, false, false],
+    player: []
+};
 
 var building = [];
 building[0] = "";

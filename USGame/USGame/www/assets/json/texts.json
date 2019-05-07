@@ -32,7 +32,8 @@
         "and to complete a level, you have to complete all batches in the level."
       ],
       "5": [
-        "The progress bar on the left shows your progress within a level."
+        "The progress bar on the left shows",
+        "your progress within a level."
       ],
       "6": "#1",
       "7": [
@@ -54,7 +55,8 @@
       "13": [
         "Good job! The cake you are creating is mapped to your user story at the bottom of the screen."
       ],
-      "14": "#5",
+      "14":
+        "#5",
       "15": [
         "When you combine three ingredients, BakeRE evaluated your user story and, if correct, you gain points (the faster, the more points)."
       ],

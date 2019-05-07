@@ -348,20 +348,6 @@
         lvl4 = l4[0];
         lvlF = lF[0];
 
-        var initialScores = [0, 0, 0, 0, 0];
-
-        var initialBools = [false, false, false, false, false];
-
-        // Set the progress array to the start conditions. Level is set in the level select menu.
-        progress[1] = 1;
-        progress[2] = [];
-        progress[3] = [];
-        progress[4] = initialScores;
-        progress[5] = [];
-        progress[6] = 0;
-        progress[7] = initialBools;
-        progress[8] = [];
-
         this.initializeAnimations();
 
         this.doneLoading();
@@ -398,7 +384,7 @@
         let x = 10;
         let y = window.innerHeight / 2;
 
-        this.progress = this.add.graphics({ x: x, y: y });
+        this.pr = this.add.graphics({ x: x, y: y });
         this.border = this.add.graphics({ x: x, y: y });
 
         this.load.on('progress', this.onProgress, this);
@@ -406,12 +392,12 @@
 
     onProgress(val) {
         // Width of progress bar
-        let w = window.innerWidth - 2 * this.progress.x;
+        let w = window.innerWidth - 2 * this.pr.x;
         let h = 18;
 
-        this.progress.clear();
-        this.progress.fillStyle('0xFFFFFF', 1);
-        this.progress.fillRect(0, 0, w * val, h);
+        this.pr.clear();
+        this.pr.fillStyle('0xFFFFFF', 1);
+        this.pr.fillRect(0, 0, w * val, h);
 
         this.border.clear();
         this.border.lineStyle(2, '#000000', 1);
