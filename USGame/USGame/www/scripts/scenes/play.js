@@ -13,11 +13,6 @@
     }
 
     create() {
-        document.addEventListener("backbutton", function (e) {
-            e.preventDefault();
-            alert('Back Button is Pressed!');
-        }, false);
-
         var background = this.add.image(window.innerWidth / 2, window.innerHeight / 4, 'background3');
         background.setTint(0x36627b, 0x36627b, 0xf4ab2b, 0xf4ab2b);
         if (progress.currentLevel === lvl0) {
