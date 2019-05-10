@@ -13,10 +13,6 @@
         var background = this.add.image(window.innerWidth / 2, window.innerHeight / 4, 'background1');
         background.setTint(0x36627b, 0x36627b, 0xf4ab2b, 0xf4ab2b);
 
-        // Start the background music
-        //song1 = this.sound.add('song1', { loop: true, volume: 0.5 });
-        //song1.play();
-
         //#region Texts
 
         // Game Title
@@ -53,27 +49,38 @@
         //#endregion
 
         if (skipDatabaseSelect === true) {
-            menuType = 2;
+            menuType = "level";
             menuGroup = [];
             this.createMenu();
         }
         else {
-            if (menuType === 0) {
+            if (menuType === "privacy") {
+                this.privacyStatement();
+
                 this.input.on('pointerdown', function (pointer) {
+                    if (menuType === "privacy") {
+                        this.handlePrivacyStatement();
+                    }
                     this.createMenu();
                 }, this);
             }
         }
 
         this.input.on('gameobjectdown', function (pointer, gameobject) {
-            if (menuType === 0) {
-
+            if (menuType === "privacy") {
+                this.handlePrivacyStatement();
+            }
+            else if (menuType === "participant") {
+                // Name input
+                var n = gameobject.list[0].text;
+                this.addLetters(n);
+            }
+            else if (menuType === "name") {
                 // Name input
                 var char = gameobject.list[0].text;
                 this.addLetters(char);
-
             }
-            else if (menuType === 1) {
+            else if (menuType === "database") {
 
                 // Database selection
                 for (var i = 0; i < databases.length; i++) {
@@ -90,11 +97,11 @@
                 });
 
                 menuGroup = [];
-                menuType = 2;
+                menuType = "level";
 
                 this.createMenu();
             }
-            else if (menuType === 2) {
+            else if (menuType === "level") {
 
                 // Level selection
                 var name = gameobject.list[1].text;
@@ -127,11 +134,11 @@
         var w = window.innerWidth;
         var h = window.innerHeight;
 
-        if (menuType === 1) {
+        if (menuType === "database") {
             txt_progress.text = "Select your database";
             l = databases.length;
         }
-        else if (menuType === 2) {
+        else if (menuType === "level") {
             txt_progress.text = "Pick a level";
             l = 5; 
 
@@ -140,12 +147,16 @@
             sText.y = h / 20;
             sText.text = "Score: " + progress.pointsPerLevel.reduce(function (a, b) { return a + b; }, 0);
         }
-        else {
+        else if (menuType === "name") {
             txt_progress.text = "Name: " + progress.player.join("");
             this.createTextMenu();
         }
+        else if (menuType === "participant") {
+            txt_progress.text = "Participant ID: " + progress.id.join("");
+            this.createNumberMenu();
+        }
 
-        if (menuType === 1 || menuType === 2) {
+        if (menuType === "database" || menuType === "level") {
             this.createButtons(l);
         }
     }
@@ -235,7 +246,7 @@
             points = ptsNeeded[i];
             totalPoints = progress.pointsPerLevel.reduce(function (a, b) { return a + b; }, 0);
 
-            if (menuType === 2) {
+            if (menuType === "level") {
                 if (i === 0) {
                     unlocked = true;
                 }
@@ -249,7 +260,7 @@
 
             var g = this.add.graphics();
 
-            if (menuType === 2) {
+            if (menuType === "level") {
                 if (unlocked === true) {
                     g.fillStyle(0xffffff, 1);
                 }
@@ -266,13 +277,13 @@
             g.lineStyle(2, 0x000000, 1);
             g.strokeRoundedRect(0, 0, squareSize, squareSize, 12);
 
-            if (menuType === 1) {
+            if (menuType === "database") {
                 txt = databases[i]['Title'];
             }
-            else if (menuType === 2 && i === 0) {
+            else if (menuType === "level" && i === 0) {
                 txt = "Tutorial";
             }
-            else if (menuType === 2) {
+            else if (menuType === "level") {
                 if (unlocked === true) {
                     txt = [
                         "Level " + i,
@@ -304,11 +315,52 @@
             t.setOrigin(0.5, 0.5);
 
             container = this.add.container(i * (w / 6 + w / 36) + w / 36, 2 * h / 3 - squareSize / 2);
-            if (menuType === 1 || unlocked === true) {
+            if (menuType === "database" || unlocked === true) {
                 container.setInteractive(new Phaser.Geom.Rectangle(0, 0, squareSize, squareSize), Phaser.Geom.Rectangle.Contains);
             }
             container.add(g);
             container.add(t);
+            menuGroup.push(container);
+        }
+    }
+
+    createNumberMenu() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        var textButton;
+        var container;
+        var nrs = [];
+        var numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+        var buttons = ['↶', '↷'];
+        
+        for (var i = 0; i < numbers.length; i++) {
+            textButton = this.make.text(textconfigMenuHeader);
+            textButton.x = 0;
+            textButton.y = 0;
+            textButton.setDepth(10);
+            textButton.text = numbers[i];
+            textButton.setStroke('#FFFFFF', 12);
+
+            container = this.add.container((i + 1) * w / 12, 4 * h / 6);
+            container.setInteractive(new Phaser.Geom.Rectangle(0, 0, textButton.width, textButton.height), Phaser.Geom.Rectangle.Contains);
+            container.add(textButton);
+
+            menuGroup.push(container);
+        }
+
+        for (var j = 0; j < buttons.length; j++) {
+            textButton = this.make.text(textconfigMenuHeader);
+            textButton.x = 0;
+            textButton.y = 0;
+            textButton.setDepth(10);
+            textButton.text = buttons[j];
+            textButton.setStroke('#FFFFFF', 12);
+
+            container = this.add.container((j + 9) * w / 12, 5 * h / 6);
+            container.setInteractive(new Phaser.Geom.Rectangle(0, 0, textButton.width, textButton.height), Phaser.Geom.Rectangle.Contains);
+            container.add(textButton);
+
             menuGroup.push(container);
         }
     }
@@ -344,16 +396,97 @@
     }
 
     addLetters(char) {
-        if (char === "↶") {
-            if (progress.player.length > 0) {
-                progress.player.pop();
-            } 
+        if (menuType === "name") {
+            if (char === "↶") {
+                if (progress.player.length > 0) {
+                    progress.player.pop();
+                }
+            }
+            else if (char === "↷") {
+                this.checkName();
+            }
+            else {
+                progress.player.push(char);
+            }
         }
-        else if (char === "↷") {
-            this.checkName();
+        else if (menuType === "participant") {
+            if (char === "↶") {
+                if (progress.id.length > 0) {
+                    progress.id.pop();
+                }
+            }
+            else if (char === "↷") {
+                this.checkID();
+            }
+            else {
+                progress.id.push(char);
+            }
+        }
+    }
+
+    privacyStatement() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        mbg = this.add.graphics();
+        mbg.fillStyle(0x000000, 0.3);
+
+        menBG = this.add.graphics();
+        menBG.fillStyle(0xFFFFFF, 1);
+
+        mbg.fillRect(0, 0, w, h);
+        mbg.setDepth(99);
+
+        var orderWidth = 9 * w / 10;
+        var orderHeight = 9 * h / 10;
+        var orderX = w / 2;
+        var orderY = h / 2;
+
+        menBG.fillRoundedRect(orderX - orderWidth / 2, orderY - orderHeight / 2, orderWidth, orderHeight, 32);
+        menBG.setDepth(100);
+
+        header = this.make.text(textconfigMenuHeader);
+        header.setOrigin(0.5, 0);
+        header.x = w / 2;
+        header.y = h / 7;
+        header.text = "Privacy Statement";
+        header.setDepth(101);
+
+        mText = this.make.text(textconfigMenuOrder);
+        mText.setOrigin(0.5, 0.5);
+        mText.x = orderX;
+        mText.y = orderY;
+        mText.text = [
+            "By playing this game, I consent to the anonymous collection of my progress data and learning analytics for research purposes.",
+            "",
+            "I understand that this data includes scores, times and survey data, and can not be traced back to me in any way, shape or form."
+        ];
+        mText.setDepth(101);
+
+        menBG.setInteractive(new Phaser.Geom.Rectangle(0, 0, w, h), Phaser.Geom.Rectangle.Contains);
+
+        mbg.visible = false;
+        menBG.visible = false;
+        mText.visible = false;
+        header.visible = false;
+    }
+
+    handlePrivacyStatement() {
+        if (menuOpen === false) {
+            menuOpen = true;
+            mbg.visible = true;
+            menBG.visible = true;
+            mText.visible = true;
+            header.visible = true;
         }
         else {
-            progress.player.push(char);
+            menuOpen = false;
+            mbg.visible = false;
+            menBG.visible = false;
+            mText.visible = false;
+            header.visible = false;
+
+            menuType = "participant";
         }
     }
 
@@ -381,7 +514,7 @@
                 this.sendName();
 
                 menuGroup = [];
-                menuType = 1;
+                menuType = "database";
                 this.createMenu();
             }
         }.bind(this);
@@ -389,7 +522,32 @@
         xhttp.send();
     }
 
+    checkID() {
+        if (progress.id.length !== 2) {
+            txt_progress.text = "Participant ID should be two digits long!";
+        }
+        else {
+            menuGroup.forEach(function (item) {
+                item.list[0].text = "";
+            });
+
+            this.sendName();
+
+            menuGroup = [];
+            menuType = "name";
+            this.createMenu();
+        }
+    }
+
     sendName() {
+        var scorestr = "";
+        var scorestring = "";
+
+        for (var k = 1; k <= progress.pointsPerLevel.length; k++) {
+            scorestr = "&score" + k + "=" + progress.pointsPerLevel[k - 1];
+            scorestring = scorestring + scorestr;
+        }
+
         var timestr = "";
         var timestring = "";
 
@@ -401,8 +559,9 @@
             }
         }
 
+        var id = progress.id.join("");
         var name = "%27" + progress.player.join("") + "%27";
-        var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=0" + timestring;
+        var url = "http://www.bakere.tech/addscore.php?uniqueID=" + id + "&name=" + name + "&score=0" + scorestring + timestring;
 
         var xhttp = new XMLHttpRequest();
         xhttp.open('GET', url, true);

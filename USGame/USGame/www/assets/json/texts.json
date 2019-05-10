@@ -10,7 +10,7 @@
   },
   "Introductions": {
     "Tutorial": {
-      "nr": 19,
+      "nr": 20,
       "nr2": 13,
       "1": [
         "Welcome to BakeRE!"
@@ -58,21 +58,25 @@
       "14":
         "#5",
       "15": [
-        "When you combine three ingredients, BakeRE evaluated your user story and, if correct, you gain points (the faster, the more points)."
+        "When you combine three ingredients, BakeRE evaluated your user story and, if correct, you gain points (the faster, the more points).",
+        "",
+        "Try it out now by finishing this user story!"
       ],
       "16": "#6",
       "17": [
+        "Good job!",
         "When a user story is incorrect, points are detracted, so be careful! Sometimes being precise is better than being fast.",
         "",
-        "(Points gained in the tutorial do not add up to your score)"
+        "(Points gained in the tutorial do not add up to your total score)"
       ],
-      "18": [
+      "18": "#7",
+      "19": [
         "With this in mind, complete the three user stories in this batch to finish the tutorial.",
         "",
         "You will now see the context of the batch of user stories.",
         "To take another look at the context, press the pause button."
       ],
-      "19": [
+      "20": [
         "You can always replay the tutorial if necessary.",
         "",
         "Good luck!"
@@ -146,7 +150,7 @@
         "Welcome back!"
       ],
       "2": [
-        "In this final level, we look at the back of a user story car: acceptance tests."
+        "In this final level, we look at the back of a user story card: acceptance tests."
       ],
       "3": [
         "We follow Dan North's syntax:",

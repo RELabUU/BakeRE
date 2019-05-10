@@ -5,23 +5,28 @@
     "dependencies": {
         "body-parser": "^1.19.0",
         "cordova-android": "^5.2.1",
-        "cordova-ios": "^4.2.0",
+        "cordova-ios": "^4.5.5",
         "cordova-plugin-screen-orientation": "^3.0.1",
         "cordova-windows": "^4.4.2",
-        "es6-promise-plugin": "^4.2.2",
+        "es6-promise-plugin": "~4.2.2",
         "express": "^4.16.4",
         "mongojs": "^2.6.0",
         "phaser": "^3.15.1",
-        "phaser3-project-template": "^1.0.9"
+        "phaser3-project-template": "^1.0.9",
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova-plugin-statusbar": "~2.4.2"
     },
     "cordova": {
         "plugins": {
-            "cordova-plugin-screen-orientation": {}
+            "cordova-plugin-screen-orientation": {},
+            "cordova-plugin-whitelist": {},
+            "es6-promise-plugin": {},
+            "cordova-plugin-statusbar": {}
         },
         "platforms": [
             "android",
-            "ios",
-            "windows"
+            "windows",
+            "ios"
         ]
     }
 }

@@ -26,20 +26,13 @@ var formerR = "<???>";
 var formerA = "<???>";
 var formerB = "<???>";
 
-var menuType = 0;
+var menuType = "privacy";
+var menuOpen = false;
 var menuGroup = [];
-
-// Progress is an array that keeps track of the player progress within the game. 
-// progress[0] = current level (level object), 
-// progress[1] = current epic (number),
-// progress[2] = current userstory batch (array of userstories)
-// progress[3] = current mistake batch (array of mistakes)
-// progress[4] = points per level (array of points per level, tutorial does not have points)
-// progress[5] = colours matching uss
-// progress[6] = current total time (of completed batches)
-// progress[7] = completed levels (array of bools)
-// progress[8] = player name
-//var progress = [];
+var mbg;
+var menBG;
+var mText;
+var header;
 
 var times0 = [0, 0];
 var times1 = [0, 0, 0, 0, 0];
@@ -47,6 +40,7 @@ var times2 = [0, 0, 0, 0, 0, 0, 0];
 var times3 = [0, 0, 0, 0, 0, 0, 0];
 var times4 = [0, 0, 0, 0, 0];
 
+// Progress is the local storage object used throughout the entire game
 var progress = {
     currentLevel: lvl0,
     currentEpic: 1,
@@ -56,7 +50,8 @@ var progress = {
     colours: [],
     totalTime: [times0, times1, times2, times3, times4],
     completedLevels: [false, false, false, false, false],
-    player: []
+    player: [],
+    id: []
 };
 
 var building = [];
@@ -86,6 +81,7 @@ var currentTask;
 var tutorialHandler;
 var tapComplete = false;
 var tapRoleComplete = false;
+var tapActionBenefitComplete = false;
 var dragComplete = false;
 
 var scoreTimeFlash;

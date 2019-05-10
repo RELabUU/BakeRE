@@ -13,6 +13,11 @@
     }
 
     create() {
+        document.addEventListener("backbutton", function (e) {
+            e.preventDefault();
+            alert('Back Button is Pressed!');
+        }, false);
+
         var background = this.add.image(window.innerWidth / 2, window.innerHeight / 4, 'background3');
         background.setTint(0x36627b, 0x36627b, 0xf4ab2b, 0xf4ab2b);
         if (progress.currentLevel === lvl0) {
@@ -693,13 +698,9 @@
         bg.visible = true;
 
         var sc = score;
-        var total = 0;
+        var total = progress.pointsPerLevel.reduce(function (a, b) { return a + b; }, 0);
         var t = progress.totalTime[lvlNr].reduce(function (a, b) { return a + b; }, 0);
         var mistakeText = "";
-
-        for (var i = 0; i < progress.pointsPerLevel.length; i++) {
-            total = total + progress.totalTime[i].reduce(function (a, b) { return a + b; }, 0);
-        }
 
         if (mistakesMade.length === 0) {
             mistakeText = "You have made 0 mistakes in this level! Well done!";
@@ -711,12 +712,23 @@
             mistakeText = "You made the most mistakes in the category " + tipType + ". " + tipText;
         }
 
-        var content = [
-            "Your score for this level is " + score + ". This brings your total score to " + total + ".",
-            "Your time for this level is " + t + ".",
-            "",
-            mistakeText
-        ];
+        var content;
+        if (progress.currentLevel === lvl0) {
+            content = [
+                "Your score for this level is " + score + ". This does not count towards your total score as this is the tutorial.",
+                "Your time for this level is " + t + ".",
+                "",
+                mistakeText
+            ];
+        }
+        else {
+            content = [
+                "Your score for this level is " + score + ". This brings your total score to " + total + ".",
+                "Your time for this level is " + t + ".",
+                "",
+                mistakeText
+            ];
+        }
 
         debrief = this.make.text(textconfigMenuOrder);
         debrief.x = window.innerWidth / 2;
@@ -1345,7 +1357,7 @@
                 introIndex2 = introIndex2 + 1;
                 introText.text = intr[introIndex];
                 this.introProgress();
-                if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6") {
+                if (introText.text === "#1" || introText.text === "#2" || introText.text === "#3" || introText.text === "#4" || introText.text === "#5" || introText.text === "#6" || introText.text === "#7") {
                     tutorialProgress = introText.text;
                     introIndex2 = introIndex2 - 1;
 
@@ -1880,6 +1892,12 @@
         correctSound.play();
         console.log("Valid userstory! :)");
 
+        if (progress.currentLevel === lvl0 && tutorialProgress !== "Complete") {
+            if (currentTask.type === "tap action benefit") {
+                tapActionBenefitComplete = true;
+            }
+        }
+
         this.disableMenuButtons();
 
         var level = progress.currentLevel;
@@ -2203,9 +2221,19 @@
                 userstoryFlash.visible = true;
                 break;
             case "#6":
+                currentTask = { type: "tap action benefit", complete: false };
+                actionMenu.setInteractive();
+                benefitMenu.setInteractive();
+                this.enableMenuButtons();
+                break;
+            case "#7":
                 //points and time
                 //currentTask = wait or tap screen
                 currentTask = { type: "tap", complete: false };
+                menuVisible = "None";
+                menuBG.visible = false;
+                this.createMenuText();
+                this.textsFalse();
                 scoreTimeFlash.visible = true;
                 break;
             default:
@@ -2222,6 +2250,9 @@
             currentTask.complete = true;
         }
         else if (currentTask.type === "tap role" && tapRoleComplete === true) {
+            currentTask.complete = true;
+        }
+        else if (currentTask.type === "tap action benefit" && tapActionBenefitComplete === true) {
             currentTask.complete = true;
         }
         else if (currentTask.type === "drag" && dragComplete === true) {
@@ -2325,6 +2356,14 @@
     // --------------------------------------------------------------------------- //
 
     sendScore(s, lvlNr) {
+        var scorestr = "";
+        var scorestring = "";
+
+        for (var k = 1; k <= progress.pointsPerLevel.length; k++) {
+            scorestr = "&score" + k + "=" + progress.pointsPerLevel[k - 1];
+            scorestring = scorestring + scorestr;
+        }
+
         var timestr = "";
         var timestring = "";
 
@@ -2336,8 +2375,9 @@
             }
         }
 
+        var id = progress.id.join("");
         var name = "%27" + progress.player.join("") + "%27";
-        var url = "http://www.bakere.tech/addscore.php?name=" + name + "&score=" + s + timestring;
+        var url = "http://www.bakere.tech/addscore.php?uniqueID=" + id + "&name=" + name + "&score=" + s + scorestring + timestring;
 
         console.log(timestring);
         console.log(url);

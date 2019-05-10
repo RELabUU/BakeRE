@@ -1,25 +1,25 @@
 {
-    "prepare_queue": {
-        "installed": [],
-        "uninstalled": []
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "tech.bakere.bakere"
     },
-    "config_munge": {
-        "files": {}
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "tech.bakere.bakere"
     },
-    "installed_plugins": {
-        "cordova-plugin-screen-orientation": {
-            "PACKAGE_NAME": "io.cordova.myappf305c9"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.myappf305c9"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "io.cordova.myappf305c9"
-        }
-    },
-    "dependent_plugins": {
-        "es6-promise-plugin": {
-            "PACKAGE_NAME": "io.cordova.myappf305c9"
-        }
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "tech.bakere.bakere"
     }
+  },
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "tech.bakere.bakere"
+    }
+  }
 }
