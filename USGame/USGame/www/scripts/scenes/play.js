@@ -1887,12 +1887,6 @@
         correctSound.play();
         console.log("Valid userstory! :)");
 
-        if (progress.currentLevel === lvl0 && tutorialProgress !== "Complete") {
-            if (currentTask.type === "tap action benefit") {
-                tapActionBenefitComplete = true;
-            }
-        }
-
         this.disableMenuButtons();
 
         var level = progress.currentLevel;
@@ -1919,6 +1913,12 @@
 
         this.time.delayedCall(1500, function () {
             this.putStuffBack(true, lvlNr);
+
+            if (progress.currentLevel === lvl0 && tutorialProgress !== "Complete") {
+                if (currentTask.type === "tap action benefit") {
+                    tapActionBenefitComplete = true;
+                }
+            }
 
             if (uss.length - mss.length === 0 || flawless.completed === true) {
                 uss = [];
@@ -2031,7 +2031,14 @@
                     }
 
                     oText.text = orderText;
-                    this.toggleContext();
+                    if (progress.currentLevel === lvl0 && tutorialProgress !== "Complete") {
+                        if (currentTask.type !== "tap action benefit") {
+                            this.toggleContext();
+                        }
+                    }
+                    else {
+                        this.toggleContext();
+                    }
                 }
             }
             else {
