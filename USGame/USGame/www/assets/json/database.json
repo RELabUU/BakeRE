@@ -5,15 +5,15 @@
     "Epics List": [
       {
         "Epic Title": "Assignments",
-        "Epic Text": "Teachers need to be able to set up assignments for the students to complete, often in teams."
+        "Epic Text": "Teachers need to set up assignments for the students to complete, often in groups."
       },
       {
         "Epic Title": "Tests",
-        "Epic Text": "Sometimes, teachers want to challenge students with intermediate tests or quizzes that can be completed in the educational environment."
+        "Epic Text": "Sometimes, teachers want to challenge students with intermediate tests or quizzes that can be completed in the learning environment."
       },
       {
         "Epic Title": "Accounts",
-        "Epic Text": "Teachers, teaching assistents and students alike should have accounts within the learning environments, all with different privileges"
+        "Epic Text": "Teachers, teaching assistants and students should have accounts in the learning environments, each with different privileges"
       },
       {
         "Epic Title": "Course material",
@@ -25,7 +25,7 @@
       },
       {
         "Epic Title": "Communication",
-        "Epic Text": "All participants within the learning environment should be able to communicate amongst each other"
+        "Epic Text": "All participants of the learning environment should be able to communicate with one another"
       },
       {
         "Epic Title": "Recordings",
@@ -33,7 +33,7 @@
       },
       {
         "Epic Title": "Groups",
-        "Epic Text": "Within the learning environment groups need to be created to enable cooperation within practical teams"
+        "Epic Text": "Groups need to be created in the learning environment to help them collaborate in creating assignments"
       }
     ]
   },
@@ -44,7 +44,7 @@
         "Epic Title": "Assignments",
         "Role": "Teacher",
         "Action": "create an assignment in the learning environment",
-        "Benefit": "there is no need to use other external services"
+        "Benefit": "other external services are not necessary"
       },
       {
         "Epic Title": "Assignments",
@@ -73,13 +73,13 @@
       {
         "Epic Title": "Tests",
         "Role": "Teacher",
-        "Action": "create an anonymous test within the learning environment for my students",
-        "Benefit": "I can test their knowledge without knowing their performance"
+        "Action": "create an anonymous quiz for my students",
+        "Benefit": "I can test students' knowledge without knowing their performance"
       },
       {
         "Epic Title": "Tests",
         "Role": "Teacher",
-        "Action": "create a graded test within the learning environment for my students",
+        "Action": "create a graded test in the learning environment for my students",
         "Benefit": "I can include online tests in the course grading"
       },
       {
@@ -103,14 +103,14 @@
       {
         "Epic Title": "Accounts",
         "Role": "Student",
-        "Action": "create an account",
-        "Benefit": "I have access to the online learning environment"
+        "Action": "create an account for a course I attend",
+        "Benefit": "I can access the online learning materials"
       },
       {
         "Epic Title": "Accounts",
         "Role": "Student",
-        "Action": "have access to my profile information",
-        "Benefit": "I can check it for incorrect information"
+        "Action": "set the visibility level of my photo",
+        "Benefit": "I can establish who can see this kind of personal details"
       },
       {
         "Epic Title": "Accounts",
@@ -122,25 +122,25 @@
         "Epic Title": "Accounts",
         "Role": "Teacher assistant",
         "Action": "receive an account with access to grading functionalities",
-        "Benefit": "I can perform my grading duties"
+        "Benefit": "I can help the teacher in grading assignments"
       },
       {
         "Epic Title": "Accounts",
         "Role": "Student",
-        "Action": "be able to find fellow colleagues within the online learning environment",
-        "Benefit": "I can hand in assignments together with my practical partner(s)"
+        "Action": "search for fellow students who are enrolled in the online learning environment",
+        "Benefit": "I can invite them to join a group for working at assignments"
       },
       {
         "Epic Title": "Course material",
         "Role": "Student",
-        "Action": "receive a notification when new material is uploaded to the learning environment",
-        "Benefit": "I know when changes to the material are made"
+        "Action": "receive a notification when new material is uploaded",
+        "Benefit": "I can immediately download new slides and papers"
       },
       {
         "Epic Title": "Course material",
         "Role": "Teacher",
         "Action": "upload the slides I use for my lectures to the learning environment",
-        "Benefit": "my students can review the material explained in the lectures at home"
+        "Benefit": "my students can review the slides at home"
       },
       {
         "Epic Title": "Course material",
@@ -158,30 +158,30 @@
         "Epic Title": "Course material",
         "Role": "Student",
         "Action": "have access to the slides used during the lectures",
-        "Benefit": "I can review the lecture material at home"
+        "Benefit": "I can review the slides at home"
       },
       {
         "Epic Title": "Scheduling",
         "Role": "Teacher",
         "Action": "create a course schedule within the learning environment",
-        "Benefit": "my students and teaching assistents can schedule their time correctly"
+        "Benefit": "my students and teaching assistants can schedule their time correctly"
       },
       {
         "Epic Title": "Scheduling",
         "Role": "Teacher",
         "Action": "update the course schedule when unforeseen changes to the planning occur",
-        "Benefit": "my students and teaching assistents are aware of changes in the planning"
+        "Benefit": "my students and teaching assistants are aware of changes in the planning"
       },
       {
         "Epic Title": "Scheduling",
         "Role": "Student",
-        "Action": "get a notification when a lecture is dropped",
+        "Action": "receive a notification when a lecture is dropped",
         "Benefit": "I know I do not have to attend the lecture"
       },
       {
         "Epic Title": "Scheduling",
         "Role": "Teaching assistant",
-        "Action": "get a notification when I am required to assist a lecture or practical",
+        "Action": "receive a notification when I am required to assist a lecture or practical",
         "Benefit": "I know for which lectures my assistance is required"
       },
       {
@@ -194,7 +194,7 @@
         "Epic Title": "Communication",
         "Role": "Student",
         "Action": "privately message my teacher or teacher assistants",
-        "Benefit": "I can ask questions about the course on days when there is no lecture"
+        "Benefit": "I can ask clarifications about the course on days when there is no lecture"
       },
       {
         "Epic Title": "Communication",
@@ -206,25 +206,25 @@
         "Epic Title": "Communication",
         "Role": "Student",
         "Action": "privately message my colleagues",
-        "Benefit": "I can communicate with colleagues on days when there is no lecture"
+        "Benefit": "I can communicate with colleagues in the learning environment"
       },
       {
         "Epic Title": "Communication",
         "Role": "Teaching assistant",
-        "Action": "clearly be identifiable as an assistant when posting messages",
+        "Action": "be clearly identifiable as an assistant when posting messages",
         "Benefit": "students know I am one of the assistants instead of a colleague"
       },
       {
         "Epic Title": "Communication",
         "Role": "Teacher",
         "Action": "make contact information about me and teaching assistants easily accessible",
-        "Benefit": "students know who to contact with questions"
+        "Benefit": "students know who to contact when they have questions"
       },
       {
         "Epic Title": "Recordings",
         "Role": "Teacher",
         "Action": "post recorded lectures online",
-        "Benefit": "my students can review the material explained in the lectures at home"
+        "Benefit": "my students can replay the recording of a lecture at home"
       },
       {
         "Epic Title": "Recordings",
@@ -242,7 +242,7 @@
         "Epic Title": "Recordings",
         "Role": "Teacher",
         "Action": "attach notes to the recordings at certain timestamps",
-        "Benefit": "I can provide additional information where necessary"
+        "Benefit": "I can provide clarifications to my lecture where necessary"
       },
       {
         "Epic Title": "Recordings",
@@ -253,32 +253,32 @@
       {
         "Epic Title": "Groups",
         "Role": "Teacher",
-        "Action": "message groups",
-        "Benefit": "I can share feedback and other remarks once to everyone on the same team"
+        "Action": "message all student groups",
+        "Benefit": "I can share clarifications about the assignments"
       },
       {
         "Epic Title": "Groups",
         "Role": "Student",
-        "Action": "request to join groups",
-        "Benefit": "I can find my practical team to cooperate on assignments"
+        "Action": "request to join a group",
+        "Benefit": "I can find the fellow students with whom I collaborate on an assignment"
       },
       {
         "Epic Title": "Groups",
         "Role": "Student",
-        "Action": "create groups",
-        "Benefit": "I can make a hub for my practical partners to cooperate within"
+        "Action": "create a new group",
+        "Benefit": "I can make a collaboration hub for my assignment partners"
       },
       {
         "Epic Title": "Groups",
         "Role": "Student",
         "Action": "send group invites",
-        "Benefit": "I can add partners to my practical team"
+        "Benefit": "I can add my assignment partners to a group I have created"
       },
       {
         "Epic Title": "Groups",
         "Role": "Student",
         "Action": "accept group invites",
-        "Benefit": "I can become a member of my practical team"
+        "Benefit": "I can become a member of a group"
       }
     ]
   },
@@ -288,7 +288,7 @@
         "Epic Title": "Assignments",
         "Role": "Teacher",
         "Action": "create an assignment in the learning environment and in Google Drive",
-        "Benefit": "there is no need to use other external services"
+        "Benefit": "other external services are not necessary"
       },
       {
         "Epic Title": "Assignments",
@@ -325,7 +325,7 @@
       {
         "Epic Title": "Course material",
         "Role": "Teacher",
-        "Action": "upload the lists (such as content, grades etc.) to the learning environment",
+        "Action": "upload the lists (such as papers, slides, etc.) to the learning environment",
         "Benefit": "my students know what I expect them to study for the exam(s)"
       },
       {
@@ -339,7 +339,7 @@
       {
         "Epic Title": "Tests",
         "Role": "Teacher",
-        "Action": "anonymous test for my students",
+        "Action": "anonymous quiz for my students",
         "Benefit": "add results"
       },
       {
@@ -378,7 +378,7 @@
         "Epic Title": "Scheduling",
         "Role": "Teacher",
         "Action": "create a course schedule within the learning environment",
-        "Benefit": "my students and teaching assistents can pull the schedule into their online agenda"
+        "Benefit": "my students and teaching assistents can load the schedule into their Outlook agenda"
       },
       {
         "Epic Title": "Recordings",
@@ -436,7 +436,7 @@
         "Epic Title": "Recordings",
         "Role": "Teacher",
         "Action": "attach notes (see US2) to the recordings at certain timestamps",
-        "Benefit": "I can provide additional information where necessary"
+        "Benefit": "I can provide clarifications to my lecture where necessary"
       }
     ]
   },
@@ -448,7 +448,7 @@
         "usKey": 1,
         "Role": "Teacher",
         "Action": "message groups",
-        "Benefit": "I can share feedback and other remarks once to everyone on the same team",
+        "Benefit": "I can share feedback and other remarks at once to everyone on the same team",
         "Given": "a list of groups within the learning environment",
         "When": "I click on a group",
         "Then": "I should get the option to send feedback and/or remarks to all group members at once"
@@ -458,7 +458,7 @@
         "usKey": 1,
         "Role": "Teacher",
         "Action": "message groups",
-        "Benefit": "I can share feedback and other remarks once to everyone on the same team",
+        "Benefit": "I can share feedback and other remarks at once to everyone on the same team",
         "Given": "a list of groups within the learning environment",
         "When": "I click on a group",
         "Then": "I should get the option to send feedback and/or remarks to specific group members"
@@ -468,7 +468,7 @@
         "usKey": 1,
         "Role": "Teacher",
         "Action": "message groups",
-        "Benefit": "I can share feedback and other remarks once to everyone on the same team",
+        "Benefit": "I can share feedback and other remarks at once to everyone on the same team",
         "Given": "a group within the learning environment",
         "When": "I message all group members",
         "Then": "all group members should get a notification when one of them replies"
@@ -478,9 +478,9 @@
         "usKey": 2,
         "Role": "Student",
         "Action": "request to join groups",
-        "Benefit": "I can find my practical team to cooperate on assignments",
+        "Benefit": "I can find my team to cooperate on assignments",
         "Given": "a group within the learning environment",
-        "When": "I click on the group",
+        "When": "I click on the group icon",
         "Then": "I should be able to see the group members"
       },
       {
@@ -488,7 +488,7 @@
         "usKey": 2,
         "Role": "Student",
         "Action": "request to join groups",
-        "Benefit": "I can find my practical team to cooperate on assignments",
+        "Benefit": "I can find my team to cooperate on assignments",
         "Given": "a group within the learning environment",
         "When": "I see that this group contains my group members",
         "Then": "I should be able to send a join request"
@@ -498,7 +498,7 @@
         "usKey": 2,
         "Role": "Student",
         "Action": "request to join groups",
-        "Benefit": "I can find my practical team to cooperate on assignments",
+        "Benefit": "I can find my team to cooperate on assignments",
         "Given": "a group within the learning environment",
         "When": "I have sent a join request",
         "Then": "I should get a confirmation notification"
@@ -508,7 +508,7 @@
         "usKey": 3,
         "Role": "Student",
         "Action": "create groups",
-        "Benefit": "I can make a hub for my practical partners to cooperate within",
+        "Benefit": "I can make a collaboration hub for my assignment partners",
         "Given": "the learning environment",
         "When": "I have an account within the learning environment",
         "Then": "I should be able to create a group"
@@ -518,9 +518,9 @@
         "usKey": 3,
         "Role": "Student",
         "Action": "create groups",
-        "Benefit": "I can make a hub for my practical partners to cooperate within",
+        "Benefit": "I can make a collaboration hub for my assignment partners",
         "Given": "a group within the learning environment",
-        "When": "I am creating the group settings",
+        "When": "I am specifying the group settings",
         "Then": "I should be able to set the group description"
       },
       {
@@ -528,7 +528,7 @@
         "usKey": 3,
         "Role": "Student",
         "Action": "create groups",
-        "Benefit": "I can make a hub for my practical partners to cooperate within",
+        "Benefit": "I can make a collaboration hub for my assignment partners",
         "Given": "a group within the learning environment",
         "When": "I have created this group",
         "Then": "I should have access to an admin page concerning this group"
@@ -538,7 +538,7 @@
         "usKey": 4,
         "Role": "Student",
         "Action": "send group invites",
-        "Benefit": "I can add partners to my practical team",
+        "Benefit": "I can add my assignment partners to a group I have created",
         "Given": "a group within the learning environment",
         "When": "I receive a join request",
         "Then": "I should be able to reject this request"
@@ -548,7 +548,7 @@
         "usKey": 4,
         "Role": "Student",
         "Action": "send group invites",
-        "Benefit": "I can add partners to my practical team",
+        "Benefit": "I can add my assignment partners to a group I have created",
         "Given": "a group within the learning environment",
         "When": "I receive a join request",
         "Then": "I should be able to accept this request"
@@ -558,7 +558,7 @@
         "usKey": 4,
         "Role": "Student",
         "Action": "send group invites",
-        "Benefit": "I can add partners to my practical team",
+        "Benefit": "I can add my assignment partners to a group I have created",
         "Given": "a group within the learning environment",
         "When": "I find another student that belongs in my team",
         "Then": "I should be able to send a join request"
@@ -568,7 +568,7 @@
         "usKey": 5,
         "Role": "Student",
         "Action": "accept group invites",
-        "Benefit": "I can become a member of my practical team",
+        "Benefit": "I can become a member of a group",
         "Given": "the learning environment",
         "When": "I go to my account",
         "Then": "I should be able to access a list of groups"
@@ -578,17 +578,17 @@
         "usKey": 5,
         "Role": "Student",
         "Action": "accept group invites",
-        "Benefit": "I can become a member of my practical team",
+        "Benefit": "I can become a member of a group",
         "Given": "the learning environment",
         "When": "I go to my account",
-        "Then": "I should see who amongst the students is not yet a member of any groups"
+        "Then": "I should see which students are not yet members of any groups"
       },
       {
         "Epic Title": "Groups",
         "usKey": 5,
         "Role": "Student",
         "Action": "accept group invites",
-        "Benefit": "I can become a member of my practical team",
+        "Benefit": "I can become a member of a group",
         "Given": "a deadline I set on group joining",
         "When": "a student has not yet joined any groups after this deadline",
         "Then": "I should receive a notification"
