@@ -493,6 +493,7 @@
     checkName() {
         var name = "";
         var n = progress.player.join("");
+        var players = [];
         var url = "http://www.bakere.tech/getname.php";
 
         var xhttp = new XMLHttpRequest();
@@ -523,20 +524,39 @@
     }
 
     checkID() {
-        if (progress.id.length !== 2) {
-            txt_progress.text = "Participant ID should be two digits long!";
-        }
-        else {
-            menuGroup.forEach(function (item) {
-                item.list[0].text = "";
-            });
+        var id = "";
+        var ids = [];
+        var i = progress.id.join("");
+        var url = "http://www.bakere.tech/getid.php";
 
-            this.sendName();
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('GET', url);
+        xhttp.responseType = 'text';
 
-            menuGroup = [];
-            menuType = "name";
-            this.createMenu();
-        }
+        xhttp.onload = function () {
+            id = xhttp.response;
+            ids = id.split("@");
+
+            if (ids.includes(i)) {
+                txt_progress.text = "Participant ID is already in use!";
+            }
+            else if (progress.id.length !== 2) {
+                txt_progress.text = "Participant ID should be two digits long!";
+            }
+            else {
+                menuGroup.forEach(function (item) {
+                    item.list[0].text = "";
+                });
+
+                this.sendName();
+
+                menuGroup = [];
+                menuType = "name";
+                this.createMenu();
+            }
+        }.bind(this);
+
+        xhttp.send();
     }
 
     sendName() {

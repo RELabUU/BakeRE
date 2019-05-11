@@ -1,11 +1,21 @@
 {
-     "android": {
-         "release": {
-             "keystore": "c:\\Users\\merle\\Documents\\Universiteit\\Master\\jd-release-key.keystore",
-             "storePassword": "BakeREadmin11!",
-             "alias": "android-key2",
-             "password" : "BakeREadmin11!",
-             "keystoreType": ""
-         }
-     }
- }
+  "android": {
+    "release": {
+      "keystore": "c:\\Users\\merle\\Documents\\Universiteit\\Master\\jd-release-key.keystore",
+      "storePassword": "BakeREadmin11!",
+      "alias": "android-key2",
+      "password": "BakeREadmin11!",
+      "keystoreType": ""
+    }
+  },
+    "ios": {
+      "debug": {
+        "developmentTeam": "m.p.m.delen@uu.nl"
+      },
+      "release": {
+        "developmentTeam": "m.p.m.delen@uu.nl",
+        "codeSignIdentity": "iPhone Developer",
+        "packageType": "ad-hoc"
+      }
+    }
+}
