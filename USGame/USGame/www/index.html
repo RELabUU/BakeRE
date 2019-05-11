@@ -18,6 +18,7 @@
     <link rel="manifest" href="/manifest.json">
     <!-- Libraries -->
     <script src="lib/phaser.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <!-- Scenes -->
     <script type="text/javascript" src="scripts/scenes/boot.js"></script>
     <script type="text/javascript" src="scripts/scenes/preload.js"></script>
@@ -26,10 +27,12 @@
     <!-- Scripts -->
     <script type="text/javascript" src="scripts/js/app.js"></script>
     <script type="text/javascript" src="scripts/js/main.js"></script>
+    <script type="text/javascript" src="scripts/js/backbutton.js"></script>
 
     <title>USGame</title>
 </head>
 <body>
     <div id="phaser-app"></div>
+    <script>document.addEventListener("deviceready", onDeviceReady, false);</script>
 </body>
 </html>
