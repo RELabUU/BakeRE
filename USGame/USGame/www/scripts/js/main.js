@@ -46,10 +46,10 @@ var progress = {
     currentEpic: 1,
     currentUserstories: [],
     currentMistakes: [],
-    pointsPerLevel: [0, 3000, 3000, 0, 0],
+    pointsPerLevel: [0, 0, 0, 0, 0],
     colours: [],
     totalTime: [times0, times1, times2, times3, times4],
-    completedLevels: [true, true, true, false, false],
+    completedLevels: [false, false, false, false, false],
     player: [],
     id: []
 };
@@ -166,6 +166,10 @@ var category1;
 var category2;
 var category3;
 var pausedCategory;
+var creditsShown = false;
+var page1;
+var page2;
+var currentPage = 1;
 
 // #region Text configs
 // Config for menu text
@@ -196,7 +200,18 @@ var textconfigMenuOrder = {
         fontSize: 18,
         align: 'center',
         fill: '#000000',
-        wordWrap: { width: 2 * window.innerWidth / 3, useAdvancedWrap: true }
+        wordWrap: { width: 3 * window.innerWidth / 4, useAdvancedWrap: true }
+    }
+};
+
+var textconfigMenuOrder2 = {
+    text: '',
+    style: {
+        fontFamily: 'Dosis',
+        fontSize: 18,
+        align: 'left',
+        fill: '#000000',
+        wordWrap: { width: 3 * window.innerWidth / 4, useAdvancedWrap: true }
     }
 };
 

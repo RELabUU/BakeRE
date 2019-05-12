@@ -1726,13 +1726,15 @@
                                 return;
                             }
                             else {
-                                if (flawless.inProgress === true) {
-                                    flawless.completed = true;
-                                }
+                                if (j === progress.currentMistakes.length - 1) {
+                                    if (flawless.inProgress === true) {
+                                        flawless.completed = true;
+                                    }
 
-                                donezo = true;
-                                this.userStoryExists(i);
-                                return;
+                                    donezo = true;
+                                    this.userStoryExists(i);
+                                    return;
+                                }
                             }
                         }
                     }

@@ -51,6 +51,7 @@
         if (skipDatabaseSelect === true) {
             menuType = "level";
             menuGroup = [];
+            this.privacyStatement();
             this.createMenu();
         }
         else {
@@ -102,23 +103,26 @@
                 this.createMenu();
             }
             else if (menuType === "level") {
-
-                // Level selection
-                var name = gameobject.list[1].text;
-                var levels = [lvl0, lvl1, lvl2, lvl3, lvl4];
-
-                for (var x = 1; x <= 5; x++) {
-                    if (name.includes("Level " + x)) {
-                        progress.currentLevel = levels[x];
-                        break;
-                    }
-                    else if (x === 5) {
-                        progress.currentLevel = levels[0];
-                        break;
-                    }
+                if (gameobject === menBG || gameobject.type === "Text") {
+                    this.handlePrivacyStatement();
                 }
+                else {
+                    // Level selection
+                    var name = gameobject.list[1].text;
+                    var levels = [lvl0, lvl1, lvl2, lvl3, lvl4];
 
-                this.startGame();
+                    for (var x = 1; x <= 5; x++) {
+                        if (name.includes("Level " + x)) {
+                            progress.currentLevel = levels[x];
+                            break;
+                        }
+                        else if (x === 5) {
+                            progress.currentLevel = levels[0];
+                            break;
+                        }
+                    }
+                    this.startGame();
+                }
             }
         }, this);
 
@@ -139,6 +143,7 @@
             l = databases.length;
         }
         else if (menuType === "level") {
+            this.createCreditMenu();
             txt_progress.text = "Pick a level";
             l = 5; 
 
@@ -452,7 +457,7 @@
         header.text = "Privacy Statement";
         header.setDepth(101);
 
-        mText = this.make.text(textconfigMenuOrder);
+        mText = this.make.text(textconfigMenuOrder2);
         mText.setOrigin(0.5, 0.5);
         mText.x = orderX;
         mText.y = orderY;
@@ -473,23 +478,90 @@
 
     handlePrivacyStatement() {
         if (menuOpen === false) {
-            menuOpen = true;
-            mbg.visible = true;
-            menBG.visible = true;
-            mText.visible = true;
-            header.visible = true;
+            if (creditsShown === true) {
+                menuOpen = true;
+
+                mbg.visible = true;
+                menBG.visible = true;
+                mText.visible = true;
+                mText.text = page1;
+                header.visible = true;
+                header.text = "Credits";
+            }
+            else {
+                menuOpen = true;
+
+                mbg.visible = true;
+                menBG.visible = true;
+                mText.visible = true;
+                header.visible = true;
+            }
         }
         else {
-            menuOpen = false;
-            mbg.visible = false;
-            menBG.visible = false;
-            mText.visible = false;
-            header.visible = false;
+            if (creditsShown === true) {
+                if (currentPage === 1) {
+                    mText.text = page2;
+                    currentPage = 2;
+                }
+                else {
+                    menuOpen = false;
+                    currentPage = 1;
 
-            menuType = "participant";
+                    mbg.visible = false;
+                    menBG.visible = false;
+                    mText.visible = false;
+                    header.visible = false;
+                }
+            }
+            else {
+                menuOpen = false;
+
+                mbg.visible = false;
+                menBG.visible = false;
+                mText.visible = false;
+                header.visible = false;
+
+                menuType = "participant";
+                creditsShown = true;
+            }
         }
     }
 
+    createCreditMenu() {
+        var creditText;
+
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        page1 = [
+            "Coding and Assets: Merle Delen",
+            "Fonts: Dosis (Google webfont)",
+            "Menu Buttons: Platformer Art - Candy (www.kenney.nl)",
+            "Particle Effects: Phaser 3 (www.phaser.io/phaser3)",
+            "Audio assets: see next page (www.freesound.org)"
+        ];
+
+        page2 = [
+            "Gotitem.mp3: Kastenfrosch",
+            "successfull.mp3: Kastenfrosch",
+            "Correct.wav: Eponn",
+            "harppu2.wav: dreamoron",
+            "Drip2.wav: Neotone",
+            "Thump 1.wav: TicTacShutUp",
+            "Thump 3.wav: TicTacShutUp"
+        ];
+
+        creditText = this.make.text(textconfigScore);
+        creditText.x = 3 * w / 4;
+        creditText.y = h / 20;
+        creditText.setDepth(10);
+        creditText.text = "Credits";
+        
+        creditText.setInteractive(new Phaser.Geom.Rectangle(0, 0, creditText.width, creditText.height), Phaser.Geom.Rectangle.Contains);
+        creditText.on('pointerup', function (pointer) {
+            this.handlePrivacyStatement();
+        }, this);
+    }
 
     checkName() {
         var name = "";
