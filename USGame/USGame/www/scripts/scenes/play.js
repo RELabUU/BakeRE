@@ -472,19 +472,37 @@
             }
         }
 
-        // Decide on the mistakes to use
-        for (var k = 0; k < n; k++) {
-            var typeContent = mistakes[msnrs[k]];
-            var epic = uss[0]['Epic Title'];
-            var toUse = [];
+        var toUse = [];
+        var epic;
+        var l;
 
-            mistTuple[0] = msnrs[k];
+        for (var m = 0; m < n; m++) {
+            var typeContent = mistakes[msnrs[m]];
+            if (m !== 0) {
+                if (msnrs[m - 1] !== msnrs[m]) {
+                    epic = uss[0]['Epic Title'];
 
-            for (var l = 0; l < typeContent.length; l++) {
-                if (typeContent[l]['Epic Title'] === epic) {
-                    toUse.push(typeContent[l]);
+                    for (l = 0; l < typeContent.length; l++) {
+                        if (typeContent[l]['Epic Title'] === epic) {
+                            toUse.push(typeContent[l]);
+                        }
+                    }
                 }
             }
+            else {
+                epic = uss[0]['Epic Title'];
+
+                for (l = 0; l < typeContent.length; l++) {
+                    if (typeContent[l]['Epic Title'] === epic) {
+                        toUse.push(typeContent[l]);
+                    }
+                }
+            }
+        }
+
+        // Decide on the mistakes to use
+        for (var k = 0; k < n; k++) {
+            mistTuple[0] = msnrs[k];
 
             if (toUse.length === 1) {
                 mss.push(toUse[0]);
@@ -496,6 +514,7 @@
                 mss.push(toUse[r[0]]);
                 mistTuple[1] = toUse[r[0]];
                 tups.push(mistTuple);
+                toUse.splice(r[0], 1);
             }
         }
 
@@ -2014,7 +2033,7 @@
                 }
                 else {
                     this.pickUserStories(epic);
-                    if (mss !== []) {
+                    if (mss.length !== 0) {
                         mss = [];
                         strsr = [];
                         strsa = [];

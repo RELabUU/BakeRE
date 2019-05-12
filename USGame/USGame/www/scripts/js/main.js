@@ -46,10 +46,10 @@ var progress = {
     currentEpic: 1,
     currentUserstories: [],
     currentMistakes: [],
-    pointsPerLevel: [0, 0, 0, 0, 0],
+    pointsPerLevel: [0, 3000, 3000, 0, 0],
     colours: [],
     totalTime: [times0, times1, times2, times3, times4],
-    completedLevels: [false, false, false, false, false],
+    completedLevels: [true, true, true, false, false],
     player: [],
     id: []
 };
