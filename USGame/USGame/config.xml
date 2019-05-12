@@ -99,6 +99,6 @@
   <preference name="KeepRunning" value="False" />
   <preference name="AndroidLaunchMode" value="singleInstance" />
   <engine name="android" spec="~5.2.2" />
-  <preference name="android-targetSdkVersion" value="26" />
+  <preference name="android-targetSdkVersion" value="16" />
   <engine name="ios" spec="~4.5.5" />
 </widget>
