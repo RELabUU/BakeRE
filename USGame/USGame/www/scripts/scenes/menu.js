@@ -71,11 +71,11 @@
             if (menuType === "privacy") {
                 this.handlePrivacyStatement();
             }
-            else if (menuType === "participant") {
+            /*else if (menuType === "participant") {
                 // Name input
                 var n = gameobject.list[0].text;
                 this.addLetters(n);
-            }
+            }*/
             else if (menuType === "name") {
                 // Name input
                 var char = gameobject.list[0].text;
@@ -156,10 +156,10 @@
             txt_progress.text = "Name: " + progress.player.join("");
             this.createTextMenu();
         }
-        else if (menuType === "participant") {
+        /*else if (menuType === "participant") {
             txt_progress.text = "Participant ID: " + progress.id.join("");
             this.createNumberMenu();
-        }
+        }*/
 
         if (menuType === "database" || menuType === "level") {
             this.createButtons(l);
@@ -414,7 +414,7 @@
                 progress.player.push(char);
             }
         }
-        else if (menuType === "participant") {
+        /*else if (menuType === "participant") {
             if (char === "↶") {
                 if (progress.id.length > 0) {
                     progress.id.pop();
@@ -426,7 +426,7 @@
             else {
                 progress.id.push(char);
             }
-        }
+        }*/
     }
 
     privacyStatement() {
@@ -521,7 +521,8 @@
                 mText.visible = false;
                 header.visible = false;
 
-                menuType = "participant";
+                //menuType = "participant";
+                menuType = "name";
                 creditsShown = true;
             }
         }
@@ -596,7 +597,7 @@
         xhttp.send();
     }
 
-    checkID() {
+    /*checkID() {
         var id = "";
         var ids = [];
         var i = progress.id.join("");
@@ -630,7 +631,7 @@
         }.bind(this);
 
         xhttp.send();
-    }
+    }*/
 
     sendName() {
         var scorestr = "";
@@ -652,9 +653,9 @@
             }
         }
 
-        var id = progress.id.join("");
+        //var id = progress.id.join("");
         var name = "%27" + progress.player.join("") + "%27";
-        var url = "http://www.bakere.tech/addscore.php?uniqueID=" + id + "&name=" + name + "&score=0" + scorestring + timestring;
+        var url = "http://www.bakere.tech/addscore.php?uniqueID=" /*+ id */ + "&name=" + name + "&score=0" + scorestring + timestring;
 
         var xhttp = new XMLHttpRequest();
         xhttp.open('GET', url, true);

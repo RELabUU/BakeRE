@@ -2398,9 +2398,9 @@
             }
         }
 
-        var id = progress.id.join("");
+        //var id = progress.id.join("");
         var name = "%27" + progress.player.join("") + "%27";
-        var url = "http://www.bakere.tech/addscore.php?uniqueID=" + id + "&name=" + name + "&score=" + s + scorestring + timestring;
+        var url = "http://www.bakere.tech/addscore.php?uniqueID=" /*+ id */ + "&name=" + name + "&score=" + s + scorestring + timestring;
 
         console.log(timestring);
         console.log(url);
