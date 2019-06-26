@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddIn2", "ExcelAddIn2\ExcelAddIn2.csproj", "{FCD053FE-D9DF-4EBE-8A0E-347C660D0997}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCD053FE-D9DF-4EBE-8A0E-347C660D0997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD053FE-D9DF-4EBE-8A0E-347C660D0997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD053FE-D9DF-4EBE-8A0E-347C660D0997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD053FE-D9DF-4EBE-8A0E-347C660D0997}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A0CF410-55A5-4A2A-BB4A-525B701A2573}
+	EndGlobalSection
+EndGlobal

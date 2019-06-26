@@ -1,0 +1,15 @@
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\obj\Debug\ExcelAddIn2.csprojAssemblyReference.cache
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\obj\Debug\ExcelAddIn2.Properties.Resources.resources
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\obj\Debug\ExcelAddIn2.csproj.GenerateResource.cache
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\obj\Debug\ExcelAddIn2.csproj.CoreCompileInputs.cache
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\ExcelAddIn2.dll
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\ExcelAddIn2.pdb
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\ExcelAddIn2.dll.manifest
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\ExcelAddIn2.vsto
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\obj\Debug\ExcelAddIn2.csproj.CopyComplete
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\obj\Debug\ExcelAddIn2.dll
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\obj\Debug\ExcelAddIn2.pdb
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\merle\source\repos\ExcelAddIn2\ExcelAddIn2\bin\Debug\Newtonsoft.Json.xml

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+  <ribbon>
+    <tabs>
+      <tab idMso="TabAddIns">
+        <group id="BakeRE" label="BakeRE">
+          <button id ="textbutton1" label ="Read/write current sheet"
+                  screentip="Text" onAction="ReadWriteCurrent"
+                  supertip="Read and write the currently active sheet and parse it as a JSON file"/>
+          <button id ="textbutton2" label="Read/write current document"
+                  screentip="Text" onAction="ReadWriteAll"
+                  supertip="Read and write the currently active document and parse it as a JSON file"/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
+
